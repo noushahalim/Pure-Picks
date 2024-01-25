@@ -1,0 +1,4 @@
+.env
+node_modules
+planning
+# planning folder include module planning, database documentation, API documentation
