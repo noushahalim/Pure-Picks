@@ -20,7 +20,7 @@ Pure-Picks is a feature-rich e-commerce platform built with Node.js, Express, an
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/Pure-Picks.git
+   git clone https://github.com/noushahalim/Pure-Picks.git
    cd Pure-Picks
 2. Install dependencies:
    ```bash
