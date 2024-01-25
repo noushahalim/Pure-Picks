@@ -18,18 +18,20 @@ Pure-Picks is a feature-rich e-commerce platform built with Node.js, Express, an
 
 ## Getting Started
 
-* **Clone the repository:**
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/your-username/Pure-Picks.git
    cd Pure-Picks
-1. Install dependencies:
+2. Install dependencies:
+   ```bash
    npm install
-2. Set up environment variables:
+3. Set up environment variables:
 
-Copy .env.example to .env and configure your environment variables.
+   * Copy .env.example to .env and configure your environment variables.
 
-3. Run the application:
-  npm start
+4. Run the application:
+   ```bash
+    npm start
 
 
 
