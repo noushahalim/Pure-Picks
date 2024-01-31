@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pure Picks</title>
+  <link rel="shortcut icon" href="/images/PurePicksIcon.ico"> 
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/admin/plugins/fontawesome-free/css/all.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="/admin/dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition lockscreen">
+<!-- Automatic element centering -->
+<div class="lockscreen-wrapper">
+  <div class="lockscreen-logo">
+    <b>PURE</b>PICKS</a>
+  </div>
+  <!-- User name -->
+  <div class="lockscreen-name"><%= adminProfile.fullName %></div>
+
+  <!-- START LOCK SCREEN ITEM -->
+  <div class="lockscreen-item">
+    <!-- lockscreen image -->
+    <% let imagePath= adminProfile.imagePath %>
+    <% if(imagePath){ %>
+        <% adminProfileImage=imagePath %>
+    <% }else{ %>
+        <% adminProfileImage="/images/admin-user-icon.jpg" %>
+    <% } %>
+    <div class="lockscreen-image">
+      <img src="<%= adminProfileImage %>" alt="User">
+    </div>
+    <!-- /.lockscreen-image -->
+
+    <!-- lockscreen credentials (contains the form) -->
+    <form class="lockscreen-credentials" action="/admin/lockScreen" method="post">
+      <div class="input-group">
+        <input type="password" class="form-control" placeholder="password" name="lockScreenPassword">
+
+        <div class="input-group-append">
+          <button type="submit" class="btn">
+            <i class="fas fa-arrow-right text-muted"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+    <!-- /.lockscreen credentials -->
+
+  </div>
+  <!-- /.lockscreen-item -->
+  <div class="help-block text-center">
+    Enter your password to retrieve your session
+  </div>
+  <div class="text-center">
+    Or<a href="/admin/login"> sign in</a>
+  </div>
+  <div class="lockscreen-footer text-center">
+    Copyright &copy; 2024-2124 <b><a href="/home" class="text-black">PurePicks</a></b><br>
+    All rights reserved
+  </div>
+</div>
+<!-- /.center -->
+
+<!-- jQuery -->
+<!-- <script src="../../plugins/jquery/jquery.min.js"></script> -->
+<!-- Bootstrap 4 -->
+<!-- <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+</body>
+</html>
