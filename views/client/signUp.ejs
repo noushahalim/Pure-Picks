@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pure Picks</title>
+    <link rel="shortcut icon" href="/images/PurePicksIcon.ico">
+    <link rel="stylesheet" href="/client/css/signUp.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div class="user-form">
+        <div class="container">
+            <div class="user signup">
+                <div class="form-box">
+                    <form action="">
+                        <div class="form-control">
+                            <h2>Welcome Pure Picks!</h2>
+                            <p>It's good to have you.</p>
+                            <input required type="text" id="userName" name="userName" placeholder="User Name" />
+                            <input required type="email" id="email" name="email" placeholder="Email" />
+                            <input required type="number" id="mobileNumber" name="mobileNumber" placeholder="Mobile Number" />
+                            <a id="otp-div-open" style="cursor: pointer;">Verify</a>
+                            <input type="hidden" id="otpVerified" value="true">
+                            <input required type="password" id="password" name="password" placeholder="Password" />
+                            <input required type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" />
+                            <input disabled type="hidden" id="verified" value="true" style="color: red; text-align: center ; border-radius: 10px; font-weight: 600; border: none;">
+                            <input type="submit" id="submitBtn" value="Register"/>
+                        </div>
+                    </form>
+                    <p class="already">Already have an account? <a href="/login">Login here</a></p>
+                </div>
+                <div class="img-box">
+                    <img src="/images/trial.sv" alt="" />
+                </div>
+                <div class="otp-div" id="otp-div-opened" style="display: none;">
+                    <div class="col-12 col-md-6 col-lg-4" style="min-width: 500px">
+                        <div class="card bg-white mb-5 mt-5 border-0" style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.12)">
+                            <a href="#" id="otp-div-close">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="red" style="width:20px;" viewBox="0 0 384 512">
+                                    <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+                                </svg>
+                            </a>                            
+                            <div class="card-body p-5 text-center">
+                                <h4>Verify</h4>
+                                <p>Your code was sent to you via mobile Number</p>
+                
+                                <div class="otp-field mb-4">
+                                    <input type="number" id="otp1" maxlength="1" aria-label="Enter first digit" />
+                                    <input type="number" id="otp2" maxlength="1" disabled />
+                                    <input type="number" id="otp3" maxlength="1" disabled />
+                                    <input type="number" id="otp4" maxlength="1" disabled />
+                                    <input type="number" id="otp5" maxlength="1" disabled />
+                                    <input type="number" id="otp6" maxlength="1" disabled />
+                                </div>
+                
+                                <button class="btn btn-primary mb-3" id="otpSubmit">Verify</button>
+                
+                                <p class="resend text-muted mb-0">
+                                    Didn't receive code? <a href="">Request again</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <script src="/client/js/signUp.js"></script>
+
+</body>
+
+</html>

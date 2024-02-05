@@ -4,6 +4,7 @@ const dotenv=require('dotenv').config()
 const session=require('express-session')
 const nocache=require('nocache')
 
+
 //Connecting DB
 const DBconnect= require('./config/mongodb')
 DBconnect.dbconnect()
@@ -33,7 +34,7 @@ app.use("/admin",admin)
 
 //for user route
 const client=require("./routes/clientRouter")
-app.use("/client",client)
+app.use("/",client)
 
 
 

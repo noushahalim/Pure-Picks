@@ -1,0 +1,345 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Roboto", sans-serif;
+}
+
+.user-form {
+    min-height: 100vh;
+    width: 100%;
+    background-color: #ffcce0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-form .container {
+    position: relative;
+    width: 900px;
+    height: 500px;
+    background-color: white;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.user-form .user {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.user-form .img-box {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    transition: all 500ms ease-in-out;
+}
+
+.user-form .img-box img {
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.user-form .form-box {
+    position: relative;
+    height: 100%;
+    background-color: white;
+    transition: 500ms ease-in-out;
+}
+.form-box{
+  width: 50%;
+}
+
+
+
+.user-form .form-box .top {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+  }
+  .user-form .form-box .top p {
+    font-size: 13px;
+  }
+  .user-form .form-box .top span {
+    color: #1a1aff;
+    cursor: pointer;
+  }
+  .user-form form {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    width: 100%;
+    max-width: 300px;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .user-form form .form-control:first-child {
+    text-align: center;
+  }
+  .user-form form .form-control:first-child input {
+    font-family: "Poppins", sans-serif;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    text-indent: 16px;
+    width: 100%;
+    color: #4d4d4d;
+    outline: none;
+  }
+  .user-form form .form-control:first-child input[type="submit"] {
+    display: block;
+    text-align: center;
+    width: 100%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: rgb(26,26,255);
+    color: white;
+    transition: 0.5s;
+  }
+  .user-form form .form-control:first-child input[type="submit"]:hover {
+    background-color: #ccccff;
+  }
+  .user-form form .form-control:first-child h2 {
+    width: 100%;
+    font-weight: 400;
+    font-size: 26px;
+  }
+  .user-form form .form-control:first-child p {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+  .user-form form .form-control:first-child span {
+    font-size: 13px;
+    display: block;
+    text-align: right;
+    margin-bottom: 20px;
+  }
+  .user-form form .form-control:first-child div {
+    position: relative;
+  }
+  .user-form form .form-control:first-child .icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 1rem;
+    cursor: pointer;
+  }
+  .user-form form .form-control:last-child {
+    text-align: center;
+  }
+  .user-form form .form-control:last-child p {
+    position: relative;
+    display: inline-block;
+    font-size: 14px;
+  }
+  .user-form form .form-control:last-child p::after {
+    content: "";
+    position: absolute;
+    right: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 2px;
+    background-color: #ddd;
+  }
+  .user-form form .form-control:last-child p::before {
+    content: "";
+    position: absolute;
+    left: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 2px;
+    background-color: #ddd;
+  }
+  .user-form form .form-control:last-child .icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  .user-form form .form-control:last-child .icons .icon {
+    cursor: pointer;
+  }
+  .user-form form .form-control:last-child .icons .icon:not(:last-child) {
+    margin-right: 15px;
+  }
+  /* .user-form .container .signup {
+    pointer-events: none;
+  } */
+  /* .user-form .container .signup .form-box {
+    top: 100%;
+  } */
+  /* .user-form .container .signup .img-box {
+    top: -100%;
+  } */
+
+/* Your existing styles for form controls */
+.already{
+  font-size: 14px;
+  position: absolute;
+  left: 46%;
+  top: 3%;
+}
+.already a{
+  text-decoration: none;
+  color: #1a1aff;
+}
+@media (max-width: 996px) {
+    .form-box {
+      width: 100%;
+    }
+    .user-form .container {
+        max-width: 400px;
+    }
+    .user-form .container .img-box {
+        display: none;
+    }
+    .user-form .container.active .login .form-box {
+        top: -100%;
+    }
+    .already{
+      font-size: 13px;
+      position: absolute;
+      left: 44%;
+      top: 3%;
+    }
+}
+
+@media (max-width: 567px) {
+    .form-box {
+        width: 100%;
+    }
+    .already{
+      font-size: 12px;
+      position: absolute;
+      left: 38%;
+      top: 3%;
+    }
+    /* .header .navbar .row .nav-list a.user-link {
+        display: block;
+      }
+    
+      .user-form {
+        padding: 0;
+      } */
+    /* Adjust styles for smaller screens if needed */
+    /* .form-box{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    } */
+}
+
+
+.otp-div{
+  position: absolute;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  /* font-size: 15px; */
+  background: #fff;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  width: 900px;
+  height: 500px;
+}
+.otp-field {
+  flex-direction: row;
+  column-gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.otp-field input {
+  height: 45px;
+  width: 42px;
+  border-radius: 6px;
+  outline: none;
+  font-size: 1.125rem;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+.otp-field input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+.otp-field input::-webkit-inner-spin-button,
+.otp-field input::-webkit-outer-spin-button {
+  display: none;
+}
+
+.resend {
+  font-size: 12px;
+}
+.card-body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 13px;
+  padding: 20px;
+}
+.card-body button{
+  width: 15%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 15px;
+  border-radius: 5px;
+  border: 1px solid;
+  color: white;
+}
+.btn-active {
+  background-color: rgb(97,161,254);
+  cursor: pointer;
+}
+
+.btn-inactive {
+  background-color: gray;
+}
+#otp-div-open{
+  /* width: 20%; */
+  /* border: 1px solid white; */
+  box-shadow: 0 5px 10px 1px rgba(255, 1, 1, 0.356);
+  text-decoration: none;
+  padding: 5px;
+  position: relative;
+  left: -124px;
+  top: 5px;
+  background-color: white;
+  border-radius: 5px;
+  color: white;
+  background-color: red;
+  font-size: 15px;
+  display: none;
+}
+@media (max-width: 996px) {
+  .otp-div{
+    width: 100%;
+    height: 100%;
+  }
+  #otp-div-close svg{
+    position: relative;
+    left: 80px;
+  }
+}
+@media (max-width: 567px) {
+  .otp-div{
+    width: 100%;
+    height: 100%;
+  }
+}
