@@ -45,6 +45,15 @@ adminRouter.post("/lockScreen",authenticatedAdmin,adminController.lockScreenPost
 
 adminRouter.get("/logout",authenticatedAdmin,lockedAdmin,adminController.logoutGet)
 
+//admin categories
+
+adminRouter.get("/categories",authenticatedAdmin,lockedAdmin,adminController.categoriesGet)
+adminRouter.post("/addCategory",authenticatedAdmin,lockedAdmin,adminController.addCategoryPost)
+adminRouter.delete("/deleteCategory/:categoryName",authenticatedAdmin,lockedAdmin,adminController.deleteCategoryDelete)
+adminRouter.get("/subCategory/:category",authenticatedAdmin,lockedAdmin,adminController.subCategoryGet)
+adminRouter.post("/addSubCategory",authenticatedAdmin,lockedAdmin,adminController.addSubCategoryPost)
+adminRouter.post("/deleteSubCategory",authenticatedAdmin,lockedAdmin,adminController.deleteSubCategoryPost)
+
 
 
 module.exports=adminRouter

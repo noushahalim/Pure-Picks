@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en"> 
+
+<%- include('layouts/htmlhead.ejs') %>
+
+<body class="app">   	
+    <header class="app-header fixed-top">	   	            
+        <%- include('layouts/topnav.ejs') %>
+		<%- include('layouts/sidepanel.ejs') %>
+    </header><!--//app-header-->
+    
+    <div class="app-wrapper">
+	    
+	    <div class="app-content pt-3 p-md-3 p-lg-4">
+		    <div class="container-xl">
+			    
+			    <h1 class="app-page-title">Category Management</h1>
+                <div class="row gy-4">
+	                <div class="col-12 col-lg-6 categories">
+		                <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
+						    <div class="app-card-header p-3 border-bottom-0">
+						        <div class="row align-items-center gx-3">
+							        <div class="col-auto">
+								        <div class="app-icon-holder">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512" class="bi bi-person" fill="currentColor"><path d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3 0-24 10.7-24 24zM40 368c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"/></svg>
+										    
+									    </div><!--//icon-holder-->
+						                
+							        </div><!--//col-->
+							        <div class="col-auto">
+								        <h4 class="app-card-title">Categories</h4>
+							        </div><!--//col-->
+						        </div><!--//row-->
+						    </div><!--//app-card-header-->
+							<div class="app-card-footer p-4 mt-auto">
+								<a class="btn app-btn-secondary" href="#add-Categories" onclick="openCategoryForm()">Add Categories</a>
+							 </div><!--//app-card-footer-->
+						    <div class="app-card-body px-4 w-100">
+							    <ul id="categoriesList">
+									<% categories.forEach(function(category) { %>
+									  <div class="categories-list" id="<%= category.categoryName %>">
+										<a href="#" id="categoryClicked" data-category="<%= category.categoryName %>"><li><%= category.categoryName %></li></a>
+										<a href="#" onclick="deleteCategory('<%= category.categoryName %>')">
+										  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="1em" height="1em" fill="red">
+											<path d="M170.5 51.6L151.5 80h145l-19-28.4c-1.5-2.2-4-3.6-6.7-3.6H177.1c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80H368h48 8c13.3 0 24 10.7 24 24s-10.7 24-24 24h-8V432c0 44.2-35.8 80-80 80H112c-44.2 0-80-35.8-80-80V128H24c-13.3 0-24-10.7-24-24S10.7 80 24 80h8H80 93.8l36.7-55.1C140.9 9.4 158.4 0 177.1 0h93.7c18.7 0 36.2 9.4 46.6 24.9zM80 128V432c0 17.7 14.3 32 32 32H336c17.7 0 32-14.3 32-32V128H80zm80 64V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16z"/>
+										  </svg>
+										</a>
+									  </div>
+									  <hr>
+									<% }); %>
+								  </ul>
+								  
+								  
+						    </div><!--//app-card-body-->
+						    
+						   
+						</div><!--//app-card-->
+	                </div><!--//col-->
+                    <div class="add-category" style="display: none;">
+                        <button style="background-color: transparent; border: none; " class="close-btn" onclick="closeCategoryForm()">
+                            <svg width="1em" height="1em" fill="red" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+                        </button>
+                        <form id="addCategoryForm" action="/admin/addCategory" method="post">
+							<label for="categoryName" style="display: block; margin-bottom: 5px;">Category Name:</label>
+							<input style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 3px;" type="text" id="categoryName" name="categoryName" required>
+							<button style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 3px; cursor: pointer;" type="submit">Add Category</button>
+						</form>
+                    </div>
+	                <div class="col-12 col-lg-6 sub-categories">
+						<form action="" method="">
+		                <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
+							
+						    <div class="app-card-header p-3 border-bottom-0">
+						        <div class="row align-items-center gx-3">
+							        <div class="col-auto">
+								        <div class="app-icon-holder">
+                                            <svg width="1em" height="1em" class="bi bi-sliders" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M264.5 5.2c14.9-6.9 32.1-6.9 47 0l218.6 101c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 149.8C37.4 145.8 32 137.3 32 128s5.4-17.9 13.9-21.8L264.5 5.2zM476.9 209.6l53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 277.8C37.4 273.8 32 265.3 32 256s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0l152-70.2zm-152 198.2l152-70.2 53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 405.8C37.4 401.8 32 393.3 32 384s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0z"/></svg>
+									    </div><!--//icon-holder-->
+						                
+							        </div><!--//col-->
+							        <div class="col-auto">
+								        <h4 class="app-card-title">Sub Categories</h4>
+							        </div><!--//col-->
+						        </div><!--//row-->
+						    </div><!--//app-card-header-->
+							<div class="app-card-footer p-4 mt-auto">
+								<!-- <a class="btn app-btn-secondary" href="#">Manage Preferences</a> -->
+								<a class="btn app-btn-secondary" href="#add-Sub-Categories" onclick="openSubCategoryForm()">Add Sub Categories</a>
+							 </div><!--//app-card-footer-->
+						    <div class="app-card-body px-4 w-100">
+							    <ul id="subCategoriesList">
+                                    <!-- <div class="categories-list"><li>Hello</li><a href=""><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="1em" height="1em" fill="red"><path d="M170.5 51.6L151.5 80h145l-19-28.4c-1.5-2.2-4-3.6-6.7-3.6H177.1c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80H368h48 8c13.3 0 24 10.7 24 24s-10.7 24-24 24h-8V432c0 44.2-35.8 80-80 80H112c-44.2 0-80-35.8-80-80V128H24c-13.3 0-24-10.7-24-24S10.7 80 24 80h8H80 93.8l36.7-55.1C140.9 9.4 158.4 0 177.1 0h93.7c18.7 0 36.2 9.4 46.6 24.9zM80 128V432c0 17.7 14.3 32 32 32H336c17.7 0 32-14.3 32-32V128H80zm80 64V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0V400c0 8.8-7.2 16-16 16s-16-7.2-16-16V192c0-8.8 7.2-16 16-16s16 7.2 16 16z"/></svg></a></div>
+									<hr> -->
+									
+								
+										
+									
+									
+                                </ul>
+						    </div><!--//app-card-body-->
+						    
+						   
+						</div><!--//app-card-->
+						</form>
+	                </div><!--//col-->
+					<div class="add-sub-category" style="display: none;">
+                        <button style="background-color: transparent; border: none; " class="close-btn" onclick="closeSubCategoryForm()">
+                            <svg width="1em" height="1em" fill="red" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+                        </button>
+                        <form id="addSubCategoryForm" action="" method="post">
+                          <label for="categoryName" style="display: block; margin-bottom: 5px;">Sub Category Name:</label>
+                          <input style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 3px;" type="text" id="subCategoryName" name="subCategoryName" required>
+                          <button style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 3px; cursor: pointer;" type="submit">Add Sub Category</button>
+                        </form>
+                    </div>
+	                
+                </div><!--//row-->
+			    
+		    </div><!--//container-fluid-->
+	    </div><!--//app-content-->
+	    
+	    <footer class="app-footer">
+		    <div class="container text-center py-3">
+		         
+		    </div>
+	    </footer><!--//app-footer-->
+	    
+    </div><!--//app-wrapper-->    					
+	
+
+    <!-- Javascript -->          
+    <script src="/admin/assets/plugins/popper.min.js"></script>
+    <script src="/admin/assets/plugins/bootstrap/js/bootstrap.min.js"></script>  
+    
+    <!-- Page Specific JS -->
+    <script src="/admin/assets/js/app.js"></script> 
+	<script src="/admin/assets/js/category.js"></script>
+
+</body>
+</html> 
+
