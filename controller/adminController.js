@@ -1,5 +1,6 @@
 const adminProfileModel=require('../model/adminProfileModel')
 const categoryModel=require('../model/categoryModal')
+const productModel=require('../model/productModel')
 const bcrypt=require('bcrypt')
 
 //redirect admin to login
@@ -60,11 +61,12 @@ exports.dashboardGet=async (req,res)=>{
         const admin=req.session.admin
         const adminProfile=await adminProfileModel.findOne({adminName:admin})
         // console.log(adminProfile);
+        const page="dashboard"
         if(adminProfile){
-            res.render("dashboard",{adminProfile})
+            res.render("dashboard",{adminProfile,page})
         }
         else{
-            res.render("dashboard",{adminProfile:" "})
+            res.render("dashboard",{adminProfile:" ",page})
         }
     }catch(err){
         console.log("error when get dashboard",err.message);
@@ -78,11 +80,12 @@ exports.profileGet=async (req,res)=>{
         const admin=req.session.admin
         const adminProfile=await adminProfileModel.findOne({adminName:admin})
         // console.log(adminProfile);
+        const page="profile"
         if(adminProfile){
-            res.render("profile",{adminProfile})
+            res.render("profile",{adminProfile,page})
         }
         else{
-            res.render("profile",{adminProfile:" "})
+            res.render("profile",{adminProfile:" ",page})
         }
     }catch(err){
         console.log("error when get profile",err.message);
@@ -205,11 +208,12 @@ exports.categoriesGet=async (req,res)=>{
         const adminProfile=await adminProfileModel.findOne({adminName:admin})
         const categories=await categoryModel.find()
         // console.log(adminProfile);
+        const page="categories"
         if(adminProfile){
-            res.render("categories",{adminProfile,categories})
+            res.render("categories",{adminProfile,categories,page})
         }
         else{
-            res.render("categories",{adminProfile:" ",categories})
+            res.render("categories",{adminProfile:" ",categories,page})
         }
     }catch(err){
         console.log("error when get categories",err.message);
@@ -325,5 +329,128 @@ exports.deleteSubCategoryPost=async (req,res)=>{
     }catch(err){
         console.log("error when delete category",err.message);
         return res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+
+//admin Products
+
+exports.productsGet=async(req,res)=>{
+    try{
+        const admin=req.session.admin
+        const adminProfile=await adminProfileModel.findOne({adminName:admin})
+        const products=await productModel.find()
+        // console.log(adminProfile);
+        const page="products"
+        if(adminProfile){
+            res.render("products",{adminProfile,page,products})
+        }
+        else{
+            res.render("products",{adminProfile:" ",page,products})
+        }
+    }catch(err){
+        console.log("error when get products",err.message);
+    }
+}
+
+//admin add Products
+
+exports.addProductGet=async(req,res)=>{
+    try{
+        const admin=req.session.admin
+        const adminProfile=await adminProfileModel.findOne({adminName:admin})
+        const categories=await categoryModel.find()
+        const page="products"
+        if(adminProfile){
+            res.render("addProduct",{adminProfile,page,categories,product:''})
+        }
+        else{
+            res.render("addProduct",{adminProfile:" ",page,categories,product:''})
+        }
+    }catch(err){
+        console.log("error when get add product",err.message);
+    }
+}
+
+exports.addProductPost=async(req,res)=>{
+    try{
+        const {productName,oldPrice,newPrice,productDescription,stock,color,size,category,subCategory}=req.body
+        const image=req.files.map((file)=> '/images/upload/others/products/'+file.filename)
+        // console.log(image);
+        const data= new productModel({
+            productName:productName,
+            oldPrice:oldPrice,
+            newPrice:newPrice,
+            productDescription:productDescription,
+            stock:stock,
+            color:color,
+            size:size,
+            category:category,
+            subCategory:subCategory,
+            productImagePath:image
+        })
+        await data.save()
+
+        res.redirect("/admin/products")
+    }
+    catch(err){
+        console.log("error when product add",err.message);
+    }
+}
+
+//admin Edit product
+
+exports.editProductGet=async(req,res)=>{
+    try{
+        const admin=req.session.admin
+        const adminProfile=await adminProfileModel.findOne({adminName:admin})
+        const categories=await categoryModel.find()
+        const productid=req.params.id
+        const product=await productModel.findOne({_id:productid})
+        const page="products"
+        if(product){
+            if(adminProfile){
+                res.render("addProduct",{adminProfile,page,categories,product})
+            }
+            else{
+                res.render("addProduct",{adminProfile:" ",page,categories,product})
+            }
+        }else{
+            res.redirect("/admin/products")
+        }
+    }catch(err){
+        console.log("error when get edit product",err.message);
+    }
+}
+
+
+exports.editProductPost=async(req,res)=>{
+    try{
+        const {productName,oldPrice,newPrice,productDescription,stock,color,size,category,subCategory}=req.body
+        const image=req.files.map((file)=> '/images/upload/others/products/'+file.filename)
+        const productid=req.params.id
+        const product=await productModel.findOne({_id:productid})
+        if(product){
+            
+            await productModel.updateOne({_id:productid},
+                {$set:{
+                    productName:productName,
+                    oldPrice:oldPrice,
+                    newPrice:newPrice,
+                    productDescription:productDescription,
+                    stock:stock,
+                    color:color,
+                    size:size,
+                    category:category,
+                    subCategory:subCategory,
+                    productImagePath:image
+                }},
+                {upsert:true})
+            
+        }
+        res.redirect("/admin/products")
+    }
+    catch(err){
+        console.log("error when product edit",err.message);
     }
 }

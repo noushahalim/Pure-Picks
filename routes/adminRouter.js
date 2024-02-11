@@ -50,9 +50,31 @@ adminRouter.get("/logout",authenticatedAdmin,lockedAdmin,adminController.logoutG
 adminRouter.get("/categories",authenticatedAdmin,lockedAdmin,adminController.categoriesGet)
 adminRouter.post("/addCategory",authenticatedAdmin,lockedAdmin,adminController.addCategoryPost)
 adminRouter.delete("/deleteCategory/:categoryName",authenticatedAdmin,lockedAdmin,adminController.deleteCategoryDelete)
+
+//admin sub categories
+
 adminRouter.get("/subCategory/:category",authenticatedAdmin,lockedAdmin,adminController.subCategoryGet)
 adminRouter.post("/addSubCategory",authenticatedAdmin,lockedAdmin,adminController.addSubCategoryPost)
 adminRouter.post("/deleteSubCategory",authenticatedAdmin,lockedAdmin,adminController.deleteSubCategoryPost)
+
+//admin Products
+
+adminRouter.get("/products",authenticatedAdmin,lockedAdmin,adminController.productsGet)
+
+//admin add Products
+
+adminRouter.get("/addProduct",authenticatedAdmin,lockedAdmin,adminController.addProductGet)
+adminRouter.post("/addProduct",authenticatedAdmin,lockedAdmin,upload.array('productImage',3),adminController.addProductPost)
+
+//admin edit Product
+
+adminRouter.get("/editProduct/:id",authenticatedAdmin,lockedAdmin,adminController.editProductGet)
+adminRouter.post("/editProduct/:id",authenticatedAdmin,lockedAdmin,upload.array('productImage',3),adminController.editProductPost)
+
+
+
+
+
 
 
 

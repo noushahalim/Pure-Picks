@@ -11,6 +11,6 @@ const categoryModelSchema=new mongoose.Schema({
     }
 })
 
-const collection=new mongoose.model("categoryModel",categoryModelSchema)
+const collection=new mongoose.model("categoryDatas",categoryModelSchema)
 
 module.exports=collection

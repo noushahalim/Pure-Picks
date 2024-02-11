@@ -20,6 +20,10 @@ const clientSignUpSchema=new mongoose.Schema({
     registerDate:{
         type:String,
         required:true
+    },
+    bannedUser:{
+        type:Number,
+        default:0
     }
 })
 

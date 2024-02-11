@@ -1,0 +1,187 @@
+<%- include('layouts/htmlhead.ejs') %>
+<link rel="stylesheet" href="/admin/css/addProduct.css">
+<body class="app">
+    <header class="app-header fixed-top">
+        <%- include('layouts/topnav.ejs') %>
+		<%- include('layouts/sidepanel.ejs') %>
+    </header>
+    <div class="app-wrapper">
+        <div class="app-content pt-3 p-md-3 p-lg-4">
+		    <div class="container-xl">
+			    
+			    <% if(product){ %>
+                    <h1 class="app-page-title">Edit Product</h1>
+                <div class="row gy-4">
+                    <div class="col-12 col-lg-6 form-1">
+                        
+                        <form action="/admin/editProduct/<%= product._id %>" method="POST" enctype="multipart/form-data">
+                            <label for="productName">Product Name:</label>
+                            <input required type="text" id="productName" name="productName" value="<%= product.productName %>" >
+                            <br>
+                    
+                            <label for="oldPrice">Old Price:</label>
+                            <input required type="number" id="oldPrice" name="oldPrice" value="<%= product.oldPrice %>" >
+                            <br>
+                    
+                            <label for="newPrice">New Price:</label>
+                            <input required type="number" id="newPrice" name="newPrice" value="<%= product.newPrice %>" >
+                            <br>
+                    
+                            <label for="productDescription">Product Description:</label>
+                            <textarea id="productDescription" name="productDescription" rows="4" ><%= product.productDescription %></textarea>
+                            <br>
+                    
+                            <label for="stock">Stock:</label>
+                            <input required type="number" id="stock" name="stock" value="<%= product.stock %>">
+                            <br>
+                    </div>
+                    <div class="col-12 col-lg-6 form-2">
+                    
+                            <label for="color">Color:</label>
+                            <input type="text" id="color" name="color" value="<%= product.color %>" >
+                            <br>
+                    
+                            <label for="size">Size:</label>
+                            <select id="size" name="size" >
+                                <% if(product.size){ %>
+                                    <option value="<%= product.size%>"><%= product.size %></option>
+                                <% }else{ %>
+                                    <option value="">Select Size</option>
+                                <% } %>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="XXL">XXL</option>
+                            </select>
+                            <br>
+                    
+                            <label for="category">Category:</label>
+                            <select required id="category" name="category" >
+                                <option value="<%= product.category %>"><%= product.category %></option>
+                                <% categories.forEach(function(category) { %>
+                                <option value="<%= category.categoryName %>"><%= category.categoryName %></option>
+                                <!-- <% let a =category.categoryName %> -->
+                                <% }); %>
+                                
+                            </select>
+                            
+                            <br>
+                    
+                            <label for="subCategory">Subcategory:</label>
+                            <select required id="subCategory" name="subCategory" >
+                                <option value="<%= product.subCategory %>"><%= product.subCategory %></option>
+                                <% categories.forEach(function(category) { %>
+                                    <% category.subCategory.forEach(function(sub) { %>
+                                    <option value="<%= sub %>"><%= category.categoryName + " - " + sub %></option>
+                                    <% }); %>
+                                <% }); %>
+                            </select>
+                            <br>
+                    
+                            <label for="productImage">Product Image:</label>
+                            <input required type="file" id="productImage" name="productImage" accept="image/*"  multiple>
+                            <br><br><br><br>
+                    
+                            <button id="submit" type="submit">Edit Product</button>
+                        </form>
+                    </div>
+                    
+                </div>
+                <% }else{ %>
+                    <h1 class="app-page-title">Add Product</h1>
+                <div class="row gy-4">
+                    <div class="col-12 col-lg-6 form-1">
+                        
+                        <form action="/admin/addProduct" method="POST" enctype="multipart/form-data">
+                            <label for="productName">Product Name:</label>
+                            <input required type="text" id="productName" name="productName" >
+                            <br>
+                    
+                            <label for="oldPrice">Old Price:</label>
+                            <input required type="number" id="oldPrice" name="oldPrice" >
+                            <br>
+                    
+                            <label for="newPrice">New Price:</label>
+                            <input required type="number" id="newPrice" name="newPrice" >
+                            <br>
+                    
+                            <label for="productDescription">Product Description:</label>
+                            <textarea id="productDescription" name="productDescription" rows="4" ></textarea>
+                            <br>
+                    
+                            <label for="stock">Stock:</label>
+                            <input required type="number" id="stock" name="stock">
+                            <br>
+                    </div>
+                    <div class="col-12 col-lg-6 form-2">
+                    
+                            <label for="color">Color:</label>
+                            <input type="text" id="color" name="color" >
+                            <br>
+                    
+                            <label for="size">Size:</label>
+                            <select id="size" name="size" >
+                                <option value="">Select size</option>
+                                <option value="S">S</option>
+                                <option value="M">M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="XXL">XXL</option>
+                            </select>
+                            <br>
+                    
+                            <label for="category">Category:</label>
+                            <select required id="category" name="category" >
+                                <option value="">Select Category</option>
+                                <% categories.forEach(function(category) { %>
+                                <option value="<%= category.categoryName %>"><%= category.categoryName %></option>
+                                <!-- <% let a =category.categoryName %> -->
+                                <% }); %>
+                                
+                            </select>
+                            
+                            <br>
+                    
+                            <label for="subCategory">Subcategory:</label>
+                            <select required id="subCategory" name="subCategory" >
+                                <option value="">Select Sub Category</option>
+                                <% categories.forEach(function(category) { %>
+                                    <% category.subCategory.forEach(function(sub) { %>
+                                    <option value="<%= sub %>"><%= category.categoryName + " - " + sub %></option>
+                                    <% }); %>
+                                <% }); %>
+                            </select>
+                            <br>
+                    
+                            <label for="productImage">Product Image:</label>
+                            <input required type="file" id="productImage" name="productImage" accept="image/*"  multiple>
+                            <br><br><br><br>
+                    
+                            <button id="submit" type="submit">Add Product</button>
+                        </form>
+                    </div>
+                    
+                </div>
+                <% } %>
+            </div><!--//row-->
+            
+        </div><!--//container-fluid-->
+    </div><!--//app-content-->
+    </div>
+    
+
+
+
+
+    
+    <!-- Javascript -->          
+    <script src="/admin/assets/plugins/popper.min.js"></script>
+    <script src="/admin/assets/plugins/bootstrap/js/bootstrap.min.js"></script>  
+    
+    <!-- Page Specific JS -->
+    <script src="/admin/assets/js/app.js"></script> 
+
+    <script src="/admin/js/addProduct.js"></script>
+
+</body>
