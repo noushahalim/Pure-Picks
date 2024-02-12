@@ -1,6 +1,7 @@
 const adminProfileModel=require('../model/adminProfileModel')
 const categoryModel=require('../model/categoryModal')
 const productModel=require('../model/productModel')
+const clientModel=require('../model/clientSignUpModel')
 const bcrypt=require('bcrypt')
 
 //redirect admin to login
@@ -452,5 +453,96 @@ exports.editProductPost=async(req,res)=>{
     }
     catch(err){
         console.log("error when product edit",err.message);
+    }
+}
+
+//admin Product ban
+
+exports.banProductPost= async(req,res)=>{
+    try{
+        const productId=req.params.id
+        const product=await productModel.findOne({_id:productId})
+        if(product){
+            if(product.bannedProduct==0){
+                await productModel.updateOne({_id:productId},
+                    {$set:{
+                        bannedProduct:1
+                    }},
+                    {upsert:true})
+                    res.status(200).json({message:"banned"})
+            }
+            else if(product.bannedProduct==1){
+                await productModel.updateOne({_id:productId},
+                    {$set:{
+                        bannedProduct:0
+                    }},
+                    {upsert:true})
+                    res.status(200).json({message:"unBanned"})
+            }
+            else{
+                res.status(404).json({message:"Can't find ban details in ProductDetails"})
+            }
+        }
+        else{
+            res.status(404).json({message:"Can't find ProductDetails"})
+        }
+    }catch(err){
+        console.log("error when ban product",err.message);
+    }
+}
+
+
+//admin user management
+
+exports.userGet=async(req,res)=>{
+    try{
+        const admin=req.session.admin
+        const adminProfile=await adminProfileModel.findOne({adminName:admin})
+        const users=await clientModel.find()
+        const page="users"
+        if(adminProfile){
+            res.render("users",{adminProfile,page,users})
+        }
+        else{
+            res.render("users",{adminProfile:" ",page,users})
+        }
+    }catch(err){
+        console.log("error when get user managment",err.message);
+    }
+}
+
+
+//admin User ban
+
+exports.banUserPost= async(req,res)=>{
+    try{
+        const userId=req.params.id
+        const user=await clientModel.findOne({_id:userId})
+        if(user){
+            if(user.bannedUser==0){
+                await clientModel.updateOne({_id:userId},
+                    {$set:{
+                        bannedUser:1
+                    }},
+                    {upsert:true})
+                    res.status(200).json({message:"banned"})
+            }
+            else if(user.bannedUser==1){
+                await clientModel.updateOne({_id:userId},
+                    {$set:{
+                        bannedUser:0
+                    }},
+                    {upsert:true})
+                    res.status(200).json({message:"unBanned"})
+            }
+            else{
+                res.status(404).json({message:"Can't find ban details in UserDetails"})
+            }
+        }
+        else{
+            res.status(404).json({message:"Can't find UserDetails"})
+        }
+    }catch(err){
+        console.log("error when ban user",err.message);
     }
 }

@@ -71,7 +71,17 @@ adminRouter.post("/addProduct",authenticatedAdmin,lockedAdmin,upload.array('prod
 adminRouter.get("/editProduct/:id",authenticatedAdmin,lockedAdmin,adminController.editProductGet)
 adminRouter.post("/editProduct/:id",authenticatedAdmin,lockedAdmin,upload.array('productImage',3),adminController.editProductPost)
 
+//admin product ban
 
+adminRouter.post("/banProduct/:id",authenticatedAdmin,lockedAdmin,adminController.banProductPost)
+
+//admin user Management
+
+adminRouter.get("/users",authenticatedAdmin,lockedAdmin,adminController.userGet)
+
+//admin user ban
+
+adminRouter.post("/banUser/:id",authenticatedAdmin,lockedAdmin,adminController.banUserPost)
 
 
 
