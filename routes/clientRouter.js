@@ -1,6 +1,8 @@
 const express=require('express')
 const clientRouter=express()
 const clientController=require('../controller/clientController')
+const authController=require("../controller/authController")
+
 
 clientRouter.use(express.json())
 clientRouter.use(express.urlencoded({ extended: true }));
@@ -12,18 +14,18 @@ clientRouter.get("/",clientController.clientGet)
 
 //client login
 
-clientRouter.get("/login",clientController.loginGet)
-clientRouter.post("/login",clientController.loginPost)
+clientRouter.get("/login",authController.loginGet)
+clientRouter.post("/login",authController.loginPost)
 
 //client SignUp
 
-clientRouter.get("/signUp",clientController.signUpGet)
-clientRouter.post("/signUp",clientController.signUpPost)
+clientRouter.get("/signUp",authController.signUpGet)
+clientRouter.post("/signUp",authController.signUpPost)
 
 //client otp
 
-clientRouter.get("/otp/:mobileNumber",clientController.otpGet)
-clientRouter.post("/otp/:otp",clientController.otpPost)
+clientRouter.get("/otp/:mobileNumber",authController.otpGet)
+clientRouter.post("/otp/:otp",authController.otpPost)
 
 
 module.exports=clientRouter

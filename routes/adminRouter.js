@@ -3,6 +3,12 @@ const multer=require('multer')
 const storage = require('../middleware/multer')
 const adminRouter=express()
 const adminController=require("../controller/adminController")
+const adminProfileController=require("../controller/adminProfileController")
+const authController=require("../controller/authController")
+const categoriesController=require("../controller/categoriesController")
+const productsController=require("../controller/productsController")
+
+
 const upload = multer({ storage: storage })
 const authenticatedAdmin=require('../middleware/adminAuthentication')
 const lockedAdmin=require('../middleware/adminLockscreenAuthentication')
@@ -16,12 +22,12 @@ adminRouter.set('views','./views/admin')
 
 // redirect admin to login
 
-adminRouter.get("/",adminController.adminGet)
+adminRouter.get("/",authController.adminGet)
 
 //admin login
 
-adminRouter.get("/login",adminController.loginGet)
-adminRouter.post("/login",adminController.loginPost)
+adminRouter.get("/login",authController.adminLoginGet)
+adminRouter.post("/login",authController.adminLoginPost)
 
 //admin Dashboard
 
@@ -29,51 +35,51 @@ adminRouter.get("/dashboard",authenticatedAdmin,lockedAdmin ,adminController.das
 
 //admin Profile
 
-adminRouter.get("/profile",authenticatedAdmin,lockedAdmin ,adminController.profileGet)
-adminRouter.post("/editProfile",upload.single('adminProfileImage'),authenticatedAdmin,lockedAdmin,adminController.editProfilePost)
+adminRouter.get("/profile",authenticatedAdmin,lockedAdmin ,adminProfileController.profileGet)
+adminRouter.post("/editProfile",upload.single('adminProfileImage'),authenticatedAdmin,lockedAdmin,adminProfileController.editProfilePost)
 
 //admin Security
 
-adminRouter.post("/editSecurity",authenticatedAdmin,lockedAdmin,adminController.editSecurityPost)
+adminRouter.post("/editSecurity",authenticatedAdmin,lockedAdmin,adminProfileController.editSecurityPost)
 
 //admin LockScreen
 
-adminRouter.get("/lockScreen",authenticatedAdmin ,adminController.lockScreenGet)
-adminRouter.post("/lockScreen",authenticatedAdmin,adminController.lockScreenPost)
+adminRouter.get("/lockScreen",authenticatedAdmin ,authController.adminLockScreenGet)
+adminRouter.post("/lockScreen",authenticatedAdmin,authController.adminLockScreenPost)
 
 //admin logout
 
-adminRouter.get("/logout",authenticatedAdmin,lockedAdmin,adminController.logoutGet)
+adminRouter.get("/logout",authenticatedAdmin,lockedAdmin,authController.adminLogoutGet)
 
 //admin categories
 
-adminRouter.get("/categories",authenticatedAdmin,lockedAdmin,adminController.categoriesGet)
-adminRouter.post("/addCategory",authenticatedAdmin,lockedAdmin,adminController.addCategoryPost)
-adminRouter.delete("/deleteCategory/:categoryName",authenticatedAdmin,lockedAdmin,adminController.deleteCategoryDelete)
+adminRouter.get("/categories",authenticatedAdmin,lockedAdmin,categoriesController.categoriesGet)
+adminRouter.post("/addCategory",authenticatedAdmin,lockedAdmin,categoriesController.addCategoryPost)
+adminRouter.delete("/deleteCategory/:categoryName",authenticatedAdmin,lockedAdmin,categoriesController.deleteCategoryDelete)
 
 //admin sub categories
 
-adminRouter.get("/subCategory/:category",authenticatedAdmin,lockedAdmin,adminController.subCategoryGet)
-adminRouter.post("/addSubCategory",authenticatedAdmin,lockedAdmin,adminController.addSubCategoryPost)
-adminRouter.post("/deleteSubCategory",authenticatedAdmin,lockedAdmin,adminController.deleteSubCategoryPost)
+adminRouter.get("/subCategory/:category",authenticatedAdmin,lockedAdmin,categoriesController.subCategoryGet)
+adminRouter.post("/addSubCategory",authenticatedAdmin,lockedAdmin,categoriesController.addSubCategoryPost)
+adminRouter.post("/deleteSubCategory",authenticatedAdmin,lockedAdmin,categoriesController.deleteSubCategoryPost)
 
 //admin Products
 
-adminRouter.get("/products",authenticatedAdmin,lockedAdmin,adminController.productsGet)
+adminRouter.get("/products",authenticatedAdmin,lockedAdmin,productsController.productsGet)
 
 //admin add Products
 
-adminRouter.get("/addProduct",authenticatedAdmin,lockedAdmin,adminController.addProductGet)
-adminRouter.post("/addProduct",authenticatedAdmin,lockedAdmin,upload.array('productImage',3),adminController.addProductPost)
+adminRouter.get("/addProduct",authenticatedAdmin,lockedAdmin,productsController.addProductGet)
+adminRouter.post("/addProduct",authenticatedAdmin,lockedAdmin,upload.array('productImage',3),productsController.addProductPost)
 
 //admin edit Product
 
-adminRouter.get("/editProduct/:id",authenticatedAdmin,lockedAdmin,adminController.editProductGet)
-adminRouter.post("/editProduct/:id",authenticatedAdmin,lockedAdmin,upload.array('productImage',3),adminController.editProductPost)
+adminRouter.get("/editProduct/:id",authenticatedAdmin,lockedAdmin,productsController.editProductGet)
+adminRouter.post("/editProduct/:id",authenticatedAdmin,lockedAdmin,upload.array('productImage',3),productsController.editProductPost)
 
 //admin product ban
 
-adminRouter.post("/banProduct/:id",authenticatedAdmin,lockedAdmin,adminController.banProductPost)
+adminRouter.post("/banProduct/:id",authenticatedAdmin,lockedAdmin,productsController.banProductPost)
 
 //admin user Management
 
