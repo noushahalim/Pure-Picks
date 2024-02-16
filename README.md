@@ -5,7 +5,7 @@ Pure-Picks is a feature-rich e-commerce platform built with Node.js, Express, an
 ## Features
 
 - **User Module:**
-  - User authentication with JWT
+  - User authentication with SESSION
   - Dynamic product browsing
   - Secure shopping cart and wishlist
   - Intuitive checkout process

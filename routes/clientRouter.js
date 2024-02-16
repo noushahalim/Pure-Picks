@@ -9,6 +9,7 @@ clientRouter.use(express.urlencoded({ extended: true }));
 clientRouter.set('view engine','ejs')
 clientRouter.set('views','./views/client')
 
+//client home
 
 clientRouter.get("/",clientController.clientGet)
 

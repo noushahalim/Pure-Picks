@@ -1,0 +1,158 @@
+<%- include('layouts/htmlhead.ejs') %>
+<link rel="stylesheet" href="/admin/css/addBanner.css">
+<body class="app">
+    <header class="app-header fixed-top">
+        <%- include('layouts/topnav.ejs') %>
+		<%- include('layouts/sidepanel.ejs') %>
+    </header>
+    <div class="app-wrapper">
+        <div class="app-content pt-3 p-md-3 p-lg-4">
+		    <div class="container-xl">
+			    
+			    <% if(banner){ %>
+                    <h1 class="app-page-title">Edit Banner</h1>
+                    <div class="row gy-4">
+                    <div class="col-12 col-lg-6 form-1">
+                        
+                        <form action="/admin/editBanner/<%= banner._id %>" method="POST" enctype="multipart/form-data">
+                            <label for="title1">Title 1:</label>
+                            <input required type="text" id="title1" name="title1" value="<%= banner.title1 %>" >
+                            <br>
+                    
+                            <label for="title2">Title 2:</label>
+                            <input required type="text" id="title2" name="title2" value="<%= banner.title2 %>" >
+                            <br>
+                    
+                            <label for="title3">Title 3:</label>
+                            <input required type="text" id="title3" name="title3" value="<%= banner.title3 %>" >
+                            <br>
+                    
+                            <label for="title4">Title 4:</label>
+                            <input required type="text" id="title4" name="title4" value="<%= banner.title4 %>" >
+                            <br>
+
+                            <label for="titleColor">Title Color:</label>
+                            <select required id="titleColor" name="titleColor">
+                                <option value="<%= banner.titleColor %>"><%= banner.titleColor %></option>
+                                <option value="red">RED</option>
+                                <option value="white">WHITE</option>
+                                <option value="black">BLACK</option>
+                                <option value="green">GREEN</option>
+                                <option value="blue">BLUE</option>
+                            </select>
+                            <br>
+                    
+                        </div>
+                        <div class="col-12 col-lg-6 form-2">
+                            <label for="price">Price :</label>
+                        <input required type="number" id="price" name="price" value="<%= banner.price %>"  >
+                        <br>
+    
+                        <label for="priceColor">Price Color:</label>
+                        <select required id="priceColor" name="priceColor" >
+                            <option value="<%= banner.priceColor %> "><%= banner.priceColor %></option>
+                            <option value="red">RED</option>
+                            <option value="white">WHITE</option>
+                            <option value="black">BLACK</option>
+                            <option value="green">GREEN</option>
+                            <option value="blue">BLUE</option>
+                        </select>
+                        <br>
+    
+                        <label for="targetUrl">Target Url:</label>
+                        <input required type="text" id="targetUrl" name="targetUrl" value="<%= banner.targetUrl %>" >
+                        <br>
+    
+                        <label for="bannerImage">Banner Background:</label>
+                        <input type="file" id="bannerImage" name="bannerImage" accept="image/*">
+                        <br><br>
+                        
+                        <button id="submit" type="submit">Edit Banner</button>
+                    </div>  
+                        </form>
+                    </div>
+                    
+                </div>
+                <% }else{ %>
+                    <h1 class="app-page-title">Add Banner</h1>
+                <div class="row gy-4">
+                    <div class="col-12 col-lg-6 form-1">
+                        
+                        <form action="/admin/addBanner" method="POST" enctype="multipart/form-data">
+                            <label for="title1">Title 1:</label>
+                            <input required type="text" id="title1" name="title1" >
+                            <br>
+                    
+                            <label for="title2">Title 2:</label>
+                            <input required type="text" id="title2" name="title2">
+                            <br>
+                    
+                            <label for="title3">Title 3:</label>
+                            <input required type="text" id="title3" name="title3">
+                            <br>
+                    
+                            <label for="title4">Title 4:</label>
+                            <input required type="text" id="title4" name="title4">
+                            <br>
+
+                            <label for="titleColor">Title Color:</label>
+                            <select required id="titleColor" name="titleColor" >
+                                <option value="">Select Color</option>
+                                <option value="red">RED</option>
+                                <option value="white">WHITE</option>
+                                <option value="black">BLACK</option>
+                                <option value="green">GREEN</option>
+                                <option value="blue">BLUE</option>
+                            </select>
+                            <br>
+                    
+                        </div>
+                        <div class="col-12 col-lg-6 form-2">
+                            <label for="price">Price :</label>
+                        <input required type="number" id="price" name="price">
+                        <br>
+    
+                        <label for="priceColor">Price Color:</label>
+                        <select required id="priceColor" name="priceColor" >
+                            <option value="">Select Color</option>
+                            <option value="red">RED</option>
+                            <option value="white">WHITE</option>
+                            <option value="black">BLACK</option>
+                            <option value="green">GREEN</option>
+                            <option value="blue">BLUE</option>
+                        </select>
+                        <br>
+    
+                        <label for="targetUrl">Target Url:</label>
+                        <input required type="text" id="targetUrl" name="targetUrl">
+                        <br>
+    
+                        <label for="bannerImage">Banner Background:</label>
+                        <input required type="file" id="bannerImage" name="bannerImage" accept="image/*">
+                        <br><br>
+                        
+                        <button id="submit" type="submit">Add Banner</button>
+                    </div>  
+                </form>
+                </div>
+                <% } %>
+            </div><!--//row-->
+            
+        </div><!--//container-fluid-->
+    </div><!--//app-content-->
+    </div>
+    
+
+
+
+
+    
+    <!-- Javascript -->          
+    <script src="/admin/assets/plugins/popper.min.js"></script>
+    <script src="/admin/assets/plugins/bootstrap/js/bootstrap.min.js"></script>  
+    
+    <!-- Page Specific JS -->
+    <script src="/admin/assets/js/app.js"></script> 
+
+
+</body>

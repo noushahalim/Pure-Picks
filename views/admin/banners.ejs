@@ -1,0 +1,94 @@
+<%- include('layouts/htmlhead.ejs') %>
+<link rel="stylesheet" href="/admin/css/banners.css" />
+<body class="app">
+  <header class="app-header fixed-top">
+    <%- include('layouts/topnav.ejs') %> <%- include('layouts/sidepanel.ejs') %>
+  </header>
+  <div class="app-wrapper">
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+      <div class="container-xl">
+        <h1 class="app-page-title">Banner Management</h1>
+        <button
+          class="addBannerButton"
+          onclick="window.location.href='/admin/addBanner'"
+        >
+          Add Banner
+        </button>
+        <div class="row gy-4">
+          <% banners.forEach(function(banner) { %>
+          <div
+            id="<%= banner._id %>"
+            class="banner"
+            style="
+              background-image: url(<%=banner.bannerImagePath%>);
+              color: <%= banner.titleColor %>;
+            "
+          >
+            <span id="edit"
+              ><i
+                class="fa-regular fa-pen-to-square"
+                onclick="window.location.href='/admin/editBanner/<%=banner._id%>'"
+                style="color: #06b300; font-size: 2em"
+              ></i
+            ></span>
+            <span id="delete"
+              ><i
+                class="fa-regular fa-trash-can"
+                onclick="deleteBanner('<%= banner._id %>')"
+                style="color: #db0016; font-size: 2em"
+              ></i
+            ></span>
+            <span class="span1"><%=banner.title1%></span>
+            <span class="span2"><%=banner.title2%></span>
+            <span class="span3"><%=banner.title3%></span>
+            <span class="span4"
+              ><%=banner.title4%>
+              <span class="span5" style="color: <%=banner.priceColor%>"
+                >$<%=banner.price%></span
+              ></span
+            >
+            <span
+              class="span6"
+              style="background-color: <%=banner.priceColor%>"
+              onclick="window.location.href='<%=banner.targetUrl%>'"
+              >SHOP NOW</span
+            >
+          </div>
+          <% }); %>
+        </div>
+      </div>
+      <!--//row-->
+    </div>
+    <!--//container-fluid-->
+  </div>
+  <!--//app-content-->
+  <!-- Javascript -->
+
+  <script>
+    function deleteBanner(bannerId) {
+        console.log("Deleting banner with ID:", bannerId);
+        const BannerElement = document.getElementById(bannerId);
+          console.log("Banner element:", BannerElement);
+      axios
+        .delete(`/admin/deleteBanner/${bannerId}`)
+        .then((response) => {
+          console.log("Banner deleted successfully");
+          const BannerElement = document.getElementById(bannerId);
+          console.log("Banner element:", BannerElement);
+          BannerElement.remove()
+        })
+        .catch((error) => {
+          if (error.response?.status == 404) {
+            alert(error.response.data.message);
+          } else {
+            console.error("Error deleting banner:", error);
+          }
+        });
+    }
+  </script>
+
+  <script src="/admin/assets/plugins/popper.min.js"></script>
+  <script src="/admin/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+  <!-- Page Specific JS -->
+  <script src="/admin/assets/js/app.js"></script>
+</body>
