@@ -2,11 +2,15 @@ const mongoose=require('mongoose')
 
 const categoryModelSchema=new mongoose.Schema({
     categoryName:{
-        type:String,
+        type:String
         // required:true
     },
     subCategory:{
         type:Array
+        // required:true
+    },
+    categoryImagePath:{
+        type:String
         // required:true
     }
 })

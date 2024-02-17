@@ -17,18 +17,22 @@ function closeCategoryForm() {
 
   const addCategoryForm = document.getElementById('addCategoryForm');
   const inputCategory = document.getElementById('categoryName');
+  const inputCategoryImage=document.getElementById('categoryImage')
   const categoriesList = document.getElementById('categoriesList');
 
   addCategoryForm.addEventListener('submit', function(event) {
     event.preventDefault();
-    addCategory(inputCategory.value);
+    const formData = new FormData();
+    formData.append('categoryName', inputCategory.value);
+    formData.append('categoryImage', inputCategoryImage.files[0]);
+    addCategory(formData);
   });
 
-  function addCategory(categoryName) {
-    axios.post("/admin/addCategory", { categoryName: categoryName })
+  function addCategory(formData) {
+    axios.post("/admin/addCategory", formData)
       .then((response) => {
         console.log('Category added successfully');
-        appendCategoryToList(categoryName);
+        appendCategoryToList(inputCategory.value);
         inputCategory.value = '';
       })
       .catch((error) => {

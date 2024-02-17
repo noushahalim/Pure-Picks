@@ -45,7 +45,7 @@ exports.addProductGet=async(req,res)=>{
 
 exports.addProductPost=async(req,res)=>{
     try{
-        const {productName,oldPrice,newPrice,productDescription,stock,color,size,category,subCategory}=req.body
+        const {productName,oldPrice,newPrice,productDescription,stock,brand,color,size,category,subCategory,rating}=req.body
         const image=req.files.map((file)=> '/images/upload/others/products/'+file.filename)
         // console.log(image);
         const data= new productModel({
@@ -54,10 +54,12 @@ exports.addProductPost=async(req,res)=>{
             newPrice:newPrice,
             productDescription:productDescription,
             stock:stock,
+            brand:brand,
             color:color,
             size:size,
             category:category,
             subCategory:subCategory,
+            rating:rating,
             productImagePath:image
         })
         await data.save()
@@ -95,36 +97,44 @@ exports.editProductGet=async(req,res)=>{
 }
 
 
-exports.editProductPost=async(req,res)=>{
-    try{
-        const {productName,oldPrice,newPrice,productDescription,stock,color,size,category,subCategory}=req.body
-        const image=req.files.map((file)=> '/images/upload/others/products/'+file.filename)
-        const productid=req.params.id
-        const product=await productModel.findOne({_id:productid})
-        if(product){
-            
-            await productModel.updateOne({_id:productid},
-                {$set:{
-                    productName:productName,
-                    oldPrice:oldPrice,
-                    newPrice:newPrice,
-                    productDescription:productDescription,
-                    stock:stock,
-                    color:color,
-                    size:size,
-                    category:category,
-                    subCategory:subCategory,
-                    productImagePath:image
-                }},
-                {upsert:true})
-            
+exports.editProductPost = async (req, res) => {
+    try {
+        const { productName, oldPrice, newPrice, productDescription, stock, brand, color, size, category, subCategory, rating } = req.body;
+        const productId = req.params.id;
+        const product = await productModel.findOne({ _id: productId });
+
+        if (product) {
+            const updatedProduct = {
+                productName,
+                oldPrice,
+                newPrice,
+                productDescription,
+                stock,
+                brand,
+                color,
+                size,
+                category,
+                subCategory,
+                rating,
+            };
+
+            if (req.files && req.files.length > 0) {
+                updatedProduct.productImagePath = [];
+                
+                const newImages = req.files.map(file => '/images/upload/others/products/' + file.filename);
+                updatedProduct.productImagePath = newImages;
+            }
+
+            await productModel.updateOne({ _id: productId }, { $set: updatedProduct }, { upsert: true });
         }
-        res.redirect("/admin/products")
+
+        res.redirect("/admin/products");
+    } catch (err) {
+        console.error("Error when editing product:", err.message);
+        res.status(500).send("Internal Server Error");
     }
-    catch(err){
-        console.log("error when product edit",err.message);
-    }
-}
+};
+
 
 //admin Product ban
 

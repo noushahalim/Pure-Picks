@@ -21,6 +21,9 @@ const productModelSchema=new mongoose.Schema({
         type:Number,
         required:true
     },
+    brand:{
+        type:String,
+    },
     color:{
         type:String,
         // required:true
@@ -35,6 +38,10 @@ const productModelSchema=new mongoose.Schema({
     },
     subCategory:{
         type:String,
+        required:true
+    },
+    rating:{
+        type:Number,
         required:true
     },
     productImagePath:{

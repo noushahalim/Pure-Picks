@@ -11,7 +11,7 @@ clientRouter.set('views','./views/client')
 
 //client home
 
-clientRouter.get("/",clientController.clientGet)
+clientRouter.get("/",clientController.homeGet)
 
 //client login
 

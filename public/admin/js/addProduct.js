@@ -2,14 +2,13 @@ const imageInput=document.getElementById("productImage")
 const submit=document.getElementById("submit")
 
 submit.addEventListener(("click"),(event)=>{
-    if(imageInput.files.length>3 || imageInput.files.length<3){
+    if(imageInput.files.length !== 5){
         event.preventDefault()
-        alert(`you are selected ${imageInput.files.length} images, please select 3 images`)
-    }
-    else{
-        event.target()
+        alert(`you are selected ${imageInput.files.length} images, please select 5 images`)
     }
 })
+
+
 
 
 // const categorySelect = document.getElementById('category');

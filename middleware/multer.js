@@ -14,6 +14,9 @@ const storage = multer.diskStorage({
       else if(file.fieldname=="bannerImage"){
         cb(null, './public/images/upload/others/banners')
       }
+      else if(file.fieldname=="categoryImage"){
+        cb(null, './public/images/upload/others/categories')
+      }
       else{
         cb(null, './public/images/upload/others')
       }

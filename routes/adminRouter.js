@@ -55,7 +55,7 @@ adminRouter.get("/logout",authenticatedAdmin,lockedAdmin,authController.adminLog
 //admin categories
 
 adminRouter.get("/categories",authenticatedAdmin,lockedAdmin,categoriesController.categoriesGet)
-adminRouter.post("/addCategory",authenticatedAdmin,lockedAdmin,categoriesController.addCategoryPost)
+adminRouter.post("/addCategory",authenticatedAdmin,lockedAdmin,upload.single('categoryImage'),categoriesController.addCategoryPost)
 adminRouter.delete("/deleteCategory/:categoryName",authenticatedAdmin,lockedAdmin,categoriesController.deleteCategoryDelete)
 
 //admin sub categories
@@ -71,12 +71,12 @@ adminRouter.get("/products",authenticatedAdmin,lockedAdmin,productsController.pr
 //admin add Products
 
 adminRouter.get("/addProduct",authenticatedAdmin,lockedAdmin,productsController.addProductGet)
-adminRouter.post("/addProduct",authenticatedAdmin,lockedAdmin,upload.array('productImage',3),productsController.addProductPost)
+adminRouter.post("/addProduct",authenticatedAdmin,lockedAdmin,upload.array('productImage',5),productsController.addProductPost)
 
 //admin edit Product
 
 adminRouter.get("/editProduct/:id",authenticatedAdmin,lockedAdmin,productsController.editProductGet)
-adminRouter.post("/editProduct/:id",authenticatedAdmin,lockedAdmin,upload.array('productImage',3),productsController.editProductPost)
+adminRouter.post("/editProduct/:id",authenticatedAdmin,lockedAdmin,upload.array('productImage',5),productsController.editProductPost)
 
 //admin product ban
 

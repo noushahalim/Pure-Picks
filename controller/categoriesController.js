@@ -25,6 +25,8 @@ exports.categoriesGet=async (req,res)=>{
 exports.addCategoryPost=async (req,res)=>{
     try{
         const category=req.body.categoryName
+        const image=req.file
+        const path='/images/upload/others/categories/'+image.filename
         const data=await categoryModel.findOne({categoryName:category})
         if(data){
             res.status(403).json({message:"Already added"})
@@ -32,7 +34,8 @@ exports.addCategoryPost=async (req,res)=>{
         else{
             const newCategory=new categoryModel({
                 categoryName:category,
-                subCategory:[]
+                subCategory:[],
+                categoryImagePath:path
             })
             await newCategory.save()
             res.status(200).json({message:"category added successfully"})
