@@ -14,11 +14,21 @@ exports.homeGet=async (req,res)=>{
         const products=await productModel.find()
 
         if(category){
-            if(banner){
-                res.render("home",{banner,category,recentProducts,recentOurProducts,products})
+            if(req.session.userName){
+                if(banner){
+                    res.render("home",{banner,category,recentProducts,recentOurProducts,products,user:true})
+                }
+                else{
+                    res.render("home",{banner:'',category,recentProducts,recentOurProducts,products,user:true})
+                }
             }
             else{
-                res.render("home",{banner:'',category,recentProducts,recentOurProducts,products})
+                if(banner){
+                    res.render("home",{banner,category,recentProducts,recentOurProducts,products,user:''})
+                }
+                else{
+                    res.render("home",{banner:'',category,recentProducts,recentOurProducts,products,user:''})
+                }
             }
         }
         else{
@@ -44,7 +54,11 @@ exports.productGet=async (req,res)=>{
         const product=await productModel.findOne({_id:productId})
         const avProducts=await productModel.find({category:product.category,subCategory:product.subCategory}).limit(6)
         if(product){
-            res.render("product",{products,product,avProducts})
+            if(req.session.userName){
+                res.render("product",{products,product,avProducts,user:true})
+            }else{
+                res.render("product",{products,product,avProducts,user:''})
+            }
         }
         else{
             res.redirect("/")

@@ -123,7 +123,11 @@ const client = require('twilio')(Account_SID, Auth_Token);
 //client login
 
 exports.loginGet=(req,res)=>{
-    res.render("login")
+    if(req.session.userName){
+        res.redirect("/")
+    }else{
+        res.render("login")
+    }
 }
 
 exports.loginPost=async (req,res)=>{
@@ -135,6 +139,7 @@ exports.loginPost=async (req,res)=>{
             const pass=await bcrypt.compare(password,clientData.password)
             if(pass){
                 if(clientData.bannedUser==0){
+                    req.session.userName=userName
                     res.status(200).json({message:"login successfuly"})
                 }
                 else{
@@ -159,7 +164,11 @@ exports.loginPost=async (req,res)=>{
 //client SignUp
 
 exports.signUpGet=(req,res)=>{
-    res.render("signUp")
+    if(req.session.userName){
+        res.redirect("/")
+    }else{
+        res.render("signUp")
+    }
 }
 
 

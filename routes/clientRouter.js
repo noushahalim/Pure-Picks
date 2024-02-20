@@ -2,7 +2,10 @@ const express=require('express')
 const clientRouter=express()
 const clientController=require('../controller/clientController')
 const authController=require("../controller/authController")
-const authenticatedAdmin = require('../middleware/adminAuthentication')
+const wishlistController=require("../controller/wishlistController")
+const cartController=require("../controller/cartController")
+
+const authenticatedClient=require('../middleware/clientAuthentication')
 
 
 clientRouter.use(express.json())
@@ -32,6 +35,14 @@ clientRouter.post("/otp/:otp",authController.otpPost)
 //client Product Details
 
 clientRouter.get("/:productName/:id",clientController.productGet)
+
+//client wishlist
+
+clientRouter.get("/wishlist",authenticatedClient,wishlistController.wishlistGet)
+
+//client cart
+
+clientRouter.get("/cart",authenticatedClient,cartController.cartGet)
 
 
 module.exports=clientRouter
