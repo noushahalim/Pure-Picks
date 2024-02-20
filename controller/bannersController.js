@@ -1,6 +1,7 @@
 const adminProfileModel=require('../model/adminProfileModel')
 const bannerModel=require('../model/bannerModel')
 
+//admin banners
 
 exports.bannersGet=async(req,res)=>{
     try{
@@ -18,6 +19,8 @@ exports.bannersGet=async(req,res)=>{
         console.log("error when get banner managment",err.message);
     }
 }
+
+//admin add Banner
 
 exports.addBannerGet=async(req,res)=>{
     try{
@@ -60,6 +63,7 @@ exports.addBannerPost=async(req,res)=>{
     }
 }
 
+//admin edit banner
 
 exports.editBannerGet=async(req,res)=>{
     try{
@@ -123,6 +127,7 @@ exports.editBannerPost=async(req,res)=>{
     }
 }
 
+//admin delete banner
 
 exports.deleteBannerDelete=async (req,res)=>{
     try{

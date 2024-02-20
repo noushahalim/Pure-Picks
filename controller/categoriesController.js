@@ -22,6 +22,9 @@ exports.categoriesGet=async (req,res)=>{
     }
 }
 
+//admin add categories
+
+
 exports.addCategoryPost=async (req,res)=>{
     try{
         const category=req.body.categoryName
@@ -45,6 +48,9 @@ exports.addCategoryPost=async (req,res)=>{
         console.log("error when add category",err.message);
     }
 }
+
+//admin delete categories
+
 
 exports.deleteCategoryDelete=async (req,res)=>{
     try{
@@ -81,6 +87,8 @@ exports.subCategoryGet=async(req,res)=>{
     }
 }
 
+//admin add sub categories
+
 exports.addSubCategoryPost=async (req,res)=>{
     try{
         const {category,subCategory}=req.body
@@ -110,6 +118,9 @@ exports.addSubCategoryPost=async (req,res)=>{
     }
 }
 
+//admin delete sub categories
+
+
 exports.deleteSubCategoryPost=async (req,res)=>{
     try{
         const {category,subCategory} =req.body
@@ -121,7 +132,7 @@ exports.deleteSubCategoryPost=async (req,res)=>{
                 { new: true }
             )
             if(updatedCategory){
-                // console.log(updatedCategory);
+                
                 return res.status(200).json({message:"Category deleted successfully"})
             }
             else{

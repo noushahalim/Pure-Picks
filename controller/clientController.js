@@ -3,6 +3,7 @@ const bannerModel=require('../model/bannerModel')
 const categoryModel=require('../model/categoryModal')
 const productModel=require('../model/productModel')
 
+//client home
 
 exports.homeGet=async (req,res)=>{
     try{
@@ -34,3 +35,22 @@ exports.homeGet=async (req,res)=>{
     }
 }
 
+//client Product Details
+
+exports.productGet=async (req,res)=>{
+    try{
+        const productId=req.params.id
+        const products=await productModel.find()
+        const product=await productModel.findOne({_id:productId})
+        const avProducts=await productModel.find({category:product.category,subCategory:product.subCategory}).limit(6)
+        if(product){
+            res.render("product",{products,product,avProducts})
+        }
+        else{
+            res.redirect("/")
+        }
+
+    }catch(err){
+        console.log("error when get product page",err.message);
+    }
+}

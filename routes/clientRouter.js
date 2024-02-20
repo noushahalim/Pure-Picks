@@ -2,6 +2,7 @@ const express=require('express')
 const clientRouter=express()
 const clientController=require('../controller/clientController')
 const authController=require("../controller/authController")
+const authenticatedAdmin = require('../middleware/adminAuthentication')
 
 
 clientRouter.use(express.json())
@@ -27,6 +28,10 @@ clientRouter.post("/signUp",authController.signUpPost)
 
 clientRouter.get("/otp/:mobileNumber",authController.otpGet)
 clientRouter.post("/otp/:otp",authController.otpPost)
+
+//client Product Details
+
+clientRouter.get("/:productName/:id",clientController.productGet)
 
 
 module.exports=clientRouter

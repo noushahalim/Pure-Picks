@@ -584,7 +584,7 @@
             });
             // Hook into Bootstrap shown event and manually trigger 'resize' event
             // so that Slick recalculates the widths
-            $('#quick-look').on('shown.bs.modal', function () {
+            $('.quick-look').on('shown.bs.modal', function () {
                 $modalProductDetailElement.resize();
             });
         }

@@ -1762,11 +1762,11 @@ input::-ms-clear {
     font-weight: 600;
     padding: 16px 46px; }
 
-#add-to-cart .modal-dialog {
+.add-to-cart .modal-dialog {
   width: 100%;
   max-width: 550px; }
 
-#add-to-cart .row {
+.add-to-cart .row {
   -ms-flex-align: center;
       align-items: center; }
 
@@ -1826,11 +1826,11 @@ input::-ms-clear {
     font-weight: 600;
     font-size: 13px; }
 
-#quick-look .modal-dialog {
+.quick-look .modal-dialog {
   width: 100%;
   max-width: 991px; }
 
-#quick-look .modal-body {
+.quick-look .modal-body {
   padding: 1.875rem; }
 
 .new-l--center {

@@ -11,7 +11,7 @@ exports.productsGet=async(req,res)=>{
         const admin=req.session.admin
         const adminProfile=await adminProfileModel.findOne({adminName:admin})
         const products=await productModel.find()
-        // console.log(adminProfile);
+        
         const page="products"
         if(adminProfile){
             res.render("products",{adminProfile,page,products})
@@ -47,7 +47,7 @@ exports.addProductPost=async(req,res)=>{
     try{
         const {productName,oldPrice,newPrice,productDescription,stock,brand,color,size,category,subCategory,rating}=req.body
         const image=req.files.map((file)=> '/images/upload/others/products/'+file.filename)
-        // console.log(image);
+
         const data= new productModel({
             productName:productName,
             oldPrice:oldPrice,
