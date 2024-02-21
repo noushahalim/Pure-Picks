@@ -34,11 +34,23 @@ clientRouter.post("/otp/:otp",authController.otpPost)
 
 //client Product Details
 
-clientRouter.get("/:productName/:id",clientController.productGet)
+clientRouter.get("/product/:id",clientController.productGet)
 
 //client wishlist
 
 clientRouter.get("/wishlist",authenticatedClient,wishlistController.wishlistGet)
+
+//client Add wishlist
+
+clientRouter.post("/wishlistAdd",authenticatedClient,wishlistController.wishlistAddPost)
+
+//client Remove from wishlist
+
+clientRouter.get("/wishlistRemove/:id",authenticatedClient,wishlistController.wishlistRemoveGet)
+
+//client Remove All from wishlist
+
+clientRouter.get("/wishlistRemoveAll",authenticatedClient,wishlistController.wishlistRemoveAllGet)
 
 //client cart
 

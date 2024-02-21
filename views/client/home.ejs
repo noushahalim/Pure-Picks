@@ -128,7 +128,7 @@
                                 <div class="product-r u-h-100">
                                     <div class="product-r__container">
 
-                                        <a class="aspect aspect--bg-grey aspect--square u-d-block" href="/<%=rProduct.productName%>/<%=rProduct._id%>">
+                                        <a class="aspect aspect--bg-grey aspect--square u-d-block" href="/product/<%=rProduct._id%>">
 
                                             <img class="aspect__img" src="<%= rProduct.productImagePath[3]%>" alt=""></a>
                                         <div class="product-r__action-wrap">
@@ -142,7 +142,7 @@
                                                         <a data-modal="modal" data-modal-id="#cart<%= rProduct._id%>"><i class="fas fa-plus-circle"></i></a></li>
                                                     <li>
 
-                                                        <a href="/wishlistAdd"><i class="fas fa-heart"></i></a></li>
+                                                        <a class="wishlistAdd" href="<%= rProduct._id%>"><i class="fas fa-heart"></i></a></li>
                                                 <% } else { %>
                                                     <li>
 
@@ -165,7 +165,7 @@
 
                                             <span class="product-r__name">
 
-                                                <a href="/<%=rProduct.productName%>/<%=rProduct._id%>"><%= rProduct.productName%></a></span>
+                                                <a href="/product/<%=rProduct._id%>"><%= rProduct.productName%></a></span>
 
                                             <span class="product-r__price">₹<%= rProduct.newPrice%></span></div>
 
@@ -233,7 +233,7 @@
                                                 <div class="product-bs__container">
                                                     <div class="product-bs__wrap">
 
-                                                        <a class="aspect aspect--bg-grey aspect--square u-d-block" href="/<%=product.productName%>/<%=product._id%>">
+                                                        <a class="aspect aspect--bg-grey aspect--square u-d-block" href="/product/<%=product._id%>">
 
                                                             <img class="aspect__img" src="<%=product.productImagePath[4]%>" alt=""></a>
                                                         <div class="product-bs__action-wrap">
@@ -248,7 +248,7 @@
                                                                             <a data-modal="modal" data-modal-id="#cart<%=product._id%>"><i class="fas fa-plus-circle"></i></a></li>
                                                                         <li>
         
-                                                                            <a href="/wishlistAdd"><i class="fas fa-heart"></i></a></li>
+                                                                            <a class="wishlistAdd" href="<%=product._id%>"><i class="fas fa-heart"></i></a></li>
                                                                     <% } else { %>
                                                                         <li>
                     
@@ -270,7 +270,7 @@
 
                                                     <span class="product-bs__name">
 
-                                                        <a href="/<%=product.productName%>/<%=product._id%>"><%=product.productName%></a></span>
+                                                        <a href="/product/<%=product._id%>"><%=product.productName%></a></span>
                                                     <div class="product-bs__rating gl-rating-style">
 
                                                         <% let j=product.rating %>
@@ -340,7 +340,7 @@
                                     <div class="product-short__container">
                                         <div class="product-short__img-wrap">
 
-                                            <a class="aspect aspect--bg-grey-fb aspect--square u-d-block" href="/<%=roProduct.productName%>/<%=roProduct._id%>">
+                                            <a class="aspect aspect--bg-grey-fb aspect--square u-d-block" href="/product/<%=roProduct._id%>">
 
                                                 <img class="aspect__img product-short__img" src="<%= roProduct.productImagePath[3]%>" alt=""></a></div>
                                         <div class="product-short__info">
@@ -349,7 +349,7 @@
 
                                             <span class="product-short__name">
 
-                                                <a href="/<%=roProduct.productName%>/<%=roProduct._id%>"><%= roProduct.productName%></a></span>
+                                                <a href="/product/<%=roProduct._id%>"><%= roProduct.productName%></a></span>
 
                                             <span class="product-short__category">
 
@@ -430,6 +430,8 @@
 
     <!--====== App ======-->
     <script src="/client/js/app.js"></script>
+
+    <script src="/client/js/home.js"></script>
 
     <!--====== Noscript ======-->
     <noscript>
