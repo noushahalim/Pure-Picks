@@ -36,6 +36,10 @@ const bannerModelSchema=new mongoose.Schema({
     bannerImagePath:{
         type:String,
         required:true
+    },
+    isBlocked:{
+        type:Number,
+        default:0
     }
 })
 

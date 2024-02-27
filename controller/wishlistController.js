@@ -1,6 +1,7 @@
 const signUpModel=require('../model/clientSignUpModel')
 const productModel=require('../model/productModel')
 const wishlistModel=require('../model/wishlistModel')
+const cartModel=require('../model/cartModel')
 
 //client wishlist
 
@@ -13,14 +14,21 @@ exports.wishlistGet=async (req,res)=>{
         if(wishlist){
             const wlProducts=await productModel.find({_id:wishlist.products})
             if(wlProducts){
-                res.render("wishlist",{products,wlProducts,user:true})
+                const cart=await cartModel.findOne({userId:client._id})
+                if(cart){
+                    const cartLength=cart.products.length
+                    res.render("wishlist",{products,wlProducts,user:true,cartLength})
+                }
+                else{
+                    res.render("wishlist",{products,wlProducts,user:true,cartLength:''})
+                }
             }
             else{
-                res.render("wishlist",{products,wlProducts:'',user:true})
+                res.render("wishlist",{products,wlProducts:'',user:true,cartLength:''})
             }
         }
         else{
-            res.render("wishlist",{products,wlProducts:'',user:true})
+            res.render("wishlist",{products,wlProducts:'',user:true,cartLength:''})
         }
         
     }catch(err){

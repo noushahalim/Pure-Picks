@@ -94,20 +94,36 @@ function closeCategoryForm() {
 
 
   function deleteCategory(categoryName) {
-    axios.delete(`/admin/deleteCategory/${categoryName}`)
-  .then((response) => {
-    console.log('Category deleted successfully');
-    const categoryElement = document.getElementById(categoryName);
-    categoryElement.parentNode.removeChild(categoryElement);
-  })
-  .catch((error) => {
-      if(error.response.status==404){
-          alert(error.response.data.message)
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`/admin/deleteCategory/${categoryName}`)
+        .then((response) => {
+          const categoryElement = document.getElementById(categoryName);
+          categoryElement.parentNode.removeChild(categoryElement);
+          Swal.fire({
+            title: "Deleted!",
+            text: "Category has been deleted.",
+            icon: "success"
+          });
+        })
+        .catch((error) => {
+            if(error.response.status==404){
+                alert(error.response.data.message)
+            }
+            else{
+                console.error('Error deleting category:', error);
+            }
+        });
       }
-      else{
-          console.error('Error deleting category:', error);
-      }
-  });
+    });
   }
 
 ////////////////////////////////////////////////////////////////////////////
@@ -261,23 +277,40 @@ subCategoriesList.appendChild(hr);
 
 
 function deleteSubCategory(data) {
-  axios.post("/admin/deleteSubCategory",data)
-.then((response) => {
-  console.log('Sub Category deleted successfully');
-  const subCategoryName = data.subCategory;
-  const subCategoryElement = document.getElementById(subCategoryName);
-  if(subCategoryElement){
-    subCategoryElement.parentNode.removeChild(subCategoryElement);
-  }else{
-    console.error(`Subcategory element with ID ${subCategoryName} not found.`);
-  }
-})
-.catch((error) => {
-    if(error.response.status==404){
-        alert(error.response.data.message)
-    }
-    else{
-        console.error('Error deleting sub category:', error);
-    }
-});
+    Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      axios.post("/admin/deleteSubCategory",data)
+      .then((response) => {
+        const subCategoryName = data.subCategory;
+        const subCategoryElement = document.getElementById(subCategoryName);
+        if(subCategoryElement){
+          subCategoryElement.parentNode.removeChild(subCategoryElement);
+        }else{
+          console.error(`Subcategory element with ID ${subCategoryName} not found.`);
+        }
+        Swal.fire({
+          title: "Deleted!",
+          text: "Sub category has been deleted.",
+          icon: "success"
+        });
+      })
+      .catch((error) => {
+          if(error.response.status==404){
+              alert(error.response.data.message)
+          }
+          else{
+              console.error('Error deleting sub category:', error);
+          }
+      });
+        }
+  });
+  
 }

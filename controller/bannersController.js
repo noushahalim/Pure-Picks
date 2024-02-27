@@ -143,3 +143,38 @@ exports.deleteBannerDelete=async (req,res)=>{
         console.log("error when delete banner",err.message);
     }
 }
+
+//admin block banner
+
+exports.blockBannerGet=async (req,res)=>{
+    try{
+        const id=req.params.bannerId
+        const banner=await bannerModel.findOne({_id:id})
+        if(banner){
+            if(banner.isBlocked==0){
+                await bannerModel.updateOne({_id:id},
+                    {$set:{
+                        isBlocked:1
+                    }},
+                    {upsert:true})
+                    res.status(200).json({message:"blocked"})
+            }
+            else if(banner.isBlocked==1){
+                await bannerModel.updateOne({_id:id},
+                    {$set:{
+                        isBlocked:0
+                    }},
+                    {upsert:true})
+                    res.status(200).json({message:"unBlocked"})
+            }
+            else{
+                res.status(404).json({message:"Can't find block details in bannerDetails"})
+            }
+        }
+        else{
+            res.status(404).json({message:"Can't find bannerDetails"})
+        }
+    }catch(err){
+        console.log("error when block banner",err.message);
+    }
+}

@@ -56,5 +56,16 @@ clientRouter.get("/wishlistRemoveAll",authenticatedClient,wishlistController.wis
 
 clientRouter.get("/cart",authenticatedClient,cartController.cartGet)
 
+//client Add cart
+
+clientRouter.post("/cartAdd",authenticatedClient,cartController.cartAddPost)
+
+//client Remove Cart
+
+clientRouter.get("/cartDelete/:id",authenticatedClient,cartController.cartRemoveGet)
+
+//client Remove All Cart
+
+clientRouter.get("/cartDeleteAll",authenticatedClient,cartController.cartRemoveAllGet)
 
 module.exports=clientRouter

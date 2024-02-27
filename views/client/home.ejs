@@ -3,7 +3,7 @@
 
 <%- include('layouts/head.ejs') %>
 
-<body class="config" >
+<body class="config"  style="background-color: rgba(229,233,234);">
     <div class="preloader is-active">
         <div class="preloader__wrap">
 
@@ -139,7 +139,7 @@
                                                 <% if(user){ %>
                                                     <li>
 
-                                                        <a data-modal="modal" data-modal-id="#cart<%= rProduct._id%>"><i class="fas fa-plus-circle"></i></a></li>
+                                                        <a class="cartAdd" href="<%= rProduct._id%>" data-modal="modal" data-modal-id="#cart<%= rProduct._id%>"><i class="fas fa-plus-circle"></i></a></li>
                                                     <li>
 
                                                         <a class="wishlistAdd" href="<%= rProduct._id%>"><i class="fas fa-heart"></i></a></li>
@@ -245,7 +245,7 @@
                                                                     <% if(user){ %>
                                                                         <li>
 
-                                                                            <a data-modal="modal" data-modal-id="#cart<%=product._id%>"><i class="fas fa-plus-circle"></i></a></li>
+                                                                            <a class="cartAdd" href="<%= product._id%>" data-modal="modal" data-modal-id="#cart<%=product._id%>"><i class="fas fa-plus-circle"></i></a></li>
                                                                         <li>
         
                                                                             <a class="wishlistAdd" href="<%=product._id%>"><i class="fas fa-heart"></i></a></li>

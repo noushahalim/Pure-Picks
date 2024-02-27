@@ -109,5 +109,9 @@ adminRouter.post("/editBanner/:id",authenticatedAdmin,lockedAdmin,upload.single(
 
 adminRouter.delete("/deleteBanner/:bannerId",authenticatedAdmin,lockedAdmin,bannersController.deleteBannerDelete)
 
+//admin block banner
+
+adminRouter.get("/blockBanner/:bannerId",authenticatedAdmin,lockedAdmin,bannersController.blockBannerGet)
+
 
 module.exports=adminRouter

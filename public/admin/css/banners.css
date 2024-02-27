@@ -17,6 +17,11 @@
     padding-left: 95%;
     padding-top: 1em;
 }
+#block{
+    cursor: pointer;
+    padding-left: 95%;
+    padding-top: 1em;
+}
 .span1{
     padding-top: 6.5em;
     font-size: 17px;

@@ -3,7 +3,7 @@
 
 <%- include('layouts/head.ejs') %>
 
-<body class="config">
+<body class="config"style="background-color: rgba(242,242,242);">
     <div class="preloader is-active">
         <div class="preloader__wrap">
 
@@ -83,7 +83,7 @@
                         <div class="col-lg-7">
 
                             <!--====== Product Right Side Details ======-->
-                            <div class="pd-detail">
+                            <div class="pd-detail" style="background-color: white; padding: 10px; border-radius: 5px;">
                                 <div>
 
                                     <span class="pd-detail__name"><%= product.productName%></span></div>
@@ -119,8 +119,7 @@
                                     <div class="pd-detail__inline">
 
                                         <span class="pd-detail__click-wrap"><i class="far fa-heart u-s-m-r-6"></i>
-
-                                            <a href="">Add to Wishlist</a>
+                                            <a class="wishlistAdd" href="<%=product._id%>">Add to Wishlist</a>
 
                                             
                                 </div>
@@ -150,8 +149,7 @@
                                                 <!--====== End - Input Counter ======-->
                                             </div>
                                             <div class="u-s-m-b-15">
-
-                                                <button class="btn btn--e-brand-b-2" type="submit">Add to Cart</button></div>
+                                                <a class="btn btn--e-brand-b-2 cartAdd" href="<%=product._id%>" data-modal="modal" data-modal-id="#cart<%=product._id%>">Add to Cart</a></div>
                                         </div>
                                     </form>
                                 </div>
@@ -178,7 +176,7 @@
             </div>
 
             <!--====== Product Detail Tab ======-->
-            <div class="u-s-p-y-90">
+            <div class="u-s-p-y-90" style="background-color: white;">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
@@ -546,12 +544,22 @@
                                                     <li>
 
                                                         <a data-modal="modal" data-modal-id="#quick<%=avProduct._id%>" data-tooltip="tooltip" data-placement="top" title="Quick View"><i class="fas fa-search-plus"></i></a></li>
-                                                    <li>
+                                                        <% if(user){ %>
+                                                            <li>
 
-                                                        <a data-modal="modal" data-modal-id="#cart<%=avProduct._id%>" data-tooltip="tooltip" data-placement="top" title="Add to Cart"><i class="fas fa-plus-circle"></i></a></li>
-                                                    <li>
+                                                                <a class="cartAdd" href="<%=avProduct._id%>" data-modal="modal" data-modal-id="#cart<%=avProduct._id%>"><i class="fas fa-plus-circle"></i></a></li>
+                                                            <li>
 
-                                                        <a href="signin.html" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist"><i class="fas fa-heart"></i></a></li>
+                                                                <a class="wishlistAdd" href="<%=avProduct._id%>"><i class="fas fa-heart"></i></a></li>
+                                                        <% } else { %>
+                                                            <li>
+        
+                                                                <a href="/login"><i class="fas fa-plus-circle"></i></a></li>
+                                                            <li>
+        
+                                                                <a href="/login"><i class="fas fa-heart"></i></a></li>
+        
+                                                        <% } %>
                                                     
                                                 </ul>
                                             </div>
@@ -628,6 +636,9 @@
 
     <!--====== App ======-->
     <script src="/client/js/app.js"></script>
+
+    <script src="/client/js/product.js"></script>
+
 
     <!--====== Noscript ======-->
     <noscript>

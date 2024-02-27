@@ -38,6 +38,19 @@
                 style="color: #db0016; font-size: 2em"
               ></i
             ></span>
+            <span id="block">
+              <% if(banner.isBlocked==1){ %>
+              <i class="fa-solid fa-ban block-icon" 
+                onclick="blockBanner('<%= banner._id %>')" 
+                style="color: #1e00ff; font-size: 2em">
+              </i>
+              <% } else { %>
+              <i class="fa-regular fa-circle-check block-icon" 
+                onclick="blockBanner('<%= banner._id %>')" 
+                style="color: #a600ff; font-size: 2em">
+              </i>
+              <% } %>
+            </span>
             <span class="span1"><%=banner.title1%></span>
             <span class="span2"><%=banner.title2%></span>
             <span class="span3"><%=banner.title3%></span>
@@ -69,22 +82,72 @@
         console.log("Deleting banner with ID:", bannerId);
         const BannerElement = document.getElementById(bannerId);
           console.log("Banner element:", BannerElement);
-      axios
-        .delete(`/admin/deleteBanner/${bannerId}`)
-        .then((response) => {
-          console.log("Banner deleted successfully");
-          const BannerElement = document.getElementById(bannerId);
-          console.log("Banner element:", BannerElement);
-          BannerElement.remove()
-        })
-        .catch((error) => {
-          if (error.response?.status == 404) {
-            alert(error.response.data.message);
-          } else {
-            console.error("Error deleting banner:", error);
-          }
-        });
+          Swal.fire({
+              title: "Are you sure?",
+              text: "You'r Deleting This Banner!",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                axios
+                  .delete(`/admin/deleteBanner/${bannerId}`)
+                  .then((response) => {
+                    console.log("Banner deleted successfully");
+                    const BannerElement = document.getElementById(bannerId);
+                    console.log("Banner element:", BannerElement);
+                    BannerElement.remove()
+                    Swal.fire({
+                      title: "Deleted!",
+                      text: "Banner deleted.",
+                      icon: "success"
+                    });
+                  })
+                  .catch((error) => {
+                    if (error.response?.status == 404) {
+                      alert(error.response.data.message);
+                    } else {
+                      console.error("Error deleting banner:", error);
+                    }
+                  });
+              }
+            })
+      
     }
+
+
+    function blockBanner(bannerId) {
+        const bannerElement = document.getElementById(bannerId);
+        axios
+          .get(`/admin/blockBanner/${bannerId}`)
+          .then((response) => {
+            console.log("Banner blocked successfully");
+            // const bannerElement = document.getElementById(bannerId);
+            const blockIcon = bannerElement.querySelector('.block-icon');
+            if (response.data.message === 'blocked') {
+              blockIcon.classList.remove('fa-regular','fa-circle-check');
+              blockIcon.classList.add('fa-solid','fa-ban');
+              blockIcon.style.color = "#1e00ff";
+            } else if(response.data.message === 'unBlocked') {
+              blockIcon.classList.remove('fa-solid','fa-ban');
+              blockIcon.classList.add('fa-regular','fa-circle-check');
+              blockIcon.style.color = "#a600ff";
+            }
+            else{
+                console.log('something went wrong');
+            }
+          })
+          .catch((error) => {
+            if (error.response?.status == 404) {
+              alert(error.response.data.message);
+            } else {
+              console.error("Error blocking banner:", error);
+            }
+          });
+    }
+
   </script>
 
   <script src="/admin/assets/plugins/popper.min.js"></script>
