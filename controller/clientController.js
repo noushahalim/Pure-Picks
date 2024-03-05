@@ -22,36 +22,36 @@ exports.homeGet=async (req,res)=>{
                 if(cart){
                     const cartLength=cart.products.length
                     if(banner){
-                        res.render("home",{banner,category,recentProducts,recentOurProducts,products,user:true,cartLength})
+                        res.render("home",{banner,category,recentProducts,recentOurProducts,products,user:true,cartLength,page:'home'})
                     }
                     else{
-                        res.render("home",{banner:'',category,recentProducts,recentOurProducts,products,user:true,cartLength})
+                        res.render("home",{banner:'',category,recentProducts,recentOurProducts,products,user:true,cartLength,page:'home'})
                     }
                 }
                 else{
                     if(banner){
-                        res.render("home",{banner,category,recentProducts,recentOurProducts,products,user:true,cartLength:''})
+                        res.render("home",{banner,category,recentProducts,recentOurProducts,products,user:true,cartLength:'',page:'home'})
                     }
                     else{
-                        res.render("home",{banner:'',category,recentProducts,recentOurProducts,products,user:true,cartLength:''})
+                        res.render("home",{banner:'',category,recentProducts,recentOurProducts,products,user:true,cartLength:'',page:'home'})
                     }
                 }
             }
             else{
                 if(banner){
-                    res.render("home",{banner,category,recentProducts,recentOurProducts,products,user:'',cartLength:''})
+                    res.render("home",{banner,category,recentProducts,recentOurProducts,products,user:'',cartLength:'',page:'home'})
                 }
                 else{
-                    res.render("home",{banner:'',category,recentProducts,recentOurProducts,products,user:'',cartLength:''})
+                    res.render("home",{banner:'',category,recentProducts,recentOurProducts,products,user:'',cartLength:'',page:'home'})
                 }
             }
         }
         else{
             if(banner){
-                res.render("home",{banner,category:''})
+                res.render("home",{banner,category:'',page:'home'})
             }
             else{
-                res.render("home",{banner:'',category:''})
+                res.render("home",{banner:'',category:'',page:'home'})
             }
         }
     }
@@ -75,9 +75,9 @@ exports.productGet=async (req,res)=>{
             if(client){
                 const cart=await cartModel.findOne({userId:client._id})
                 const cartLength=cart.products.length
-                res.render("product",{products,product,avProducts,user:true,cartLength})
+                res.render("product",{products,product,avProducts,user:true,cartLength,page:''})
             }else{
-                res.render("product",{products,product,avProducts,user:'',cartLength:''})
+                res.render("product",{products,product,avProducts,user:'',cartLength:'',page:''})
             }
         }
         else{

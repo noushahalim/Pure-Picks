@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+    <%- include('layouts/head.ejs') %>
+
+<body class="config">
+    <div class="preloader is-active">
+        <div class="preloader__wrap">
+
+            <img class="preloader__img" src="/images/PurePicksIcon.ico" alt="loading"></div>
+    </div>
+
+    <!--====== Main App ======-->
+    <div id="app">
+
+        <!--====== Main Header ======-->
+        <%- include('layouts/topNav.ejs') %>
+        <!--====== End - Main Header ======-->
+
+
+        <!--====== App Content ======-->
+        <div class="app-content">
+
+            <!--====== Section 1 ======-->
+            <div class="u-s-p-y-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="breadcrumb">
+                            <div class="breadcrumb__wrap">
+                                <ul class="breadcrumb__list">
+                                    <li class="has-separator">
+
+                                        <a href="/">Home</a></li>
+                                    <li class="is-marked">
+
+                                        <a href="/account">My Account</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--====== End - Section 1 ======-->
+
+            <!--====== Section 2 ======-->
+            <div class="u-s-p-b-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="dash">
+                        <div class="container">
+                            <div class="row">
+
+                                <%- include('layouts/accountFeatures.ejs') %>
+
+                                <div class="col-lg-9 col-md-12">
+                                    <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white">
+                                        <div class="dash__pad-2">
+                                            <h1 class="dash__h1 u-s-m-b-14">Edit Profile</h1>
+
+                                            <span class="dash__text u-s-m-b-30"></span>
+                                            <div class="dash__link dash__link--secondary u-s-m-b-30">
+
+                                                </div>
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <% if(profile) { %>
+                                                        <form class="dash-edit-p" action="/profileEdit" method="post">
+                                                            <div class="gl-inline">
+                                                                <div class="u-s-m-b-30">
+    
+                                                                    <label class="gl-label" for="reg-fname">FIRST NAME *</label>
+    
+                                                                    <input class="input-text input-text--primary-style" type="text" id="reg-fname" name="fName" placeholder="Enter Your First Name" value="<%= profile.fName %>" required></div>
+                                                                <div class="u-s-m-b-30">
+    
+                                                                    <label class="gl-label" for="reg-lname">LAST NAME *</label>
+    
+                                                                    <input class="input-text input-text--primary-style" type="text" id="reg-lname" name="lName" placeholder="Enter Your Last Name" value="<%= profile.lName %>" required></div>
+                                                            </div>
+                                                            <div class="gl-inline">
+                                                                <div class="u-s-m-b-30">
+    
+                                                                    <!--====== Date of Birth Select-Box ======-->
+    
+                                                                    <span class="gl-label">BIRTHDAY</span>
+                                                                    <div class="gl-dob"><select class="select-box select-box--primary-style" name="birthMonth" required>
+                                                                            <option value="<%= profile.birthMonth %>"> <%= profile.birthMonth %></option>
+                                                                            <option value="january">January</option>
+                                                                            <option value="february">February</option>
+                                                                            <option value="march">March</option>
+                                                                            <option value="april">April</option>
+                                                                            <option value="may">May</option>
+                                                                            <option value="june">June</option>
+                                                                            <option value="july">July</option>
+                                                                            <option value="august">August</option>
+                                                                            <option value="september">September</option>
+                                                                            <option value="october">October</option>
+                                                                            <option value="november">November</option>
+                                                                            <option value="december">December</option>
+                                                                        </select><select class="select-box select-box--primary-style" id="daysSelect" name="birthDay" required>
+                                                                            <option value="<%= profile.birthDay %>"><%= profile.birthDay %></option>
+                                                                        </select><select class="select-box select-box--primary-style" id="yearSelect" name="birthYear" required>
+                                                                            <option value="<%= profile.birthYear %>"><%= profile.birthYear %></option>
+                                                                        </select></div>
+                                                                    <!--====== End - Date of Birth Select-Box ======-->
+                                                                </div>
+                                                                <div class="u-s-m-b-30">
+    
+                                                                    <label class="gl-label" for="gender">GENDER</label><select class="select-box select-box--primary-style u-w-100" id="gender" name="gender" required>
+                                                                        <option value="<%= profile.gender %>"><%= profile.gender %></option>
+                                                                        <option value="male">Male</option>
+                                                                        <option value="male">Female</option>
+                                                                        <option value="other">other</option>
+                                                                    </select></div>
+                                                            </div>
+                                                            <div class="gl-inline">
+                                                                <div class="u-s-m-b-30">
+    
+                                                                    <label class="gl-label" for="userName">USERNAME</label>
+    
+                                                                    <input class="input-text input-text--primary-style" type="text" id="userName" value="<%=userData.userName%>" disabled></div>
+                                                                <div class="u-s-m-b-30">
+    
+                                                                    <label class="gl-label" for="email">EMAIL</label>
+    
+                                                                    <input class="input-text input-text--primary-style" type="text" id="email" value="<%=userData.email%>" disabled></div>
+                                                            </div>
+                                                            <div class="gl-inline">
+                                                                <div class="u-s-m-b-30">
+            
+                                                                    <label class="gl-label" for="address-phone">PHONE</label>
+            
+                                                                    <input class="input-text input-text--primary-style" type="number" id="address-phone" value="<%=userData.mobileNumber%>" disabled></div>
+                                                                <div class="u-s-m-b-30">
+            
+                                                                    <label class="gl-label" for="address-street">STREET ADDRESS *</label>
+            
+                                                                    <input class="input-text input-text--primary-style" type="text" id="address-street" placeholder="House Name and Street" name="streetAddress" value="<%= profile.streetAddress %>" required></div>
+                                                            </div>
+                                                            <div class="gl-inline">
+                                                                <div class="u-s-m-b-30">
+            
+                                                                    <!--====== Select Box ======-->
+            
+                                                                    <label class="gl-label" for="address-country">COUNTRY *</label><select class="select-box select-box--primary-style" id="address-country" name="country" required>
+                                                                        <option value="<%= profile.country %>"><%= profile.country %></option>
+                                                                        <option value="india">INDIA (IND)</option>
+                                                                        
+                                                                        
+                                                                    </select>
+                                                                    <!--====== End - Select Box ======-->
+                                                                </div>
+                                                                <div class="u-s-m-b-30">
+            
+                                                                    <!--====== Select Box ======-->
+            
+                                                                    <label class="gl-label" for="address-state">STATE *</label><select class="select-box select-box--primary-style" id="stateSelect" name="state" required>
+                                                                        <option value="<%= profile.state %>"><%= profile.state %></option>
+                                                                    </select>
+                                                                    <!--====== End - Select Box ======-->
+                                                                </div>
+                                                            </div>
+                                                            <div class="gl-inline">
+                                                                <div class="u-s-m-b-30">
+            
+                                                                    <label class="gl-label" for="address-city">TOWN/CITY *</label>
+            
+                                                                    <input class="input-text input-text--primary-style" type="text" id="address-city" name="city" value="<%= profile.city %>" required></div>
+                                                                <div class="u-s-m-b-30">
+            
+                                                                    <label class="gl-label" for="address-street">PIN *</label>
+            
+                                                                    <input class="input-text input-text--primary-style" type="text" id="address-postal" placeholder="Zip/Postal Code" name="pin" value="<%= profile.pin %>" required></div>
+                                                            </div>
+    
+                                                            <button class="btn btn--e-brand-b-2" type="submit">SAVE</button>
+                                                        </form>
+                                                    <% } else { %>
+                                                        <form class="dash-edit-p" action="/profileEdit" method="post">
+                                                            <div class="gl-inline">
+                                                                <div class="u-s-m-b-30">
+    
+                                                                    <label class="gl-label" for="reg-fname">FIRST NAME *</label>
+    
+                                                                    <input class="input-text input-text--primary-style" type="text" id="reg-fname" name="fName" placeholder="Enter Your First Name" required></div>
+                                                                <div class="u-s-m-b-30">
+    
+                                                                    <label class="gl-label" for="reg-lname">LAST NAME *</label>
+    
+                                                                    <input class="input-text input-text--primary-style" type="text" id="reg-lname" name="lName" placeholder="Enter Your Last Name" required></div>
+                                                            </div>
+                                                            <div class="gl-inline">
+                                                                <div class="u-s-m-b-30">
+    
+                                                                    <!--====== Date of Birth Select-Box ======-->
+    
+                                                                    <span class="gl-label">BIRTHDAY</span>
+                                                                    <div class="gl-dob"><select class="select-box select-box--primary-style" name="birthMonth" required>
+                                                                            <option value="">Month</option>
+                                                                            <option value="january">January</option>
+                                                                            <option value="february">February</option>
+                                                                            <option value="march">March</option>
+                                                                            <option value="april">April</option>
+                                                                            <option value="may">May</option>
+                                                                            <option value="june">June</option>
+                                                                            <option value="july">July</option>
+                                                                            <option value="august">August</option>
+                                                                            <option value="september">September</option>
+                                                                            <option value="october">October</option>
+                                                                            <option value="november">November</option>
+                                                                            <option value="december">December</option>
+                                                                        </select><select class="select-box select-box--primary-style" id="daysSelect" name="birthDay" required>
+                                                                            <option value="">Day</option>
+                                                                        </select><select class="select-box select-box--primary-style" id="yearSelect" name="birthYear" required>
+                                                                            <option value="">Year</option>
+                                                                        </select></div>
+                                                                    <!--====== End - Date of Birth Select-Box ======-->
+                                                                </div>
+                                                                <div class="u-s-m-b-30">
+    
+                                                                    <label class="gl-label" for="gender">GENDER</label><select class="select-box select-box--primary-style u-w-100" id="gender" name="gender" required>
+                                                                        <option value="">Select</option>
+                                                                        <option value="male">Male</option>
+                                                                        <option value="male">Female</option>
+                                                                        <option value="other">other</option>
+                                                                    </select></div>
+                                                            </div>
+                                                            <div class="gl-inline">
+                                                                <div class="u-s-m-b-30">
+    
+                                                                    <label class="gl-label" for="userName">USERNAME</label>
+    
+                                                                    <input class="input-text input-text--primary-style" type="text" id="userName" value="<%=userData.userName%>" disabled></div>
+                                                                <div class="u-s-m-b-30">
+    
+                                                                    <label class="gl-label" for="email">EMAIL</label>
+    
+                                                                    <input class="input-text input-text--primary-style" type="text" id="email" value="<%=userData.email%>" disabled></div>
+                                                            </div>
+                                                            <div class="gl-inline">
+                                                                <div class="u-s-m-b-30">
+            
+                                                                    <label class="gl-label" for="address-phone">PHONE</label>
+            
+                                                                    <input class="input-text input-text--primary-style" type="number" id="address-phone" value="<%=userData.mobileNumber%>" disabled></div>
+                                                                <div class="u-s-m-b-30">
+            
+                                                                    <label class="gl-label" for="address-street">STREET ADDRESS *</label>
+            
+                                                                    <input class="input-text input-text--primary-style" type="text" id="address-street" placeholder="House Name and Street" name="streetAddress" required></div>
+                                                            </div>
+                                                            <div class="gl-inline">
+                                                                <div class="u-s-m-b-30">
+            
+                                                                    <!--====== Select Box ======-->
+            
+                                                                    <label class="gl-label" for="address-country">COUNTRY *</label><select class="select-box select-box--primary-style" id="address-country" name="country" required>
+                                                                        <option value="">Choose Country</option>
+                                                                        <option value="india">INDIA (IND)</option>
+                                                                        
+                                                                        
+                                                                    </select>
+                                                                    <!--====== End - Select Box ======-->
+                                                                </div>
+                                                                <div class="u-s-m-b-30">
+            
+                                                                    <!--====== Select Box ======-->
+            
+                                                                    <label class="gl-label" for="address-state">STATE *</label><select class="select-box select-box--primary-style" id="stateSelect" name="state" required>
+                                                                        <option value="">Choose State</option>
+                                                                    </select>
+                                                                    <!--====== End - Select Box ======-->
+                                                                </div>
+                                                            </div>
+                                                            <div class="gl-inline">
+                                                                <div class="u-s-m-b-30">
+            
+                                                                    <label class="gl-label" for="address-city">TOWN/CITY *</label>
+            
+                                                                    <input class="input-text input-text--primary-style" type="text" id="address-city" name="city" required></div>
+                                                                <div class="u-s-m-b-30">
+            
+                                                                    <label class="gl-label" for="address-street">PIN *</label>
+            
+                                                                    <input class="input-text input-text--primary-style" type="text" id="address-postal" placeholder="Zip/Postal Code" name="pin" required></div>
+                                                            </div>
+    
+                                                            <button class="btn btn--e-brand-b-2" type="submit">SAVE</button>
+                                                        </form>
+                                                    <% } %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--====== End - Section Content ======-->
+            </div>
+            <!--====== End - Section 2 ======-->
+        </div>
+
+        
+        <!--====== Main Footer ======-->
+        <%- include('layouts/footer.ejs') %>
+
+        <!--====== Modal Section ======-->
+
+
+        
+        <!--====== End - Modal Section ======-->
+    </div>
+    <!--====== End - Main App ======-->
+
+
+    <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
+    <script>
+        window.ga = function() {
+            ga.q.push(arguments)
+        };
+        ga.q = [];
+        ga.l = +new Date;
+        ga('create', 'UA-XXXXX-Y', 'auto');
+        ga('send', 'pageview')
+    </script>
+    <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
+    <!--====== Vendor Js ======-->
+    <script src="/client/js/vendor.js"></script>
+
+    <!--====== jQuery Shopnav plugin ======-->
+    <script src="/client/js/jquery.shopnav.js"></script>
+
+    <!--====== App ======-->
+    <script src="/client/js/app.js"></script>
+
+    <script>
+        const daysSelect = document.getElementById("daysSelect");
+
+        for (let i = 1; i <= 31; i++) {
+            const day = i < 10 ? "0" + i : i;
+            const option = document.createElement("option");
+            option.value = day;
+            option.text = day;
+            daysSelect.appendChild(option);
+        }
+
+        const yearSelect = document.getElementById("yearSelect");
+
+            for (let year = 1981; year <= 2024; year++) {
+                const option = document.createElement("option");
+                option.value = year;
+                option.text = year;
+                yearSelect.appendChild(option);
+            }
+
+        const states = [
+                "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
+                "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand",
+                "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur",
+                "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan",
+                "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh",
+                "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands",
+                "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi",
+                "Lakshadweep", "Puducherry"
+            ];
+
+        const stateSelect = document.getElementById("stateSelect");
+
+        states.forEach(state => {
+            const option = document.createElement("option");
+            option.value = state.toLowerCase().replace(/\s+/g, "-");
+            option.text = state;
+            stateSelect.appendChild(option);
+        });
+
+    </script>
+
+
+    <!--====== Noscript ======-->
+    <noscript>
+        <div class="app-setting">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="app-setting__wrap">
+                            <h1 class="app-setting__h1">JavaScript is disabled in your browser.</h1>
+
+                            <span class="app-setting__text">Please enable JavaScript in your browser or upgrade to a JavaScript-capable browser.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </noscript>
+</body>
+</html>

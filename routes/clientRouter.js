@@ -4,6 +4,8 @@ const clientController=require('../controller/clientController')
 const authController=require("../controller/authController")
 const wishlistController=require("../controller/wishlistController")
 const cartController=require("../controller/cartController")
+const accountController=require("../controller/accountController")
+
 
 const authenticatedClient=require('../middleware/clientAuthentication')
 
@@ -67,5 +69,18 @@ clientRouter.get("/cartDelete/:id",authenticatedClient,cartController.cartRemove
 //client Remove All Cart
 
 clientRouter.get("/cartDeleteAll",authenticatedClient,cartController.cartRemoveAllGet)
+
+//client Account
+
+clientRouter.get("/account",authenticatedClient,accountController.accountGet)
+
+//client Profile
+
+clientRouter.get("/profile",authenticatedClient,accountController.profileGet)
+
+//client Profile Edit
+
+clientRouter.get("/profileEdit",authenticatedClient,accountController.profileEditGet)
+clientRouter.post("/profileEdit",authenticatedClient,accountController.profileEditPost)
 
 module.exports=clientRouter

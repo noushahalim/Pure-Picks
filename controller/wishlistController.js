@@ -17,18 +17,18 @@ exports.wishlistGet=async (req,res)=>{
                 const cart=await cartModel.findOne({userId:client._id})
                 if(cart){
                     const cartLength=cart.products.length
-                    res.render("wishlist",{products,wlProducts,user:true,cartLength})
+                    res.render("wishlist",{products,wlProducts,user:true,cartLength,page:'wishlist'})
                 }
                 else{
-                    res.render("wishlist",{products,wlProducts,user:true,cartLength:''})
+                    res.render("wishlist",{products,wlProducts,user:true,cartLength:'',page:'wishlist'})
                 }
             }
             else{
-                res.render("wishlist",{products,wlProducts:'',user:true,cartLength:''})
+                res.render("wishlist",{products,wlProducts:'',user:true,cartLength:'',page:'wishlist'})
             }
         }
         else{
-            res.render("wishlist",{products,wlProducts:'',user:true,cartLength:''})
+            res.render("wishlist",{products,wlProducts:'',user:true,cartLength:'',page:'wishlist'})
         }
         
     }catch(err){

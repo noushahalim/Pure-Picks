@@ -50,7 +50,7 @@
                                     <% if(user){ %>
                                         <li>
     
-                                            <a href="/profile"><i class="fas fa-user-circle u-s-m-r-6"></i>
+                                            <a href="/account"><i class="fas fa-user-circle u-s-m-r-6"></i>
     
                                                 <span>Account</span></a></li>
                                         <li>
@@ -163,13 +163,13 @@
                         <ul class="ah-list ah-list--design1 ah-list--link-color-secondary">
                             <li>
 
-                                <a href="/"><i class="fas fa-home u-c-brand"></i></a></li>
+                                <a href="/"><i class="fas fa-home <%= page === 'home' ? 'u-c-brand' : '' %>"></i></a></li>
                             <li>
 
-                                <a href="/wishlist"><i class="far fa-heart"></i></a></li>
+                                <a href="/wishlist"><i class="far fa-heart <%= page === 'wishlist' ? 'u-c-brand' : '' %>"></i></a></li>
                             <% if(user){ %>
                                 <li class="has-dropdown">
-                                    <a class="mini-cart-shop-link" href="/cart"><i class="fas fa-shopping-bag"></i>
+                                    <a class="mini-cart-shop-link" href="/cart"><i class="fas fa-shopping-bag <%= page === 'cart' ? 'u-c-brand' : '' %>"></i>
                                         <% if(cartLength>0){ %>
     
                                         <span class="total-item-round"><%= cartLength %></span>

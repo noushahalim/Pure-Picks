@@ -15,12 +15,12 @@ exports.cartGet=async (req,res)=>{
             if (cartProductIds.length > 0) {
                 const cartProducts = await productModel.find({ _id: { $in: cartProductIds } });
                 if (cartProducts) {
-                    res.render("cart", { cartProducts, user: true ,cartLength,cart});
+                    res.render("cart", { cartProducts, user: true ,cartLength,cart,page:'cart'});
                     return;
                 }
             }
         }
-        res.render("cart", { cartProducts: [], user: true ,cartLength:'',cart});
+        res.render("cart", { cartProducts: [], user: true ,cartLength:'',cart,page:'cart'});
         
     }catch(err){
         console.log("error when get cart",err.message);
