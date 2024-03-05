@@ -1,0 +1,51 @@
+<%- include('layouts/htmlhead.ejs') %>
+<link rel="stylesheet" href="/admin/css/coupens.css">
+<body class="app">
+    <header class="app-header fixed-top">
+        <%- include('layouts/topnav.ejs') %>
+		<%- include('layouts/sidepanel.ejs') %>
+    </header>
+    <div class="app-wrapper">
+        <div class="app-content pt-3 p-md-3 p-lg-4">
+		    <div class="container-xl">
+			    <h1 class="app-page-title">Coupens Management</h1>
+                <div class="row gy-4">
+                    <button class="addCoupenButton" onclick="window.location.href='/admin/addCoupen'">Add Coupen</button>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Coupen Code</th>
+                                    <th>Min Amount</th>
+                                    <th>Max Amount</th>
+                                    <th>Discount</th>
+                                    <th>Delete</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% coupens.forEach(function(coupen) { %>
+                                <tr>
+                                    <td><%= coupen.coupenCode %></td>
+                                    <td><%= coupen.minAmount %></td>
+                                    <td><%= coupen.maxAmount %></td>
+                                    <td><%= coupen.discount %></td>
+                                    <td><a href="/admin/deleteCoupen/<%= coupen._id %>">Delete</a></td>
+                                </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div><!--//row-->
+        </div><!--//container-fluid-->
+    </div><!--//app-content-->
+    <!-- Javascript -->          
+    <script src="/admin/assets/plugins/popper.min.js"></script>
+    <script src="/admin/assets/plugins/bootstrap/js/bootstrap.min.js"></script>  
+    <!-- Page Specific JS -->
+    <script src="/admin/assets/js/app.js"></script>
+
+</body>

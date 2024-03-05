@@ -8,6 +8,7 @@ const authController=require("../controller/authController")
 const categoriesController=require("../controller/categoriesController")
 const productsController=require("../controller/productsController")
 const bannersController=require("../controller/bannersController")
+const coupenController=require("../controller/coupenController")
 
 
 const upload = multer({ storage: storage })
@@ -112,6 +113,19 @@ adminRouter.delete("/deleteBanner/:bannerId",authenticatedAdmin,lockedAdmin,bann
 //admin block banner
 
 adminRouter.get("/blockBanner/:bannerId",authenticatedAdmin,lockedAdmin,bannersController.blockBannerGet)
+
+//admin coupens
+
+adminRouter.get("/coupens",authenticatedAdmin,lockedAdmin,coupenController.coupensGet)
+
+//admin add coupens
+
+adminRouter.get("/addCoupen",authenticatedAdmin,lockedAdmin,coupenController.addcoupenGet)
+adminRouter.post("/addCoupen",authenticatedAdmin,lockedAdmin,coupenController.addcoupenPost)
+
+//admin delete coupen
+
+adminRouter.get("/deleteCoupen/:id",authenticatedAdmin,lockedAdmin,coupenController.deleteCoupenGet)
 
 
 module.exports=adminRouter
