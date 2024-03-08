@@ -1,7 +1,7 @@
 const mongoose=require('mongoose')
 
-const coupenModelSchema=new mongoose.Schema({
-    coupenCode:{
+const couponModelSchema=new mongoose.Schema({
+    couponCode:{
         type:String,
         required:true
     },
@@ -19,6 +19,6 @@ const coupenModelSchema=new mongoose.Schema({
     }
 })
 
-const collection=new mongoose.model("coupenDatas",coupenModelSchema)
+const collection=new mongoose.model("couponDatas",couponModelSchema)
 
 module.exports=collection

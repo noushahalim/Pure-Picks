@@ -2,6 +2,7 @@ const signUpModel=require('../model/clientSignUpModel')
 const wishlistModel=require('../model/wishlistModel')
 const cartModel=require('../model/cartModel')
 const profileModel=require('../model/clientProfileModel')
+const addressModel=require('../model/addressModel')
 
 exports.accountGet= async(req,res)=>{
     try{
@@ -116,4 +117,37 @@ exports.profileEditPost=async(req,res)=>{
         console.log("error when post profileEdit",err.message)
     }
 
+}
+
+//Client Address Add
+
+exports.addressAddPost=async(req,res)=>{
+    try{
+        const clientUserName=req.session.userName
+        const userData=await signUpModel.findOne({userName:clientUserName})
+        const {fName,lName,number,streetAddress,country,state,city,pin}=req.body
+        const alreadyAddedAddress=await addressModel.findOne({fName:fName,lName:lName,number:number,streetAddress:streetAddress,country:country,state:state,city:city,pin:pin})
+        if(alreadyAddedAddress){
+            res.status(403).json({message:"Already added"})
+        }
+        else{
+            const data= new addressModel({
+                userId:userData._id,
+                fName:fName,
+                lName:lName,
+                number:number,
+                streetAddress:streetAddress,
+                country:country,
+                state:state,
+                city:city,
+                pin:pin
+            })
+        
+            await data.save()
+            res.status(200).json({data:data})
+        }
+    }
+    catch(err){
+        console.log("error when post addressAdd",err.message)
+    }
 }

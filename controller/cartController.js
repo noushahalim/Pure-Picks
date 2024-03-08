@@ -109,7 +109,7 @@ exports.cartRemoveGet=async (req,res)=>{
         const cart= await cartModel.findOne({userId:client._id})
         
         if(cart){
-            const cartProduct = cart.products.find(product => product.productId === productId);
+            const cartProduct = cart.products.find(product => product.productId.toString() === productId);
             if (cartProduct) {
                 const product=await productModel.findOne({_id: productId})
                 const productQuantity = cartProduct.quantity

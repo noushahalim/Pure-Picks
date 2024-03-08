@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<%- include('layouts/head.ejs') %>
+
+<body class="config" style="background-color: rgba(229,233,234);">
+    <div class="preloader is-active">
+        <div class="preloader__wrap">
+
+            <img class="preloader__img" src="/images/PurePicksIcon.ico" alt="loading"></div>
+    </div>
+
+    <!--====== Main App ======-->
+    <div id="app">
+
+        <!--====== Main Header ======-->
+        <%- include('layouts/topNav.ejs') %>
+        <!--====== End - Main Header ======-->
+
+
+        <!--====== App Content ======-->
+        <div class="app-content">
+
+            <!--====== Section 1 ======-->
+            <div class="u-s-p-y-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="breadcrumb">
+                            <div class="breadcrumb__wrap">
+                                <ul class="breadcrumb__list">
+                                    <li class="has-separator">
+
+                                        <a href="/">Home</a></li>
+                                    <li class="is-marked">
+
+                                        <a href="/checkout">Checkout</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--====== End - Section 1 ======-->
+
+
+            <!--====== Section 2 ======-->
+            <div class="u-s-p-b-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div id="checkout-msg-group">
+                                    
+                                    <div class="msg">
+
+                                        <span class="msg__text">coupon?
+
+                                            <a class="gl-link" href="#have-coupon" data-toggle="collapse">Click Here to reveal available coupons</a></span>
+                                        <div class="collapse" id="have-coupon" data-parent="#checkout-msg-group">
+                                            <div class="c-f u-s-m-b-16">
+                                                <% if(coupon){ %>
+                                                <span class="gl-text u-s-m-b-16">You have unlocked a coupon.</span>
+                                                <form class="c-f__form">
+                                                    <div class="u-s-m-b-16">
+                                                        <div class="u-s-m-b-15">
+
+                                                            <label for="coupon"></label>
+
+                                                            <input class="input-text input-text--primary-style" type="text" id="coupon" placeholder="Coupon Code" value="<%= coupon.couponCode%>" disabled></div>
+                                                            <span class="gl-text u-s-m-b-16">You will get <%= coupon.discount%> discount on this coupon.</span>
+                                                        <div class="u-s-m-b-15">
+
+                                                            <button class="btn btn--e-transparent-brand-b-2" type="submit" id="applyCoupon">APPLY</button></div>
+                                                    </div>
+                                                </form>
+                                                <% }else{ %>
+                                                    <span class="gl-text u-s-m-b-16">You don't have any coupon.</span>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--====== End - Section Content ======-->
+            </div>
+            <!--====== End - Section 2 ======-->
+
+
+            <!--====== Section 3 ======-->
+            <div class="u-s-p-b-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="checkout-f">
+                            <div class="row">
+                                
+                                <div class="col-lg-6">
+                                    <h1 class="checkout-f__h1">ORDER SUMMARY</h1>
+
+                                    <!--====== Order Summary ======-->
+                                    <div class="o-summary">
+                                        <div class="o-summary__section u-s-m-b-30">
+                                            <div class="o-summary__item-wrap gl-scroll">
+                                                <% cartProducts.forEach(product=>{%>
+                                                <div class="o-card">
+                                                    <div class="o-card__flex">
+                                                        <div class="o-card__img-wrap">
+
+                                                            <img class="u-img-fluid" src="<%=product.productId.productImagePath[3] %>" alt=""></div>
+                                                        <div class="o-card__info-wrap">
+
+                                                            <span class="o-card__name">
+
+                                                                <a href="/product/<%=product.productId._id%>"><%=product.productId.productName%></a></span>
+
+                                                            <span class="o-card__quantity">Quantity x 
+                                                                <%cart.products.forEach(cart=>{%>
+                                                                    <% if(cart.productId.toString()===product.productId._id.toString()){ %>
+                                                                        <%= cart.quantity %>
+                                                                    <% } %>
+                                                                <% }) %>
+                                                            </span>
+
+                                                            <span class="o-card__price">₹<%= product.productId.newPrice%>.00</span></div>
+                                                    </div>
+
+                                                    
+                                                </div>
+                                                <% }) %>
+                                            </div>
+                                        </div>
+                                        <div class="o-summary__section u-s-m-b-30">
+                                            <div class="o-summary__box">
+                                                <h1 class="checkout-f__h1">SHIPPING</h1>
+                                                <% if(profile){ %>
+                                                <div class="ship-b">
+
+                                                    <span class="ship-b__text">Ship to:</span>
+                                                    <div id="addressDisplay" class="ship-b__box u-s-m-b-10">
+                                                        <p class="ship-b__p"><%= profile.streetAddress%> <%= profile.city%> <%= profile.state%> <%= profile.pin%> <%= profile.country%> <%= userData.mobileNumber%></p>
+                                               
+                                                    </div>
+                                                    <a class="ship-b__edit btn--e-transparent-platinum-b-2" data-modal="modal" data-modal-id="#edit-ship-address">Edit</a>
+                                                </div>
+                                                <% } else if(address){ %>
+                                                    <div class="ship-b">
+    
+                                                        <span class="ship-b__text">Ship to:</span>
+                                                        <div id="addressDisplay" class="ship-b__box u-s-m-b-10">
+                                                            <p class="ship-b__p"><%= address.streetAddress%> <%= address.city%> <%= address.state%> <%= address.pin%> <%= address.country%> <%= address.number%></p>
+    
+                                                        </div>
+                                                        <a class="ship-b__edit btn--e-transparent-platinum-b-2" data-modal="modal" data-modal-id="#edit-ship-address">Edit</a>
+                                                    </div>
+                                                <% }else{ %>
+                                                    <div class="ship-b">
+                                                        <div id="addressDisplay" class="ship-b__box u-s-m-b-10">
+                                                            
+                                                        </div>
+                                                        <a class="ship-b__edit btn--e-transparent-platinum-b-2" data-modal="modal" data-modal-id="#edit-ship-address">Edit</a>
+                                                        
+                                                    </div>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    <!--====== End - Order Summary ======-->
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="o-summary">
+                                        <div class="o-summary__section u-s-m-b-30">
+                                            <div class="o-summary__box">
+                                                <table class="o-summary__table">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Price (<%= cart.totalItems %> item)</td>
+                                                            <td>₹<%= cart.discountedPrice %></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Coupon Discount</td>
+                                                            <td id="couponDiscount">₹  </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Delivery Charges</td>
+                                                            <td><del>₹40</del> &nbsp;<span style="color: green;">Free</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Total Amount</td>
+                                                            <td id="totalAmound">₹<%= cart.discountedPrice %></td>
+                                                            <input id="totalAmoundHidden" type="hidden" value="<%= cart.discountedPrice %>">
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="o-summary__section u-s-m-b-30">
+                                            <div class="o-summary__box">
+                                                <h1 class="checkout-f__h1">PAYMENT INFORMATION</h1>
+                                                <form class="checkout-f__payment" action="/placeOrder" method="post">
+                                                    <div class="u-s-m-b-10">
+
+                                                        <!--====== Radio Box ======-->
+                                                        <div class="radio-box">
+
+                                                            <input type="radio" id="cash-on-delivery" name="payment" value="COD" required>
+                                                            <div class="radio-box__state radio-box__state--primary">
+
+                                                                <label class="radio-box__label" for="cash-on-delivery">Cash on Delivery</label></div>
+                                                        </div>
+                                                        <!--====== End - Radio Box ======-->
+
+                                                        <span class="gl-text u-s-m-t-6">Pay Upon Cash on delivery. (This service is only available for india only)</span>
+                                                    </div>
+                                                    <div class="u-s-m-b-10">
+
+                                                        <!--====== Radio Box ======-->
+                                                        <div class="radio-box">
+
+                                                            <input type="radio" id="direct-bank-transfer" name="payment" value="UPI" required>
+                                                            <div class="radio-box__state radio-box__state--primary">
+
+                                                                <label style="display: flex; align-items: center; gap: 5px;" class="radio-box__label" for="direct-bank-transfer"><img style="width: 30px;" src="/images/UPI.gif" alt=""> UPI</label></div>
+                                                        </div>
+                                                        <!--====== End - Radio Box ======-->
+
+                                                        <span class="gl-text u-s-m-t-6">Pay by any UPI app.</span>
+                                                    </div>
+                                                    <input id="coupenId" name="coupenId" type="hidden" value="">
+                                                    <% if(profile){ %>
+                                                        <input id="profileId" type="hidden" name="profileId" value="<%= profile._id %>">
+                                                    <% }else if(address){ %>
+                                                        <input id="addressId" type="hidden" name="addressId" value="<%= address._id %>">
+                                                    <% }else{ %>
+                                                        <input id="addressId" type="hidden" name="addressId" value="">
+                                                    <% } %>
+                                                    <div>
+                                                        
+                                                        <button class="btn btn--e-brand-b-2" type="submit">PLACE ORDER</button></div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--====== End - Section Content ======-->
+            </div>
+            <!--====== End - Section 3 ======-->
+        </div>
+        <!--====== End - App Content ======-->
+
+
+        <!--====== Main Footer ======-->
+        <%- include('layouts/footer.ejs') %>
+
+        <!--====== Modal Section ======-->
+
+
+        <!--====== Shipping Address Add Modal ======-->
+        <div class="modal fade" id="edit-ship-address">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="checkout-modal2">
+                            <div class="u-s-m-b-30">
+                                <div class="dash-l-r">
+                                    <h1 class="gl-modal-h1">Shipping Address</h1>
+                                    <div class="dash__link dash__link--brand">
+
+                                        <a data-modal="modal" data-modal-id="#add-ship-address" data-dismiss="modal">Add new Address</a></div>
+                                </div>
+                            </div>
+                            <form class="checkout-modal2__form" id="displayAddressForm">
+                                <div class="dash__table-2-wrap u-s-m-b-30 gl-scroll">
+                                    <table class="dash__table-2">
+                                        <thead>
+                                            <tr>
+                                                <th>Action</th>
+                                                <th>Full Name</th>
+                                                <th>Address</th>
+                                                <th>Region</th>
+                                                <th>Phone Number</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% addresses.forEach(addresses=>{ %>
+                                            <tr>
+                                                <td>
+
+                                                    <!--====== Radio Box ======-->
+                                                    <div class="radio-box">
+
+                                                        <input type="radio" name="address" value="<%= addresses._id %>" required>
+                                                        <div class="radio-box__state radio-box__state--primary">
+
+                                                            <label class="radio-box__label" for="<%= addresses._id %>"></label></div>
+                                                    </div>
+                                                    <!--====== End - Radio Box ======-->
+                                                </td>
+                                                <td><%= addresses.fName %> <%= addresses.lName %></td>
+                                                <td><%= addresses.streetAddress %> <%= addresses.city %> <%= addresses.state %> <%= addresses.pin %></td>
+                                                <td><%= addresses.country %></td>
+                                                <td><%= addresses.number %></td>
+                                                
+                                            </tr>
+                                            <% }) %>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="gl-modal-btn-group">
+
+                                    <button id="addressChoose" class="btn btn--e-brand-b-2" type="submit">SAVE</button>
+
+                                    <button class="btn btn--e-grey-b-2" type="button" data-dismiss="modal">CANCEL</button></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--====== End - Shipping Address Add Modal ======-->
+
+
+        <!--====== Shipping Address Add Modal ======-->
+        <div class="modal fade" id="add-ship-address">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="checkout-modal1">
+                            <form class="checkout-modal1__form" id="addressForm">
+                                <div class="u-s-m-b-30">
+                                    <h1 class="gl-modal-h1">Add new Shipping Address</h1>
+                                </div>
+                                <div class="gl-inline">
+                                    <div class="u-s-m-b-30">
+
+                                        <label class="gl-label" for="address-fname">FIRST NAME *</label>
+
+                                        <input class="input-text input-text--primary-style" type="text" id="address-fname" placeholder="First Name" name="fName" required></div>
+                                    <div class="u-s-m-b-30">
+
+                                        <label class="gl-label" for="address-lname">LAST NAME *</label>
+
+                                        <input class="input-text input-text--primary-style" type="text" id="address-lname" placeholder="Last Name" name="lName" required></div>
+                                </div>
+                                <div class="gl-inline">
+                                    <div class="u-s-m-b-30">
+
+                                        <label class="gl-label" for="address-phone">PHONE *</label>
+
+                                        <input class="input-text input-text--primary-style" type="text" id="address-phone" name="number" required></div>
+                                    <div class="u-s-m-b-30">
+
+                                        <label class="gl-label" for="address-street">STREET ADDRESS *</label>
+
+                                        <input class="input-text input-text--primary-style" type="text" id="address-street" placeholder="House Name and Street" name="streetAddress" required></div>
+                                </div>
+                                <div class="gl-inline">
+                                    <div class="u-s-m-b-30">
+
+                                        <!--====== Select Box ======-->
+
+                                        <label class="gl-label" for="address-country">COUNTRY *</label><select class="select-box select-box--primary-style" id="address-country" name="country" required>
+                                            <option value="">Choose Country</option>
+                                            <option value="india">INDIA (IND)</option>
+                                            
+                                            
+                                        </select>
+                                        <!--====== End - Select Box ======-->
+                                    </div>
+                                    <div class="u-s-m-b-30">
+
+                                        <!--====== Select Box ======-->
+
+                                        <label class="gl-label" for="address-state">STATE *</label><select class="select-box select-box--primary-style" id="stateSelect" name="state" required>
+                                            <option value="">Choose State</option>
+                                        </select>
+                                        <!--====== End - Select Box ======-->
+                                    </div>
+                                </div>
+                                <div class="gl-inline">
+                                    <div class="u-s-m-b-30">
+
+                                        <label class="gl-label" for="address-city">TOWN/CITY *</label>
+
+                                        <input class="input-text input-text--primary-style" type="text" id="address-city" name="city" required></div>
+                                    <div class="u-s-m-b-30">
+
+                                        <label class="gl-label" for="address-street">PIN *</label>
+
+                                        <input class="input-text input-text--primary-style" type="text" id="address-postal" placeholder="Zip/Postal Code" name="pin" required></div>
+                                </div>
+                                <div class="gl-modal-btn-group">
+
+                                    <button class="btn btn--e-brand-b-2" type="submit">SAVE</button>
+
+                                    <button class="btn btn--e-grey-b-2" type="button" data-dismiss="modal">CANCEL</button></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--====== End - Shipping Address Add Modal ======-->
+        <!--====== End - Modal Section ======-->
+    </div>
+    <!--====== End - Main App ======-->
+
+
+    <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
+    <script>
+        window.ga = function() {
+            ga.q.push(arguments)
+        };
+        ga.q = [];
+        ga.l = +new Date;
+        ga('create', 'UA-XXXXX-Y', 'auto');
+        ga('send', 'pageview')
+    </script>
+    <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
+    <!--====== Vendor Js ======-->
+    <script src="/client/js/vendor.js"></script>
+
+    <!--====== jQuery Shopnav plugin ======-->
+    <script src="/client/js/jquery.shopnav.js"></script>
+
+    <!--====== App ======-->
+    <script src="/client/js/app.js"></script>
+    <script src="/client/js/checkout.js"></script>
+
+    <!--====== Noscript ======-->
+    <noscript>
+        <div class="app-setting">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="app-setting__wrap">
+                            <h1 class="app-setting__h1">JavaScript is disabled in your browser.</h1>
+
+                            <span class="app-setting__text">Please enable JavaScript in your browser or upgrade to a JavaScript-capable browser.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </noscript>
+</body>
+</html>

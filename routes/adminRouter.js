@@ -8,7 +8,7 @@ const authController=require("../controller/authController")
 const categoriesController=require("../controller/categoriesController")
 const productsController=require("../controller/productsController")
 const bannersController=require("../controller/bannersController")
-const coupenController=require("../controller/coupenController")
+const couponController=require("../controller/couponController")
 
 
 const upload = multer({ storage: storage })
@@ -114,18 +114,18 @@ adminRouter.delete("/deleteBanner/:bannerId",authenticatedAdmin,lockedAdmin,bann
 
 adminRouter.get("/blockBanner/:bannerId",authenticatedAdmin,lockedAdmin,bannersController.blockBannerGet)
 
-//admin coupens
+//admin coupons
 
-adminRouter.get("/coupens",authenticatedAdmin,lockedAdmin,coupenController.coupensGet)
+adminRouter.get("/coupons",authenticatedAdmin,lockedAdmin,couponController.couponsGet)
 
-//admin add coupens
+//admin add coupons
 
-adminRouter.get("/addCoupen",authenticatedAdmin,lockedAdmin,coupenController.addcoupenGet)
-adminRouter.post("/addCoupen",authenticatedAdmin,lockedAdmin,coupenController.addcoupenPost)
+adminRouter.get("/addCoupon",authenticatedAdmin,lockedAdmin,couponController.addcouponGet)
+adminRouter.post("/addCoupon",authenticatedAdmin,lockedAdmin,couponController.addcouponPost)
 
-//admin delete coupen
+//admin delete coupon
 
-adminRouter.get("/deleteCoupen/:id",authenticatedAdmin,lockedAdmin,coupenController.deleteCoupenGet)
+adminRouter.get("/deleteCoupon/:id",authenticatedAdmin,lockedAdmin,couponController.deleteCouponGet)
 
 
 module.exports=adminRouter

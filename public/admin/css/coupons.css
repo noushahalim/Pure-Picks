@@ -1,4 +1,4 @@
-.addCoupenButton{
+.addCouponButton{
     width: 20%; 
     height: 40px; 
     font-size: 20px; 
@@ -8,7 +8,7 @@
     color: rgb(235, 234, 234);
     transition: ease-in-out 500ms;
 }
-.addCoupenButton:hover{
+.addCouponButton:hover{
     background-color: blue;
     font-size: 21px; 
 }

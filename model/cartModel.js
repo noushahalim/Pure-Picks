@@ -2,7 +2,8 @@ const mongoose=require('mongoose')
 
 const cartElement={
     productId:{
-        type:String,
+        type:mongoose.Types.ObjectId,
+        ref:"productDatas",
         required:true
     },
     quantity:{

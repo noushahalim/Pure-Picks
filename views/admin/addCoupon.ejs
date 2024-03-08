@@ -1,5 +1,5 @@
 <%- include('layouts/htmlhead.ejs') %>
-<link rel="stylesheet" href="/admin/css/addcoupen.css">
+<link rel="stylesheet" href="/admin/css/addcoupon.css">
 <body class="app">
     <header class="app-header fixed-top">
         <%- include('layouts/topnav.ejs') %>
@@ -10,13 +10,13 @@
 		    <div class="container-xl">
 			    
 			    
-                    <h1 class="app-page-title">Add Coupen</h1>
+                    <h1 class="app-page-title">Add Coupon</h1>
                 <div class="row gy-4">
                     <div class="col-12 col-lg-6 form-1">
                         
-                        <form action="/admin/addCoupen" method="POST">
-                            <label for="coupenCode">Coupen Code:</label>
-                            <input required type="text" id="coupenCode" name="coupenCode" >
+                        <form action="/admin/addCoupon" method="POST">
+                            <label for="couponCode">Coupon Code:</label>
+                            <input required type="text" id="couponCode" name="couponCode" >
                             <br>
                     
                             <label for="minAmount">Min Amount:</label>
@@ -31,7 +31,7 @@
                             <input required type="number" id="discount" name="discount">
                             <br>
 
-                            <button id="submit" type="submit">Add Coupen</button>
+                            <button id="submit" type="submit">Add Coupon</button>
 
                         </form>
                     </div>

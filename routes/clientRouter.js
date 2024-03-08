@@ -5,6 +5,8 @@ const authController=require("../controller/authController")
 const wishlistController=require("../controller/wishlistController")
 const cartController=require("../controller/cartController")
 const accountController=require("../controller/accountController")
+const checkoutController=require("../controller/checkoutController")
+const couponController=require("../controller/couponController")
 
 
 const authenticatedClient=require('../middleware/clientAuthentication')
@@ -82,5 +84,21 @@ clientRouter.get("/profile",authenticatedClient,accountController.profileGet)
 
 clientRouter.get("/profileEdit",authenticatedClient,accountController.profileEditGet)
 clientRouter.post("/profileEdit",authenticatedClient,accountController.profileEditPost)
+
+//Client Checkout
+
+clientRouter.get("/checkout",authenticatedClient,checkoutController.checkoutGet)
+
+//Client Coupon
+
+clientRouter.post("/couponApply",authenticatedClient,couponController.couponApplyPost)
+
+//Client Address Add
+
+clientRouter.post("/addressAdd",authenticatedClient,accountController.addressAddPost)
+
+//Client placeOrder Post
+
+clientRouter.post("/placeOrder",authenticatedClient,checkoutController.placeOrderPost)
 
 module.exports=clientRouter
