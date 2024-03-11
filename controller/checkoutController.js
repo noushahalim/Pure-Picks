@@ -49,7 +49,6 @@ exports.placeOrderPost=async(req,res)=>{
         const {payment,coupenId,addressId}=req.body
         const clientUserName=req.session.userName
         const userData=await signUpModel.findOne({userName:clientUserName})
-        const bestProducts=await productModel.aggregate([{ $match: { rating: 5 } }, {$sample: { size: 4 } }])
         const cart=await cartModel.findOne({userId:userData._id})
         const productsInfo = await Promise.all(cart.products.map(async (product) => {
             const productData = await productModel.findOne({ _id: product.productId });
@@ -66,31 +65,45 @@ exports.placeOrderPost=async(req,res)=>{
         const deliveryInfo = await addressModel.findOne({_id:addressId})
         
 
-        const data=new orderModel({
-            userId:userData._id,
-            products:productsInfo,
-            deliveryDetails:deliveryInfo,
-            subTotal:cart.discountedPrice,
-            discountedPrice:cart.discountedPrice,
-            paymentMethod:payment
-        })
-        await data.save()
         if(coupenId){
             const coupen = await couponModel.findOne({_id:coupenId})
-            await orderModel.updateOne(
-                {userId:userData._id},
-                {$set:{
-                    coupenDiscount: coupen.discount,
-                    discountedPrice:cart.discountedPrice-coupen.discount
-                }},
-                {upsert:true})
+        
+            const data=new orderModel({
+                userId:userData._id,
+                products:productsInfo,
+                deliveryDetails:deliveryInfo,
+                subTotal:cart.discountedPrice,
+                coupenDiscount: coupen.discount,
+                discountedPrice:cart.discountedPrice-coupen.discount,
+                paymentMethod:payment,
+                orderDate:new Date()
+            })
+        await data.save()
+        }
+        else{
+            const data=new orderModel({
+                userId:userData._id,
+                products:productsInfo,
+                deliveryDetails:deliveryInfo,
+                subTotal:cart.discountedPrice,
+                discountedPrice:cart.discountedPrice,
+                paymentMethod:payment,
+                orderDate:new Date()
+            })
+
+            await data.save()
         }
         if(payment==='UPI'){
-            
+            const latestOrder= await orderModel.findOne({userId:userData._id}).sort({ orderDate: -1 });
+            const cartLength=cart.products.length
+            const data={
+                amount:latestOrder.discountedPrice,
+                orderId:latestOrder._id
+            }
+            res.render('payment.ejs',{data,user: true,cartLength,page:'payment'})
         }
         else if(payment==='COD'){
-            await cartModel.findOneAndDelete({userId:userData._id})
-            res.render('orderPlaced.ejs',{bestProducts})
+            res.redirect("/paymentSuccess")
         }
     }
     catch(err){

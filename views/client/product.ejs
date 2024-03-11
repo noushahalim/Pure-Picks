@@ -119,7 +119,11 @@
                                     <div class="pd-detail__inline">
 
                                         <span class="pd-detail__click-wrap"><i class="far fa-heart u-s-m-r-6"></i>
-                                            <a class="wishlistAdd" href="<%=product._id%>">Add to Wishlist</a>
+                                            <% if(user) { %>
+                                                <a class="wishlistAdd" href="<%=product._id%>">Add to Wishlist</a>
+                                            <% }else{ %>
+                                                <a href="/login">Add to Wishlist</a>
+                                            <% } %>
 
                                             
                                 </div>
@@ -149,7 +153,12 @@
                                                 <!--====== End - Input Counter ======-->
                                             </div>
                                             <div class="u-s-m-b-15">
-                                                <a class="btn btn--e-brand-b-2 cartAdd" href="<%=product._id%>" data-modal="modal" data-modal-id="#cart<%=product._id%>">Add to Cart</a></div>
+                                                <% if(user) { %>
+                                                    <a class="btn btn--e-brand-b-2 cartAdd" href="<%=product._id%>" data-modal="modal" data-modal-id="#cart<%=product._id%>">Add to Cart</a>
+                                                <% }else{ %>
+                                                    <a class="btn btn--e-brand-b-2" href="/login" >Add to Cart</a>
+                                                <% } %>
+                                            </div>
                                         </div>
                                     </form>
                                 </div>

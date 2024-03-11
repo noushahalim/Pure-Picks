@@ -1,0 +1,55 @@
+/* Payment Form Styles */
+#paymentForm {
+    max-width: 400px;
+    margin: 0 auto;
+    border: 1px solid grey;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10%;
+    background-color: white;
+}
+
+
+.payment-form-label {
+    font-weight: bold;
+}
+
+.payment-form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.payment-form-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(41,111,222);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.payment-form-button:hover {
+    background-color: #3e4ec8;
+}
+
+.thick{
+    width: 20%;
+    border: 2px solid;
+    color: rgb(41,111,222);
+}
+
+
+@media screen and (max-width: 768px) {
+    #paymentForm {
+        max-width: 90%;
+    }
+}

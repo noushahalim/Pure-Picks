@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<%- include('layouts/head.ejs') %>
+
+<body class="config" style="background-color: rgba(229,233,234);">
+    <div class="preloader is-active">
+        <div class="preloader__wrap">
+
+            <img class="preloader__img" src="/images/PurePicksIcon.ico" alt="loading"></div>
+    </div>
+
+    <!--====== Main App ======-->
+    <div id="app">
+
+        <!--====== Main Header ======-->
+        <%- include('layouts/topNav.ejs') %>
+        <!--====== End - Main Header ======-->
+
+
+        <!--====== App Content ======-->
+        <div class="app-content">
+
+            <!--====== Section 1 ======-->
+            <div class="u-s-p-y-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="breadcrumb">
+                            <div class="breadcrumb__wrap">
+                                <ul class="breadcrumb__list">
+                                    <li class="has-separator">
+
+                                        <a href="/">Home</a></li>
+                                    <li class="is-marked">
+
+                                        <a href="">payment</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--====== End - Section 1 ======-->
+
+
+            <!--====== Section 2 ======-->
+            <div class="u-s-p-b-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="row">
+                            <!-- Description Column -->
+                            <div class="col-12 col-lg-6" style="color: rgb(13,35,102);">
+                                <h2>Secure Online Payment</h2>
+                                <hr class="thick">
+                                <p>Welcome to the PUREPICKS online payment portal! You're just a few steps away from completing your purchase securely and conveniently. Shop with confidence knowing that your payment information is protected by advanced encryption technology.</p>
+                
+                                <h4>Why Choose Online Payment with PUREPICKS?</h4>
+
+                                <ul>
+                                    <li>Secure Transactions: Your payment details are encrypted and processed securely, ensuring the safety of your personal information.</li>
+                                    <li>Instant Confirmation: Receive instant confirmation of your payment and order details via email, so you can track your purchase every step of the way.</li>
+                                    <li>Convenience: Enjoy the convenience of online payment from the comfort of your home or on the go, without the need for cash or checks.</li>
+
+                                </ul>
+
+                                <h5>Need Help?</h5>
+                                <p>If you encounter any issues or have questions about the payment process, our friendly customer support team is here to assist you. Simply reach out to us, and we'll be happy to help. <br>
+
+                                    Thank you for choosing PUREPICKS for your shopping needs. We appreciate your trust and support.</p>
+
+                                <h4>Contact Us:</h4>
+                                <div style="display: flex; gap: 2%;"> <i class="fa-solid fa-envelope"></i><p>purepicksonline@gmail.com</p></div>
+                                <div style="display: flex; gap: 2%;"> <i class="fa-solid fa-phone"></i><p>+919747323239</p></div>
+                                <!-- Add your reasons here -->
+                            </div>
+                
+                            <!-- Payment Form Column -->
+                            <div class="col-12 col-lg-6">
+                                <!-- Payment Form -->
+                                <form id="paymentForm" action="/payment/razorpay" method="POST">
+                                    <label class="payment-form-label" for="amount">Amount :</label>
+                                    <input disabled class="payment-form-input" type="text" name="amount" value="<%= data.amount%>">  <br>
+                                    <label class="payment-form-label" for="orderId">Order Id :</label>
+                                    <input disabled class="payment-form-input" type="text" name="orderId" value="<%= data.orderId%>"><br>
+                                    <img src="/images/razorpayimage.jpg" alt="">
+                                    <!-- Other required fields like order_id, customer details, etc. -->
+                                    <button id="payButton" class="btn btn--e-brand-b-2 payment-form-button" type="submit">Pay Now</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!--====== End - Section Content ======-->
+            </div>
+            <!--====== End - Section 2 ======-->
+
+        </div>
+        <!--====== End - App Content ======-->
+
+
+        <!--====== Main Footer ======-->
+        <%- include('layouts/footer.ejs') %>
+
+        <!--====== Modal Section ======-->
+
+        <!--====== End - Modal Section ======-->
+    </div>
+    <!--====== End - Main App ======-->
+
+
+    <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
+    <script>
+        window.ga = function() {
+            ga.q.push(arguments)
+        };
+        ga.q = [];
+        ga.l = +new Date;
+        ga('create', 'UA-XXXXX-Y', 'auto');
+        ga('send', 'pageview')
+    </script>
+    <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
+    <!--====== Vendor Js ======-->
+    <script src="/client/js/vendor.js"></script>
+
+    <!--====== jQuery Shopnav plugin ======-->
+    <script src="/client/js/jquery.shopnav.js"></script>
+
+    <!-- Razorpay script -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <!--====== App ======-->
+    <script src="/client/js/app.js"></script>
+    <script src="/client/js/payment.js"></script>
+    
+
+    <!--====== Noscript ======-->
+    <noscript>
+        <div class="app-setting">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="app-setting__wrap">
+                            <h1 class="app-setting__h1">JavaScript is disabled in your browser.</h1>
+
+                            <span class="app-setting__text">Please enable JavaScript in your browser or upgrade to a JavaScript-capable browser.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </noscript>
+</body>
+</html>

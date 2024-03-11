@@ -7,6 +7,7 @@ const cartController=require("../controller/cartController")
 const accountController=require("../controller/accountController")
 const checkoutController=require("../controller/checkoutController")
 const couponController=require("../controller/couponController")
+const paymentController=require("../controller/paymentController")
 
 
 const authenticatedClient=require('../middleware/clientAuthentication')
@@ -100,5 +101,10 @@ clientRouter.post("/addressAdd",authenticatedClient,accountController.addressAdd
 //Client placeOrder Post
 
 clientRouter.post("/placeOrder",authenticatedClient,checkoutController.placeOrderPost)
+
+//Client Payment 
+
+clientRouter.post("/createOrder",authenticatedClient,paymentController.createOrderPost)
+clientRouter.get("/paymentSuccess",authenticatedClient,paymentController.paymentSuccessGet)
 
 module.exports=clientRouter

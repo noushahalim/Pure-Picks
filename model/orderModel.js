@@ -46,12 +46,16 @@ const orderSchema=new mongoose.Schema({
     },
     deliveryStatus:{
         type:String,
-        default:'PROCESSING',
+        default:'Order Placed',
         required:true
     },
     paymentStatus:{
         type:String,
         default:'pending'
+    },
+    orderDate:{
+        type:String,
+        required:true
     }
 })
 
