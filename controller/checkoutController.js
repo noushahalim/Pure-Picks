@@ -62,7 +62,21 @@ exports.placeOrderPost=async(req,res)=>{
                 totalPrice: totalPrice
             };
         }));
-        const deliveryInfo = await addressModel.findOne({_id:addressId})
+        let deliveryInfo = await addressModel.findOne({_id:addressId})
+        if(!deliveryInfo){
+            const profile= await profileModel.findOne({_id:addressId})
+            deliveryInfo={
+                userId:userData._id,
+                fName:profile.fName,
+                lName:profile.lName,
+                number:userData.mobileNumber,
+                streetAddress:profile.streetAddress,
+                country:profile.country,
+                state:profile.state,
+                city:profile.city,
+                pin:profile.pin
+            }
+        }
         
 
         if(coupenId){

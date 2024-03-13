@@ -3,6 +3,8 @@ const wishlistModel=require('../model/wishlistModel')
 const cartModel=require('../model/cartModel')
 const profileModel=require('../model/clientProfileModel')
 const addressModel=require('../model/addressModel')
+const orderModel=require('../model/orderModel')
+const productModel=require('../model/productModel')
 
 exports.accountGet= async(req,res)=>{
     try{
@@ -10,14 +12,16 @@ exports.accountGet= async(req,res)=>{
         const userData=await signUpModel.findOne({userName:clientUserName})
         const wishlist=await wishlistModel.findOne({userId:userData._id})
         const wishlistLength=wishlist?.products.length || 0
+        const orders=await orderModel.find({userId:userData._id}) || ''
+        const orderLength=orders.length || 0
         if(userData){
             const cart=await cartModel.findOne({userId:userData._id})
             if(cart){
                 const cartLength=cart.products.length
-                res.render("account",{userData,user:true,cartLength,wishlistLength,page:'',dash:'account'})
+                res.render("account",{orderLength,userData,user:true,cartLength,wishlistLength,page:'',dash:'account'})
             }
             else{
-                res.render("account",{userData,user:true,cartLength:'',wishlistLength,page:'',dash:'account'})
+                res.render("account",{orderLength,userData,user:true,cartLength:'',wishlistLength,page:'',dash:'account'})
             }
         }
         else{
@@ -37,15 +41,17 @@ exports.profileGet=async(req,res)=>{
         const userData=await signUpModel.findOne({userName:clientUserName})
         const wishlist=await wishlistModel.findOne({userId:userData._id})
         const profile=await profileModel.findOne({userId:userData._id}) || ''
+        const orders=await orderModel.find({userId:userData._id}) || ''
+        const orderLength=orders.length || 0
         const wishlistLength=wishlist?.products.length || 0
         if(userData){
             const cart=await cartModel.findOne({userId:userData._id})
             if(cart){
                 const cartLength=cart.products.length
-                res.render("profile",{userData,user:true,cartLength,wishlistLength,page:'',profile,dash:'profile'})
+                res.render("profile",{orderLength,userData,user:true,cartLength,wishlistLength,page:'',profile,dash:'profile'})
             }
             else{
-                res.render("profile",{userData,user:true,cartLength:'',wishlistLength,page:'',profile,dash:'profile'})
+                res.render("profile",{orderLength,userData,user:true,cartLength:'',wishlistLength,page:'',profile,dash:'profile'})
             }
         }
         else{
@@ -65,15 +71,17 @@ exports.profileEditGet=async(req,res)=>{
         const userData=await signUpModel.findOne({userName:clientUserName})
         const wishlist=await wishlistModel.findOne({userId:userData._id})
         const profile=await profileModel.findOne({userId:userData._id}) || ''
+        const orders=await orderModel.find({userId:userData._id}) || ''
+        const orderLength=orders.length || 0
         const wishlistLength=wishlist?.products.length || 0
         if(userData){
             const cart=await cartModel.findOne({userId:userData._id})
             if(cart){
                 const cartLength=cart.products.length
-                res.render("profileEdit",{userData,user:true,cartLength,wishlistLength,page:'',profile,dash:'profile'})
+                res.render("profileEdit",{orderLength,userData,user:true,cartLength,wishlistLength,page:'',profile,dash:'profile'})
             }
             else{
-                res.render("profileEdit",{userData,user:true,cartLength:'',wishlistLength,page:'',profile,dash:'profile'})
+                res.render("profileEdit",{orderLength,userData,user:true,cartLength:'',wishlistLength,page:'',profile,dash:'profile'})
             }
         }
         else{
@@ -150,4 +158,61 @@ exports.addressAddPost=async(req,res)=>{
     catch(err){
         console.log("error when post addressAdd",err.message)
     }
+}
+
+//Client Orders Get 
+
+exports.ordersGet=async(req,res)=>{
+    try{
+        const clientUserName=req.session.userName
+        const userData=await signUpModel.findOne({userName:clientUserName})
+        const wishlist=await wishlistModel.findOne({userId:userData._id})
+        const orders=await orderModel.find({userId:userData._id}) || ''
+        const wishlistLength=wishlist?.products.length || 0
+        const cart=await cartModel.findOne({userId:userData._id})
+        const orderLength=orders.length || 0
+        const processedOrders = await Promise.all(orders.map(async (order) => {
+                const firstProduct = order.products[0];
+                const productDetails = await productModel.findById(firstProduct.productId);
+                
+                return {
+                    _id: order._id,
+                    orderDate: formatDate(new Date(order.orderDate)),
+                    productId: firstProduct.productId,
+                    productImage: productDetails.productImagePath,
+                    productName: productDetails.productName,
+                    discountedPrice: order.discountedPrice,
+                    totalItems:order.products.length,
+                    totalQuantity: order.products.reduce((acc, curr) => acc + curr.quantity, 0),
+                    deliveryStatus:order.deliveryStatus
+                };
+            }));
+            console.log(orderLength)
+        if(cart){
+            const cartLength=cart.products.length
+            
+            res.render("orders",{user:true,cartLength,wishlistLength,page:'',dash:'orders',userData,orders:processedOrders,orderLength})
+        }
+        else{
+            res.render("orders",{user:true,cartLength:'',wishlistLength,page:'',dash:'orders',userData,orders:processedOrders,orderLength})
+        }
+    }
+    catch(err){
+        console.log("error when get orders",err.message)
+    }
+}
+
+
+
+
+function formatDate(date) {
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    
+    return `${day} ${month} ${year} ${hours}:${minutes}:${seconds}`;
 }

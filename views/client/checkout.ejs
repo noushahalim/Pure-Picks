@@ -237,7 +237,7 @@
                                                     </div>
                                                     <input id="coupenId" name="coupenId" type="hidden" value="">
                                                     <% if(profile){ %>
-                                                        <input id="profileId" type="hidden" name="profileId" value="<%= profile._id %>">
+                                                        <input id="addressId" type="hidden" name="addressId" value="<%= profile._id %>">
                                                     <% }else if(address){ %>
                                                         <input id="addressId" type="hidden" name="addressId" value="<%= address._id %>">
                                                     <% }else{ %>
@@ -245,7 +245,7 @@
                                                     <% } %>
                                                     <div>
                                                         
-                                                        <button class="btn btn--e-brand-b-2" type="submit">PLACE ORDER</button></div>
+                                                        <button class="btn btn--e-brand-b-2" id="placeOrder" type="submit">PLACE ORDER</button></div>
                                                 </form>
                                             </div>
                                         </div>

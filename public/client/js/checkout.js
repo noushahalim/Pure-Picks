@@ -107,3 +107,18 @@ displayAddressForm.addEventListener('submit', (event) => {
     addressId.value=selectedAddressId
     cancelButton.click();
 });
+
+
+// ------------------------------------------------------------------------------------
+
+const placeOrder=document.getElementById("placeOrder")
+
+placeOrder.addEventListener("click",(event)=>{
+    event.preventDefault()
+    if(addressId.value.length<1){
+        alert('Add A Shipping Address')
+    }
+    else{
+        event.target.form.submit();
+    }
+})

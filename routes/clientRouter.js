@@ -107,4 +107,8 @@ clientRouter.post("/placeOrder",authenticatedClient,checkoutController.placeOrde
 clientRouter.post("/createOrder",authenticatedClient,paymentController.createOrderPost)
 clientRouter.get("/paymentSuccess",authenticatedClient,paymentController.paymentSuccessGet)
 
+//Client Orders
+
+clientRouter.get("/orders",authenticatedClient,accountController.ordersGet)
+
 module.exports=clientRouter

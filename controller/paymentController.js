@@ -53,11 +53,13 @@ exports.paymentSuccessGet=async(req,res)=>{
     const userData=await signUpModel.findOne({userName:clientUserName})
     const bestProducts=await productModel.aggregate([{ $match: { rating: 5 } }, {$sample: { size: 4 } }])
     const latestOrder= await orderModel.findOne({userId:userData._id}).sort({ orderDate: -1 });
-    await orderModel.findOneAndUpdate(
-      {userId:userData._id},
-      {paymentStatus:'paid'},
-      {upsert:true}
-    )
+    if(latestOrder.paymentMethod==='UPI'){
+      await orderModel.findOneAndUpdate(
+        {_id:latestOrder._id},
+        {paymentStatus:'paid'},
+        {upsert:true}
+      )
+    }
 
     await cartModel.findOneAndDelete({userId:userData._id})
     res.render('orderPlaced.ejs',{bestProducts,id:latestOrder._id})

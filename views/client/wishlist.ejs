@@ -96,7 +96,7 @@
                                         </div>
                                         <div class="w-r__wrap-2">
 
-                                            <a class="w-r__link btn--e-brand-b-2" data-modal="modal" data-modal-id="#cart<%= product._id%>">ADD TO CART</a>
+                                            <a class="w-r__link btn--e-brand-b-2 cartAdd" href="<%=product._id%>" data-modal="modal" data-modal-id="#cart<%= product._id%>">ADD TO CART</a>
 
                                             <a class="w-r__link btn--e-transparent-platinum-b-2" href="/product/<%=product._id%>">VIEW</a>
 
@@ -228,6 +228,29 @@
             });
             
         })
+
+
+        
+        const addCartButtons = document.querySelectorAll(".cartAdd");
+
+        addCartButtons.forEach(button => {
+            button.addEventListener("click", (event) => {
+                event.preventDefault();
+                const productId = button.getAttribute("href");
+                axios.post("/cartAdd",{productId})
+                .then((response)=>{        
+                    console.log(response.data.message);
+                })
+                .catch((error)=>{
+                    if(error.response.status==403){
+                        alert(error.response.data.message)
+                    }
+                    else{
+                        console.log(error.response.data.message);
+                    }
+                })
+            });
+        });
     </script>
 
     <!--====== Noscript ======-->
