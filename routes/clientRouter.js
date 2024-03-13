@@ -111,4 +111,9 @@ clientRouter.get("/paymentSuccess",authenticatedClient,paymentController.payment
 
 clientRouter.get("/orders",authenticatedClient,accountController.ordersGet)
 
+//Client Order Details
+
+clientRouter.get("/order/:id",authenticatedClient,accountController.orderGet)
+
+
 module.exports=clientRouter

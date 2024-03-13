@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+    <%- include('layouts/head.ejs') %>
+
+<body class="config" style="background-color: rgba(229,233,234);">
+    <div class="preloader is-active">
+        <div class="preloader__wrap">
+
+            <img class="preloader__img" src="/images/PurePicksIcon.ico" alt="loading"></div>
+    </div>
+
+    <!--====== Main App ======-->
+    <div id="app">
+
+        <!--====== Main Header ======-->
+        <%- include('layouts/topNav.ejs') %>
+        <!--====== End - Main Header ======-->
+
+        <!--====== App Content ======-->
+        <div class="app-content">
+
+            <!--====== Section 1 ======-->
+            <div class="u-s-p-y-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="breadcrumb">
+                            <div class="breadcrumb__wrap">
+                                <ul class="breadcrumb__list">
+                                    <li class="has-separator">
+
+                                        <a href="/">Home</a></li>
+                                    <li class="is-marked">
+
+                                        <a href="/account">My Account</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--====== End - Section 1 ======-->
+
+            <!--====== Section 2 ======-->
+            <div class="u-s-p-b-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="dash">
+                        <div class="container">
+                            <div class="row">
+
+                                <%- include('layouts/accountFeatures.ejs') %>
+
+                                <div class="col-lg-9 col-md-12">
+                                    <h1 class="dash__h1 u-s-m-b-30">Order Details</h1>
+                                    <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
+                                        <div class="dash__pad-2">
+                                            <div class="dash-l-r">
+                                                <div>
+                                                    <div class="manage-o__text-2 u-c-secondary">Order #<%= order._id %></div>
+                                                    <div class="manage-o__text u-c-silver">Placed on <%= orderDate%></div>
+                                                </div>
+                                                <div>
+                                                    <div class="manage-o__text-2 u-c-silver">Total:
+
+                                                        <span class="manage-o__text-2 u-c-secondary">₹ <%= order.discountedPrice %></span></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
+                                        <div class="dash__pad-2">
+                                            <div class="manage-o">
+                                                <div class="manage-o__header u-s-m-b-30">
+                                                    <div class="manage-o__icon"><i class="fas fa-box u-s-m-r-5"></i>
+
+                                                        <span class="manage-o__text">Package <%= order.products.length %></span></div>
+                                                </div>
+                                                <div class="dash-l-r">
+                                                    <% if(order.deliveryStatus==='Delivered'){ %>
+                                                    <div class="manage-o__text u-c-secondary">Delivered on <%= deliveredDate%></div>
+                                                    <div class="manage-o__icon"><i class="fas fa-truck u-s-m-r-5"></i>
+
+                                                        <span class="manage-o__text">Standard</span></div>
+                                                    <% } %>
+                                                </div>
+                                                <div class="manage-o__timeline">
+                                                    <% if(order.deliveryStatus !== 'Cancelled'){ %> 
+                                                        <div class="timeline-row">
+                                                            <div class="col-lg-4 u-s-m-b-30">
+                                                                <div class="timeline-step">
+                                                                    <div class="timeline-l-i <%= order.deliveryStatus === 'Order Placed' ? 'timeline-l-i--finish' : order.deliveryStatus === 'Shipped' ? 'timeline-l-i--finish' : order.deliveryStatus === 'Delivered' ? 'timeline-l-i--finish' : '' %>">
+    
+                                                                        <span class="timeline-circle"></span></div>
+    
+                                                                    <span class="timeline-text">Order Placed</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 u-s-m-b-30">
+                                                                <div class="timeline-step">
+                                                                    <div class="timeline-l-i <%= order.deliveryStatus === 'Shipped' ? 'timeline-l-i--finish' : order.deliveryStatus === 'Delivered' ? 'timeline-l-i--finish' : '' %>">
+    
+                                                                        <span class="timeline-circle"></span></div>
+    
+                                                                    <span class="timeline-text">Shipped</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-4 u-s-m-b-30">
+                                                                <div class="timeline-step">
+                                                                    <div class="timeline-l-i <%= order.deliveryStatus === 'Delivered' ? 'timeline-l-i--finish' : '' %>">
+    
+                                                                        <span class="timeline-circle"></span></div>
+    
+                                                                    <span class="timeline-text">Delivered</span>
+                                                                </div>
+                                                            </div>
+                                                        </div> 
+                                                    <% }else{ %>
+                                                        <div class="timeline-row" style="display: flex; justify-content: center;">
+                                                            <div class="timeline-step">
+                                                                <div class="timeline-l-i timeline-l-i--finish">
+
+                                                                    <span class="timeline-circle "></span></div>
+
+                                                                <span class="timeline-text" style="color: red; font-weight: 700; font-size: larger;">Order Cancelled</span>
+                                                            </div>
+                                                        </div>
+                                                    <% } %>
+                                                </div>
+                                                <% orderProducts.forEach(product=>{ %>
+                                                <div class="manage-o__description">
+                                                    <div class="description__container">
+                                                        <div class="description__img-wrap">
+
+                                                            <img class="u-img-fluid" src="<%= product.productImage[1] %>" alt=""></div>
+                                                        <div class="description-title"><%= product.productName %></div>
+                                                    </div>
+                                                    <div class="description__info-wrap">
+                                                        <div>
+
+                                                            <span class="manage-o__text-2 u-c-silver">Quantity:
+
+                                                                <span class="manage-o__text-2 u-c-secondary"><%= product.quantity %></span></span></div>
+                                                        <div>
+
+                                                            <span class="manage-o__text-2 u-c-silver">Total:
+
+                                                                <span class="manage-o__text-2 u-c-secondary">₹ <%= product.totalPrice %></span></span></div>
+                                                    </div>
+                                                </div>
+                                                <br><hr style="border: 1px solid rgb(233, 233, 233);"><br>
+                                                <% }) %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="dash__box dash__box--bg-white dash__box--shadow u-s-m-b-30">
+                                                <div class="dash__pad-3">
+                                                    <h2 class="dash__h2 u-s-m-b-8">Shipping Address</h2>
+                                                    <h2 class="dash__h2 u-s-m-b-8"><%= order.deliveryDetails.fName %> <%= order.deliveryDetails.lName %></h2>
+
+                                                    <span class="dash__text-2"><%= order.deliveryDetails.streetAddress %> <%= order.deliveryDetails.city %> <%= order.deliveryDetails.pin %> <%= order.deliveryDetails.state %> <%= order.deliveryDetails.country %></span>
+
+                                                    <span class="dash__text-2">(+91) <%= order.deliveryDetails.number %></span>
+                                                </div>
+                                            </div>
+                                            <% if(order.deliveryStatus !== 'Cancelled' && order.deliveryStatus !== 'Delivered') { %>
+                                                <div class="dash__box dash__box--bg-white dash__box--shadow u-s-m-b-30">
+                                                    <div class="dash__pad-3">
+                                                        <h2 class="dash__h2 u-s-m-b-8">Cancellation</h2>
+                                                        <button onclick="window.location.href='/cancelOrder/<%= order._id %>'" style="background-color: rgb(255, 211, 211); border: 1px solid rgb(199, 199, 199); color: red; width: 25%; height: 25%; border-radius: 5%; font-weight: 600;">Cancel</button>
+                                                        <span class="dash__text-2">Cancel Your Order Now! Your Amount will be credited in your account within 24 hours</span>
+
+
+                                                    </div>
+                                                </div>
+                                            <% } %>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="dash__box dash__box--bg-white dash__box--shadow u-h-100">
+                                                <div class="dash__pad-3">
+                                                    <h2 class="dash__h2 u-s-m-b-8">Total Summary</h2>
+                                                    <div class="dash-l-r u-s-m-b-8">
+                                                        <div class="manage-o__text-2 u-c-secondary">Subtotal</div>
+                                                        <div class="manage-o__text-2 u-c-secondary">₹ <%= order.subTotal %></div>
+                                                    </div>
+                                                    <% if(order.coupenDiscount){ %>
+                                                        <div class="dash-l-r u-s-m-b-8">
+                                                            <div class="manage-o__text-2 u-c-secondary">Discount</div>
+                                                            <div class="manage-o__text-2 u-c-secondary">₹ <%= order.coupenDiscount %></div>
+                                                        </div>
+                                                    <% } %>
+                                                    <div class="dash-l-r u-s-m-b-8">
+                                                        <div class="manage-o__text-2 u-c-secondary">Shipping Fee</div>
+                                                        <div class="manage-o__text-2 u-c-secondary"><p style="color: green;">free</p></div>
+                                                    </div>
+                                                    <div class="dash-l-r u-s-m-b-8">
+                                                        <div class="manage-o__text-2 u-c-secondary">Total</div>
+                                                        <div class="manage-o__text-2 u-c-secondary">₹ <%= order.discountedPrice %></div>
+                                                    </div>
+                                                    <% if(order.deliveryStatus !== 'Cancelled'){ %> 
+                                                        <% if(order.paymentMethod==='UPI'){ %>
+                                                            <span class="dash__text-2">Paid by Online Payment</span>
+                                                        <% }else if(order.paymentMethod==='COD'){ %>
+                                                            <% if(order.deliveryStatus==='paid'){ %>
+                                                                <span class="dash__text-2">Paid by Cash on Delivery</span>
+                                                            <% } else { %>
+                                                                <span class="dash__text-2">Payment is Pending</span>
+                                                            <% } %>
+                                                        <% } %>
+                                                    <% }else{ %>
+                                                        <span class="dash__text-2" style="color: green;">Payment Refunded Succesfully</span>
+                                                    <% } %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--====== End - Section Content ======-->
+            </div>
+            <!--====== End - Section 2 ======-->
+        </div>
+        <!--====== End - App Content ======--> 
+
+        <!--====== Main Footer ======-->
+        <%- include('layouts/footer.ejs') %>
+    </div>
+    <!--====== End - Main App ======-->
+
+
+    <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
+    <script>
+        window.ga = function() {
+            ga.q.push(arguments)
+        };
+        ga.q = [];
+        ga.l = +new Date;
+        ga('create', 'UA-XXXXX-Y', 'auto');
+        ga('send', 'pageview')
+    </script>
+    <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
+    <!--====== Vendor Js ======-->
+    <script src="/client/js/vendor.js"></script>
+
+    <!--====== jQuery Shopnav plugin ======-->
+    <script src="/client/js/jquery.shopnav.js"></script>
+
+    <!--====== App ======-->
+    <script src="/client/js/app.js"></script>
+
+    <!--====== Noscript ======-->
+    <noscript>
+        <div class="app-setting">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="app-setting__wrap">
+                            <h1 class="app-setting__h1">JavaScript is disabled in your browser.</h1>
+
+                            <span class="app-setting__text">Please enable JavaScript in your browser or upgrade to a JavaScript-capable browser.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </noscript>
+</body>
+</html>

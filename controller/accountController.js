@@ -12,16 +12,28 @@ exports.accountGet= async(req,res)=>{
         const userData=await signUpModel.findOne({userName:clientUserName})
         const wishlist=await wishlistModel.findOne({userId:userData._id})
         const wishlistLength=wishlist?.products.length || 0
-        const orders=await orderModel.find({userId:userData._id}) || ''
+        const orders=await orderModel.find({userId:userData._id}).limit(5).sort({ orderDate: -1 }) || ''
         const orderLength=orders.length || 0
+        const processedOrders = await Promise.all(orders.map(async (order) => {
+            const firstProduct = order.products[0];
+            const productDetails = await productModel.findById(firstProduct.productId);
+            
+            return {
+                _id: order._id,
+                orderDate: formatDate2(new Date(order.orderDate)),
+                productImage: productDetails.productImagePath,
+                discountedPrice: order.discountedPrice,
+                totalItems:order.products.length,
+            };
+        }));
         if(userData){
             const cart=await cartModel.findOne({userId:userData._id})
             if(cart){
                 const cartLength=cart.products.length
-                res.render("account",{orderLength,userData,user:true,cartLength,wishlistLength,page:'',dash:'account'})
+                res.render("account",{processedOrders,orderLength,userData,user:true,cartLength,wishlistLength,page:'',dash:'account'})
             }
             else{
-                res.render("account",{orderLength,userData,user:true,cartLength:'',wishlistLength,page:'',dash:'account'})
+                res.render("account",{processedOrders,orderLength,userData,user:true,cartLength:'',wishlistLength,page:'',dash:'account'})
             }
         }
         else{
@@ -167,7 +179,7 @@ exports.ordersGet=async(req,res)=>{
         const clientUserName=req.session.userName
         const userData=await signUpModel.findOne({userName:clientUserName})
         const wishlist=await wishlistModel.findOne({userId:userData._id})
-        const orders=await orderModel.find({userId:userData._id}) || ''
+        const orders=await orderModel.find({userId:userData._id,deliveryStatus:{$ne:'Cancelled'}}).sort({ orderDate: -1 }) || ''
         const wishlistLength=wishlist?.products.length || 0
         const cart=await cartModel.findOne({userId:userData._id})
         const orderLength=orders.length || 0
@@ -187,7 +199,6 @@ exports.ordersGet=async(req,res)=>{
                     deliveryStatus:order.deliveryStatus
                 };
             }));
-            console.log(orderLength)
         if(cart){
             const cartLength=cart.products.length
             
@@ -203,6 +214,45 @@ exports.ordersGet=async(req,res)=>{
 }
 
 
+//Client Order Details
+
+exports.orderGet=async(req,res)=>{
+    try{
+        const orderId=req.params.id
+        const clientUserName=req.session.userName
+        const userData=await signUpModel.findOne({userName:clientUserName})
+        const wishlist=await wishlistModel.findOne({userId:userData._id})
+        const orders=await orderModel.find({userId:userData._id}) || ''
+        const order=await orderModel.findOne({_id:orderId})
+        const wishlistLength=wishlist?.products.length || 0
+        const cart=await cartModel.findOne({userId:userData._id})
+        const orderLength=orders.length || 0
+        const orderDate= formatDate(new Date(order.orderDate))
+        const deliveredDate= formatDate(new Date(order.deliveredDate)) || ''
+
+        const orderProducts = await Promise.all(order.products.map(async (product) => {
+            const productDetails = await productModel.findById(product.productId);
+            return {
+                productId: product.productId,
+                productImage: productDetails.productImagePath,
+                productName: productDetails.productName,
+                quantity: product.quantity,
+                totalPrice: product.totalPrice
+            };
+        }));
+        if(cart){
+            const cartLength=cart.products.length
+            
+            res.render("orderDetails",{deliveredDate,orderDate,order,orderProducts,user:true,cartLength,wishlistLength,page:'',dash:'orders',userData,orderLength})
+        }
+        else{
+            res.render("orderDetails",{deliveredDate,orderDate,order,orderProducts,user:true,cartLength:'',wishlistLength,page:'',dash:'orders',userData,orderLength})
+        }
+    }
+    catch(err){
+        console.log("error when get order details",err.message)
+    }
+}
 
 
 function formatDate(date) {
@@ -215,4 +265,16 @@ function formatDate(date) {
     const seconds = date.getSeconds();
     
     return `${day} ${month} ${year} ${hours}:${minutes}:${seconds}`;
+}
+
+function formatDate2(dateString) {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    const formattedDay = day < 10 ? '0' + day : day;
+    const formattedMonth = month < 10 ? '0' + month : month;
+
+    return formattedDay + '/' + formattedMonth + '/' + year;
 }
