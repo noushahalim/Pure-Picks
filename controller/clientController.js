@@ -11,9 +11,9 @@ exports.homeGet=async (req,res)=>{
         const clientUserName=req.session.userName
         const category=await categoryModel.find()
         const banner=await bannerModel.find({isBlocked:0})
-        const recentProducts=await productModel.find().sort({createdAt:-1}).limit(8)
-        const recentOurProducts=await productModel.find({brand:"purepicks"}).sort({createdAt:-1}).limit(4)
-        const products=await productModel.find()
+        const recentProducts=await productModel.find().sort({addedDate:-1}).limit(8)
+        const recentOurProducts=await productModel.find({brand:"purepicks"}).sort({addedDate:-1}).limit(4)
+        const products=await productModel.find().limit(32)
         const client=await signUpModel.findOne({userName:clientUserName})
 
         if(category){

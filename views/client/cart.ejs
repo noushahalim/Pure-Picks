@@ -114,7 +114,11 @@
                                                     <div  class="table-p__input-counter-wrap" style="color: black;">
                                                     <%cart.products.forEach(cart=>{%>
                                                         <% if(cart.productId.toString()===product._id.toString()){ %>
-                                                            <%= cart.quantity %>
+                                                            <div style="display: flex; align-items: center; gap: 5px;">
+                                                                <button onclick="window.location.href='/cartDec/<%= product._id %>'" style="width: 15px; height: 15px; display: flex; align-items: center; justify-content: center;">-</button>
+                                                                <%= cart.quantity %>
+                                                                <button onclick="window.location.href='/cartInc/<%= product._id %>'" style="width: 15px; height: 15px; display: flex; align-items: center; justify-content: center;">+</button>
+                                                            </div>
                                                         <% } %>
                                                     <% }) %>
                                                     </div>

@@ -10,7 +10,7 @@ exports.productsGet=async(req,res)=>{
     try{
         const admin=req.session.admin
         const adminProfile=await adminProfileModel.findOne({adminName:admin})
-        const products=await productModel.find()
+        const products=await productModel.find().sort({addedDate:-1})
         
         const page="products"
         if(adminProfile){
@@ -60,7 +60,8 @@ exports.addProductPost=async(req,res)=>{
             category:category,
             subCategory:subCategory,
             rating:rating,
-            productImagePath:image
+            productImagePath:image,
+            addedDate:new Date()
         })
         await data.save()
 
@@ -115,7 +116,7 @@ exports.editProductPost = async (req, res) => {
                 size,
                 category,
                 subCategory,
-                rating,
+                rating
             };
 
             if (req.files && req.files.length > 0) {

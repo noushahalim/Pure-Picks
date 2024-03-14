@@ -51,6 +51,10 @@ const productModelSchema=new mongoose.Schema({
     bannedProduct:{
         type:Number,
         default:0,
+    },
+    addedDate:{
+        type:String,
+        required:true
     }
 })
 

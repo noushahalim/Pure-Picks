@@ -146,6 +146,100 @@ exports.cartRemoveGet=async (req,res)=>{
     }
 }
 
+//client Cart Increment & Decrement 
+
+exports.cartIncGet=async (req,res)=>{
+    try{
+        const productId=req.params.id
+        const clientUserName=req.session.userName
+        const client=await signUpModel.findOne({userName:clientUserName})
+        const cart= await cartModel.findOne({userId:client._id})
+        const product= await productModel.findOne({_id:productId})
+        
+        if(cart){
+            const cartProduct = await cartModel.findOne({
+                userId: client._id,
+                products: { $elemMatch: { productId: productId } }
+            });
+            if (cartProduct) {
+                await cartModel.findOneAndUpdate(
+                    { userId: client._id, "products.productId": productId  },
+                    { $inc: { "products.$.quantity": 1 } },
+                    { upsert: true }
+                );
+                await cartModel.findOneAndUpdate(
+                    {userId:client._id},
+                    {
+                        $set:{
+                            totalItems: cart.totalItems + 1,
+                            totalPrice: cart.totalPrice + product.oldPrice,
+                            totalDiscount: cart.totalDiscount + (product.oldPrice - product.newPrice),
+                            discountedPrice: cart.discountedPrice + product.newPrice
+                        }
+                    }
+                )
+                res.redirect("/cart");
+            }
+            else{
+                res.redirect("/cart")
+            }
+            
+        }
+        else{
+            res.redirect("/cart")
+        }
+    }
+    catch(err){
+        console.log("error when cart increment",err.message);
+    }
+}
+
+exports.cartDecGet=async (req,res)=>{
+    try{
+        const productId=req.params.id
+        const clientUserName=req.session.userName
+        const client=await signUpModel.findOne({userName:clientUserName})
+        const cart= await cartModel.findOne({userId:client._id})
+        const product= await productModel.findOne({_id:productId})
+        
+        if(cart){
+            const cartProduct = await cartModel.findOne({
+                userId: client._id,
+                products: { $elemMatch: { productId: productId } }
+            });
+            if (cartProduct) {
+                await cartModel.findOneAndUpdate(
+                    { userId: client._id, "products.productId": productId  },
+                    { $inc: { "products.$.quantity": -1 } },
+                    { upsert: true }
+                );
+                await cartModel.findOneAndUpdate(
+                    {userId:client._id},
+                    {
+                        $set:{
+                            totalItems: cart.totalItems - 1,
+                            totalPrice: cart.totalPrice - product.oldPrice,
+                            totalDiscount: cart.totalDiscount - (product.oldPrice - product.newPrice),
+                            discountedPrice: cart.discountedPrice - product.newPrice
+                        }
+                    }
+                )
+                res.redirect("/cart");
+            }
+            else{
+                res.redirect("/cart")
+            }
+            
+        }
+        else{
+            res.redirect("/cart")
+        }
+    }
+    catch(err){
+        console.log("error when cart decrement",err.message);
+    }
+}
+
 
 //client Remove All Cart
 

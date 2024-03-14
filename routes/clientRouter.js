@@ -70,6 +70,11 @@ clientRouter.post("/cartAdd",authenticatedClient,cartController.cartAddPost)
 
 clientRouter.get("/cartDelete/:id",authenticatedClient,cartController.cartRemoveGet)
 
+//client Cart Increment & Decrement 
+
+clientRouter.get("/cartInc/:id",authenticatedClient,cartController.cartIncGet)
+clientRouter.get("/cartDec/:id",authenticatedClient,cartController.cartDecGet)
+
 //client Remove All Cart
 
 clientRouter.get("/cartDeleteAll",authenticatedClient,cartController.cartRemoveAllGet)
