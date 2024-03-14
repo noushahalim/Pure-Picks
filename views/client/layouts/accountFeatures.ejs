@@ -22,7 +22,7 @@
 
                 <li>
 
-                    <a class="<%= dash === 'returns' ? 'dash-active' : '' %>" href="/returns">My Returns & Cancellations</a></li>
+                    <a class="<%= dash === 'cancelledOrders' ? 'dash-active' : '' %>" href="/cancelledOrders">My Returns & Cancellations</a></li>
             </ul>
         </div>
     </div>
@@ -43,7 +43,7 @@
 
                         <span class="dash__w-icon dash__w-icon-style-2"><i class="fas fa-times"></i></span>
 
-                        <span class="dash__w-text">0</span>
+                        <span class="dash__w-text"><%= cancelledOrdersLength%></span>
 
                         <span class="dash__w-name">Cancel Orders</span></div>
                 </li>

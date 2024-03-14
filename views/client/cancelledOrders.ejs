@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+    <%- include('layouts/head.ejs') %>
+
+
+<body class="config" style="background-color: rgba(229,233,234);">
+    <div class="preloader is-active">
+        <div class="preloader__wrap">
+
+            <img class="preloader__img" src="/images/PurePicksIcon.ico" alt="loading"></div>
+    </div>
+
+    <!--====== Main App ======-->
+    <div id="app">
+
+        <!--====== Main Header ======-->
+        <%- include('layouts/topNav.ejs') %>
+        <!--====== End - Main Header ======-->
+
+
+        <!--====== App Content ======-->
+        <div class="app-content">
+
+            <!--====== Section 1 ======-->
+            <div class="u-s-p-y-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="breadcrumb">
+                            <div class="breadcrumb__wrap">
+                                <ul class="breadcrumb__list">
+                                    <li class="has-separator">
+
+                                        <a href="/">Home</a></li>
+                                    <li class="is-marked">
+
+                                        <a href="/account">My Account</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--====== End - Section 1 ======-->
+
+            <!--====== Section 2 ======-->
+            <div class="u-s-p-b-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="dash">
+                        <div class="container">
+                            <div class="row">
+
+                                <%- include('layouts/accountFeatures.ejs') %>
+
+                                <div class="col-lg-9 col-md-12">
+                                    <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
+                                        <div class="dash__pad-2" style="background-color: rgb(240, 240, 240);">
+                                            <h1 class="dash__h1 u-s-m-b-14">My Returns & Cancellations</h1>
+
+                                            <span class="dash__text u-s-m-b-30">Here you can see Cancelled & Returned Products.</span>
+                                            <% if(orders.length>0){ %>
+                                                <div class="m-order__list" style="background-color: rgba(240, 240, 240);">
+                                                    <% orders.forEach(order=>{ %>
+                                                    <div class="m-order__get">
+                                                        <div class="manage-o__header u-s-m-b-30">
+                                                            <div class="dash-l-r">
+                                                                <div>
+                                                                    <div class="manage-o__text-2 u-c-secondary">Order #<%= order._id %></div>
+                                                                    <div class="manage-o__text u-c-silver">Placed on <%= order.orderDate %></div>
+                                                                </div>
+                                                                <div>
+                                                                    <div class="dash__link dash__link--brand">
+    
+                                                                        <a href="/order/<%= order._id %>">VIEW</a></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="manage-o__description">
+                                                            <div class="description__container">
+                                                                <div class="description__img-wrap">
+    
+                                                                    <img class="u-img-fluid" src="<%= order.productImage[1] %>" alt=""></div>
+                                                                <% if(order.totalItems>1){ %>
+                                                                <div class="description-title"><%= order.productName %> <p style="color: grey;">And <%= order.totalItems - 1 %> more</p></div>
+                                                                <% }else{ %>
+                                                                <div class="description-title"><%= order.productName %></div>
+                                                                <% } %>
+                                                            </div>
+                                                            <div class="description__info-wrap">
+                                                                <div>
+    
+                                                                    <span style="width: fit-content;" class="manage-o__badge <%= order.deliveryStatus === 'Cancelled' ? 'badge--delivered' : '' %>"><%= order.deliveryStatus %></span></div>
+
+                                                                <div>
+    
+                                                                    <span class="manage-o__text-2 u-c-silver">Quantity:
+    
+                                                                        <span class="manage-o__text-2 u-c-secondary"><%= order.totalQuantity %></span></span></div>
+                                                                <div>
+    
+                                                                    <span class="manage-o__text-2 u-c-silver">Total:
+    
+                                                                        <span class="manage-o__text-2 u-c-secondary">₹ <%= order.discountedPrice %></span></span></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <% }) %>
+                                                </div>
+                                            <% }else{ %>
+                                                <div class="m-order__list" style="display: flex; align-items: center; justify-content: center;">
+                                                    <h1 style="color: rgb(252,88,28);">EMPTY</h1>
+                                                </div>
+                                            <%}%>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--====== End - Section Content ======-->
+            </div>
+            <!--====== End - Section 2 ======-->
+        </div>
+        <!--====== End - App Content ======-->
+
+        <!--====== Main Footer ======-->
+        <%- include('layouts/footer.ejs') %>
+    </div>
+    <!--====== End - Main App ======-->
+
+
+    <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
+    <script>
+        window.ga = function() {
+            ga.q.push(arguments)
+        };
+        ga.q = [];
+        ga.l = +new Date;
+        ga('create', 'UA-XXXXX-Y', 'auto');
+        ga('send', 'pageview')
+    </script>
+    <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
+    <!--====== Vendor Js ======-->
+    <script src="/client/js/vendor.js"></script>
+
+    <!--====== jQuery Shopnav plugin ======-->
+    <script src="/client/js/jquery.shopnav.js"></script>
+
+    <!--====== App ======-->
+    <script src="/client/js/app.js"></script>
+
+    <!--====== Noscript ======-->
+    <noscript>
+        <div class="app-setting">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="app-setting__wrap">
+                            <h1 class="app-setting__h1">JavaScript is disabled in your browser.</h1>
+
+                            <span class="app-setting__text">Please enable JavaScript in your browser or upgrade to a JavaScript-capable browser.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </noscript>
+</body>
+</html>

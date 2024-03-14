@@ -172,7 +172,7 @@
                                                 <div class="dash__box dash__box--bg-white dash__box--shadow u-s-m-b-30">
                                                     <div class="dash__pad-3">
                                                         <h2 class="dash__h2 u-s-m-b-8">Cancellation</h2>
-                                                        <button onclick="window.location.href='/cancelOrder/<%= order._id %>'" style="background-color: rgb(255, 211, 211); border: 1px solid rgb(199, 199, 199); color: red; width: 25%; height: 25%; border-radius: 5%; font-weight: 600;">Cancel</button>
+                                                        <button id="orderCancel" style="background-color: rgb(255, 211, 211); border: 1px solid rgb(199, 199, 199); color: red; width: 25%; height: 25%; border-radius: 5%; font-weight: 600;">Cancel</button>
                                                         <span class="dash__text-2">Cancel Your Order Now! Your Amount will be credited in your account within 24 hours</span>
 
 
@@ -256,6 +256,31 @@
 
     <!--====== App ======-->
     <script src="/client/js/app.js"></script>
+    <script>
+        const orderCancel=document.getElementById("orderCancel")
+        orderCancel.addEventListener("click",(event)=>{
+            event.preventDefault()
+            Swal.fire({
+              title: "Are you sure?",
+              text: "You'r Cancel This Order!",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Yes, cancel it!"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                  Swal.fire({
+                      title: "Cancelled!",
+                      text: "Order Cancelled Succesfully.",
+                      icon: "success"
+                    });
+                window.location="/orderCancel/<%= order._id %>"
+              }
+            });
+            
+        })
+    </script>
 
     <!--====== Noscript ======-->
     <noscript>

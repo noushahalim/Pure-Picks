@@ -8,6 +8,7 @@ const accountController=require("../controller/accountController")
 const checkoutController=require("../controller/checkoutController")
 const couponController=require("../controller/couponController")
 const paymentController=require("../controller/paymentController")
+const orderController=require('../controller/orderController')
 
 
 const authenticatedClient=require('../middleware/clientAuthentication')
@@ -109,11 +110,19 @@ clientRouter.get("/paymentSuccess",authenticatedClient,paymentController.payment
 
 //Client Orders
 
-clientRouter.get("/orders",authenticatedClient,accountController.ordersGet)
+clientRouter.get("/orders",authenticatedClient,orderController.ordersGet)
+
+//Client Cancelled Orders
+
+clientRouter.get("/cancelledOrders",authenticatedClient,orderController.cancelledOrdersGet)
+
+//Client Order Cancel
+
+clientRouter.get("/orderCancel/:id",authenticatedClient,orderController.orderCancelGet)
 
 //Client Order Details
 
-clientRouter.get("/order/:id",authenticatedClient,accountController.orderGet)
+clientRouter.get("/order/:id",authenticatedClient,orderController.orderGet)
 
 
 module.exports=clientRouter

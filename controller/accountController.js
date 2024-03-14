@@ -13,7 +13,10 @@ exports.accountGet= async(req,res)=>{
         const wishlist=await wishlistModel.findOne({userId:userData._id})
         const wishlistLength=wishlist?.products.length || 0
         const orders=await orderModel.find({userId:userData._id}).limit(5).sort({ orderDate: -1 }) || ''
-        const orderLength=orders.length || 0
+        const placedOrders=await orderModel.find({userId:userData._id,deliveryStatus:{$ne:'Cancelled'}}) || ''
+        const cancelledOrders=await orderModel.find({userId:userData._id,deliveryStatus:'Cancelled'}) || ''
+        const orderLength=placedOrders.length || 0
+        const cancelledOrdersLength=cancelledOrders.length || 0
         const processedOrders = await Promise.all(orders.map(async (order) => {
             const firstProduct = order.products[0];
             const productDetails = await productModel.findById(firstProduct.productId);
@@ -30,10 +33,10 @@ exports.accountGet= async(req,res)=>{
             const cart=await cartModel.findOne({userId:userData._id})
             if(cart){
                 const cartLength=cart.products.length
-                res.render("account",{processedOrders,orderLength,userData,user:true,cartLength,wishlistLength,page:'',dash:'account'})
+                res.render("account",{cancelledOrdersLength,processedOrders,orderLength,userData,user:true,cartLength,wishlistLength,page:'',dash:'account'})
             }
             else{
-                res.render("account",{processedOrders,orderLength,userData,user:true,cartLength:'',wishlistLength,page:'',dash:'account'})
+                res.render("account",{cancelledOrdersLength,processedOrders,orderLength,userData,user:true,cartLength:'',wishlistLength,page:'',dash:'account'})
             }
         }
         else{
@@ -53,17 +56,19 @@ exports.profileGet=async(req,res)=>{
         const userData=await signUpModel.findOne({userName:clientUserName})
         const wishlist=await wishlistModel.findOne({userId:userData._id})
         const profile=await profileModel.findOne({userId:userData._id}) || ''
-        const orders=await orderModel.find({userId:userData._id}) || ''
-        const orderLength=orders.length || 0
+        const placedOrders=await orderModel.find({userId:userData._id,deliveryStatus:{$ne:'Cancelled'}}) || ''
+        const cancelledOrders=await orderModel.find({userId:userData._id,deliveryStatus:'Cancelled'}) || ''
+        const orderLength=placedOrders.length || 0
+        const cancelledOrdersLength=cancelledOrders.length || 0
         const wishlistLength=wishlist?.products.length || 0
         if(userData){
             const cart=await cartModel.findOne({userId:userData._id})
             if(cart){
                 const cartLength=cart.products.length
-                res.render("profile",{orderLength,userData,user:true,cartLength,wishlistLength,page:'',profile,dash:'profile'})
+                res.render("profile",{cancelledOrdersLength,orderLength,userData,user:true,cartLength,wishlistLength,page:'',profile,dash:'profile'})
             }
             else{
-                res.render("profile",{orderLength,userData,user:true,cartLength:'',wishlistLength,page:'',profile,dash:'profile'})
+                res.render("profile",{cancelledOrdersLength,orderLength,userData,user:true,cartLength:'',wishlistLength,page:'',profile,dash:'profile'})
             }
         }
         else{
@@ -83,17 +88,19 @@ exports.profileEditGet=async(req,res)=>{
         const userData=await signUpModel.findOne({userName:clientUserName})
         const wishlist=await wishlistModel.findOne({userId:userData._id})
         const profile=await profileModel.findOne({userId:userData._id}) || ''
-        const orders=await orderModel.find({userId:userData._id}) || ''
-        const orderLength=orders.length || 0
+        const placedOrders=await orderModel.find({userId:userData._id,deliveryStatus:{$ne:'Cancelled'}}) || ''
+        const cancelledOrders=await orderModel.find({userId:userData._id,deliveryStatus:'Cancelled'}) || ''
+        const orderLength=placedOrders.length || 0
+        const cancelledOrdersLength=cancelledOrders.length || 0
         const wishlistLength=wishlist?.products.length || 0
         if(userData){
             const cart=await cartModel.findOne({userId:userData._id})
             if(cart){
                 const cartLength=cart.products.length
-                res.render("profileEdit",{orderLength,userData,user:true,cartLength,wishlistLength,page:'',profile,dash:'profile'})
+                res.render("profileEdit",{cancelledOrdersLength,orderLength,userData,user:true,cartLength,wishlistLength,page:'',profile,dash:'profile'})
             }
             else{
-                res.render("profileEdit",{orderLength,userData,user:true,cartLength:'',wishlistLength,page:'',profile,dash:'profile'})
+                res.render("profileEdit",{cancelledOrdersLength,orderLength,userData,user:true,cartLength:'',wishlistLength,page:'',profile,dash:'profile'})
             }
         }
         else{
@@ -172,100 +179,7 @@ exports.addressAddPost=async(req,res)=>{
     }
 }
 
-//Client Orders Get 
 
-exports.ordersGet=async(req,res)=>{
-    try{
-        const clientUserName=req.session.userName
-        const userData=await signUpModel.findOne({userName:clientUserName})
-        const wishlist=await wishlistModel.findOne({userId:userData._id})
-        const orders=await orderModel.find({userId:userData._id,deliveryStatus:{$ne:'Cancelled'}}).sort({ orderDate: -1 }) || ''
-        const wishlistLength=wishlist?.products.length || 0
-        const cart=await cartModel.findOne({userId:userData._id})
-        const orderLength=orders.length || 0
-        const processedOrders = await Promise.all(orders.map(async (order) => {
-                const firstProduct = order.products[0];
-                const productDetails = await productModel.findById(firstProduct.productId);
-                
-                return {
-                    _id: order._id,
-                    orderDate: formatDate(new Date(order.orderDate)),
-                    productId: firstProduct.productId,
-                    productImage: productDetails.productImagePath,
-                    productName: productDetails.productName,
-                    discountedPrice: order.discountedPrice,
-                    totalItems:order.products.length,
-                    totalQuantity: order.products.reduce((acc, curr) => acc + curr.quantity, 0),
-                    deliveryStatus:order.deliveryStatus
-                };
-            }));
-        if(cart){
-            const cartLength=cart.products.length
-            
-            res.render("orders",{user:true,cartLength,wishlistLength,page:'',dash:'orders',userData,orders:processedOrders,orderLength})
-        }
-        else{
-            res.render("orders",{user:true,cartLength:'',wishlistLength,page:'',dash:'orders',userData,orders:processedOrders,orderLength})
-        }
-    }
-    catch(err){
-        console.log("error when get orders",err.message)
-    }
-}
-
-
-//Client Order Details
-
-exports.orderGet=async(req,res)=>{
-    try{
-        const orderId=req.params.id
-        const clientUserName=req.session.userName
-        const userData=await signUpModel.findOne({userName:clientUserName})
-        const wishlist=await wishlistModel.findOne({userId:userData._id})
-        const orders=await orderModel.find({userId:userData._id}) || ''
-        const order=await orderModel.findOne({_id:orderId})
-        const wishlistLength=wishlist?.products.length || 0
-        const cart=await cartModel.findOne({userId:userData._id})
-        const orderLength=orders.length || 0
-        const orderDate= formatDate(new Date(order.orderDate))
-        const deliveredDate= formatDate(new Date(order.deliveredDate)) || ''
-
-        const orderProducts = await Promise.all(order.products.map(async (product) => {
-            const productDetails = await productModel.findById(product.productId);
-            return {
-                productId: product.productId,
-                productImage: productDetails.productImagePath,
-                productName: productDetails.productName,
-                quantity: product.quantity,
-                totalPrice: product.totalPrice
-            };
-        }));
-        if(cart){
-            const cartLength=cart.products.length
-            
-            res.render("orderDetails",{deliveredDate,orderDate,order,orderProducts,user:true,cartLength,wishlistLength,page:'',dash:'orders',userData,orderLength})
-        }
-        else{
-            res.render("orderDetails",{deliveredDate,orderDate,order,orderProducts,user:true,cartLength:'',wishlistLength,page:'',dash:'orders',userData,orderLength})
-        }
-    }
-    catch(err){
-        console.log("error when get order details",err.message)
-    }
-}
-
-
-function formatDate(date) {
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    const day = date.getDate();
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const seconds = date.getSeconds();
-    
-    return `${day} ${month} ${year} ${hours}:${minutes}:${seconds}`;
-}
 
 function formatDate2(dateString) {
     const date = new Date(dateString);
