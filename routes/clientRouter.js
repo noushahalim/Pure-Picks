@@ -100,7 +100,7 @@ clientRouter.get("/checkout",authenticatedClient,checkoutController.checkoutGet)
 
 clientRouter.post("/couponApply",authenticatedClient,couponController.couponApplyPost)
 
-//Client Address Add
+//Client Address Add on checkout
 
 clientRouter.post("/addressAdd",authenticatedClient,accountController.addressAddPost)
 
@@ -128,6 +128,19 @@ clientRouter.get("/orderCancel/:id",authenticatedClient,orderController.orderCan
 //Client Order Details
 
 clientRouter.get("/order/:id",authenticatedClient,orderController.orderGet)
+
+//Client Addresses
+
+clientRouter.get("/addresses",authenticatedClient,accountController.addressesGet)
+
+//Client Add Address
+
+clientRouter.get("/addAddress",authenticatedClient,accountController.addAddressGet)
+clientRouter.post("/addAddress",authenticatedClient,accountController.addAddressPost)
+
+//Client Delete Address
+
+clientRouter.get("/deleteAddress/:id",authenticatedClient,accountController.deleteAddressGet)
 
 
 module.exports=clientRouter

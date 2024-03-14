@@ -222,8 +222,9 @@
                       title: "Deleted!",
                       text: "Wishlist Datas removed.",
                       icon: "success"
-                    });
-                window.location="/wishlistRemoveAll"
+                    }).then(() => {
+                            window.location="/wishlistRemoveAll"
+                        });
               }
             });
             

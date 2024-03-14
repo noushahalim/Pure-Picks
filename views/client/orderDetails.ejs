@@ -274,8 +274,9 @@
                       title: "Cancelled!",
                       text: "Order Cancelled Succesfully.",
                       icon: "success"
-                    });
-                window.location="/orderCancel/<%= order._id %>"
+                    }).then(() => {
+                            window.location="/orderCancel/<%= order._id %>"
+                        });
               }
             });
             

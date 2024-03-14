@@ -299,8 +299,9 @@
                       title: "Deleted!",
                       text: "Cart Datas removed.",
                       icon: "success"
-                    });
-                window.location="/cartDeleteAll"
+                    }).then(() => {
+                            window.location="/cartDeleteAll"
+                        });
               }
             });
             
