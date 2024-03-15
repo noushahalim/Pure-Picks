@@ -146,5 +146,8 @@ clientRouter.post("/addAddress",authenticatedClient,accountController.addAddress
 
 clientRouter.get("/deleteAddress/:id",authenticatedClient,accountController.deleteAddressGet)
 
+//Client Product Review
+
+clientRouter.post("/review",clientController.reviewPost)
 
 module.exports=clientRouter

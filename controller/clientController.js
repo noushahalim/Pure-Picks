@@ -3,6 +3,8 @@ const bannerModel=require('../model/bannerModel')
 const categoryModel=require('../model/categoryModal')
 const productModel=require('../model/productModel')
 const cartModel=require('../model/cartModel')
+const orderModel=require('../model/orderModel')
+const reviewModel=require('../model/reviewModel')
 
 //client home
 
@@ -70,19 +72,23 @@ exports.productGet=async (req,res)=>{
         const product=await productModel.findOne({_id:productId})
         const avProducts=await productModel.find({category:product.category,subCategory:product.subCategory}).limit(6)
         const client=await signUpModel.findOne({userName:clientUserName})
+        const reviews=await reviewModel.find({productId:productId}).populate('userId', 'userName').exec() || ''
+        reviews.forEach(review => {
+            review.date = formatDate(new Date(review.date));
+        });
 
         if(product){
             if(client){
                 const cart=await cartModel.findOne({userId:client._id})
                 if(cart){
                     const cartLength=cart.products.length
-                    res.render("product",{products,product,avProducts,user:true,cartLength,page:''})
+                    res.render("product",{reviews,products,product,avProducts,user:true,cartLength,page:'productDetails'})
                 }
                 else{
-                    res.render("product",{products,product,avProducts,user:true,cartLength:'',page:''})
+                    res.render("product",{reviews,products,product,avProducts,user:true,cartLength:'',page:'productDetails'})
                 }
             }else{
-                res.render("product",{products,product,avProducts,user:'',cartLength:'',page:''})
+                res.render("product",{reviews,products,product,avProducts,user:'',cartLength:'',page:'productDetails'})
             }
         }
         else{
@@ -92,4 +98,44 @@ exports.productGet=async (req,res)=>{
     }catch(err){
         console.log("error when get product page",err.message);
     }
+}
+
+//Client Product Review
+
+exports.reviewPost=async(req,res)=>{
+    try{
+        const {productId,rating,reviewDescription}=req.body
+        const clientUserName=req.session.userName
+
+        const userData=await signUpModel.findOne({userName:clientUserName})
+        if(!userData){
+            return res.status(401).json({message:"You should login to review."})
+        }
+
+        const order=await orderModel.findOne({userId:userData._id,'products.productId':productId,deliveryStatus:"Delivered"})
+        if(!order){
+            return res.status(403).json({message:"You should buy this product to review."})
+        }
+
+        const review = new reviewModel({ 
+            userId: userData._id,
+            productId, 
+            rating, 
+            reviewDescription,
+            date: new Date()
+        });
+        await review.save();
+
+        return res.status(200).json({ message: "Review posted successfully." });
+    }
+    catch(err){
+        console.log("error when post review",err.message);
+        res.status(500).json({ message: "Internal server error." });
+    }
+}
+
+
+function formatDate(date) {
+    const options = { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    return date.toLocaleDateString('en-US', options);
 }
