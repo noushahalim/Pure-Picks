@@ -1,6 +1,7 @@
 const adminProfileModel=require('../model/adminProfileModel')
 const productModel=require('../model/productModel')
 const categoryModel=require('../model/categoryModal')
+const reviewModel=require('../model/reviewModel')
 
 
 
@@ -21,6 +22,36 @@ exports.productsGet=async(req,res)=>{
         }
     }catch(err){
         console.log("error when get products",err.message);
+    }
+}
+
+//admin Product Details
+
+exports.productDetailsGet=async(req,res)=>{
+    try{
+        const productId=req.params.id
+        const admin=req.session.admin
+        const adminProfile=await adminProfileModel.findOne({adminName:admin})
+        const product=await productModel.findOne({_id:productId})
+        const reviews=await reviewModel.find({productId:productId}).populate('userId', 'userName').exec() || ''
+        reviews.forEach(review => {
+            review.date = formatDate(new Date(review.date));
+        });
+
+        const page="products"
+
+        if(product){
+            if(adminProfile){
+                res.render("productDetails",{page,adminProfile,reviews,product})
+            }else{
+                res.render("productDetails",{page,adminProfile:" ",reviews,product:''})
+            }
+        }
+        else{
+            res.redirect("/admin")
+        }
+    }catch(err){
+        console.log("error when get product details",err.message);
     }
 }
 
@@ -172,3 +203,7 @@ exports.banProductPost= async(req,res)=>{
     }
 }
 
+function formatDate(date) {
+    const options = { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    return date.toLocaleDateString('en-US', options);
+}

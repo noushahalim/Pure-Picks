@@ -70,6 +70,10 @@ adminRouter.post("/deleteSubCategory",authenticatedAdmin,lockedAdmin,categoriesC
 
 adminRouter.get("/products",authenticatedAdmin,lockedAdmin,productsController.productsGet)
 
+//admin Product Details
+
+adminRouter.get("/productDetails/:id", authenticatedAdmin, lockedAdmin, productsController.productDetailsGet);
+
 //admin add Products
 
 adminRouter.get("/addProduct",authenticatedAdmin,lockedAdmin,productsController.addProductGet)
