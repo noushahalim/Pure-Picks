@@ -15,10 +15,10 @@ const razorpay = new Razorpay({
 
 exports.createOrderPost=async(req,res)=>{
     try{
+        const orderId=req.body.orderId
         const clientUserName=req.session.userName
         const userData=await signUpModel.findOne({userName:clientUserName})
-        const latestOrder= await orderModel.findOne({userId:userData._id}).sort({ orderDate: -1 });
-
+        const latestOrder= await orderModel.findOne({_id:orderId});
         if (!latestOrder) {
           return res.status(404).json({ error: 'No orders found' });
         }
@@ -49,10 +49,11 @@ exports.createOrderPost=async(req,res)=>{
 
 exports.paymentSuccessGet=async(req,res)=>{
   try{
+    const orderId=req.params.id
     const clientUserName=req.session.userName
     const userData=await signUpModel.findOne({userName:clientUserName})
     const bestProducts=await productModel.aggregate([{ $match: { rating: 5 } }, {$sample: { size: 4 } }])
-    const latestOrder= await orderModel.findOne({userId:userData._id}).sort({ orderDate: -1 });
+    const latestOrder= await orderModel.findOne({_id:orderId});
     if(latestOrder.paymentMethod==='UPI'){
       await orderModel.findOneAndUpdate(
         {_id:latestOrder._id},

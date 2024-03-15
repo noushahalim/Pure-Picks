@@ -33,6 +33,10 @@ clientRouter.post("/login",authController.loginPost)
 clientRouter.get("/signUp",authController.signUpGet)
 clientRouter.post("/signUp",authController.signUpPost)
 
+//Client Logout
+
+clientRouter.get("/logout",authenticatedClient,authController.logoutGet)
+
 //client otp
 
 clientRouter.get("/otp/:mobileNumber",authController.otpGet)
@@ -111,7 +115,7 @@ clientRouter.post("/placeOrder",authenticatedClient,checkoutController.placeOrde
 //Client Payment 
 
 clientRouter.post("/createOrder",authenticatedClient,paymentController.createOrderPost)
-clientRouter.get("/paymentSuccess",authenticatedClient,paymentController.paymentSuccessGet)
+clientRouter.get("/paymentSuccess/:id",authenticatedClient,paymentController.paymentSuccessGet)
 
 //Client Orders
 

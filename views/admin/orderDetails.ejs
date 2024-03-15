@@ -1,0 +1,133 @@
+<%- include('layouts/htmlhead.ejs') %>
+<body class="app">
+    <header class="app-header fixed-top">
+        <%- include('layouts/topnav.ejs') %>
+		<%- include('layouts/sidepanel.ejs') %>
+    </header>
+    <div class="app-wrapper">
+        <div class="app-content pt-3 p-md-3 p-lg-4">
+		    <div class="container-xl">
+			    <h1 class="app-page-title">Order Management</h1>
+                <div class="row gy-4">
+                    <div class="col-12" style="background-color: white; padding: 2%; border-radius: 20px;">
+                        <span style="color: black; font-size: 15px; font-weight: 500;">Order #<%= order._id %></span>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="font-size: 14px;">Placed On <%= orderDate%></span>
+                            <div style="font-weight: 500;">
+                                <span>Total:</span>
+                                <span style="font-size: 15px; color: black;">₹ <%= order.discountedPrice %></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12" style="background-color: white; padding: 2%; border-radius: 20px;">
+                        <div style="color: black;">
+                            <i class="fas fa-box"></i>
+                            <span style="font-size: 14px; font-weight: 500;">Package <%= order.products.length %></span>
+                            <hr style="color: gray;">
+                        </div>
+                        <% if(order.deliveryStatus==='Delivered'){ %>
+                            <div style="color: black; display: flex;">
+                                <span style="font-size: 14px; font-weight: 500;">Devivered on <%= deliveredDate%></span>
+                                <div style="margin-left: 75%;">
+                                    <i class="fas fa-truck"></i>
+                                    <span style="font-size: 14px; font-weight: 500;">Standard</span>
+                                </div>
+                            </div>
+                        <% } %>
+                        <% if(order.deliveryStatus === 'Cancelled'){ %> 
+                            <div style="display: flex; justify-content: center; padding: 2%;">
+                                <span class="timeline-text" style="color: red; font-weight: 700; font-size: larger;">Order <%= order.deliveryStatus %></span>
+                            </div>
+                        <% }else{ %>
+                            <div style="display: flex; justify-content: center; padding: 2%;">
+                                <span class="timeline-text" style="color: black; font-weight: 700; font-size: larger;"><%= order.deliveryStatus %></span>
+                            </div>
+                        <% } %>
+                        <% if(order.deliveryStatus !== 'Delivered' && order.deliveryStatus !== 'Cancelled'){ %> 
+                            <div style="display: flex; justify-content: center; padding: 2%;">
+                                <form action="/admin/orderStatusChange/<%= order._id %>" method="post">
+                                    <label style="color: black;" for="deliveryStatus">Change Status :</label>
+                                    <select name="deliveryStatus" required>
+                                        <option selected value="">Choose Status</option>
+                                        <option value="Order Placed">Order Placed</option>
+                                        <option value="Shipped">Shipped</option>
+                                        <option value="Delivered">Delivered</option>
+                                        <option value="Cancelled">Cancelled</option>
+                                    </select>
+                                    <button style="background-color: #edfdf6; border: 1px solid ; border-radius: 10px;" type="submit">Change</button>
+                                </form>
+                            </div>
+                        <% } %>
+                        <% orderProducts.forEach(product=>{ %>
+                            <div style="display: flex; justify-content: space-between;">
+                                <div style="display: flex; align-items: center;">
+                                    <div><img style="width: 100px;" src="<%= product.productImage[1] %>" alt=""></div>
+                                    <div style="margin-left: 20px; color: black; font-weight: 500;"><span><%= product.productName %></span></div>
+                                </div>
+                                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                    <div>
+                                        <span style="font-weight: 500;">Quantity: </span>
+                                        <span style="font-weight: 500; color: black;"><%= product.quantity %></span>
+                                    </div>
+                                    <div>
+                                        <span style="font-weight: 500;">Total: </span>
+                                        <span style="font-weight: 500; color: black">₹ <%= product.totalPrice %></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                        <% }) %>
+                        
+                    </div>
+                    <div class="col-12" style="display: flex; gap: 5%; justify-content: space-between; margin-bottom: 5%;">
+                        <div style="background-color: white; padding: 2%; width: 100%; display: flex; flex-direction: column;">
+                            <span style="font-weight: 500; color: black">Shipping Address</span>
+                            <span style="font-weight: 500; color: black"><%= order.deliveryDetails.fName %> <%= order.deliveryDetails.lName %></span>
+                            <span style="font-weight: 500; font-size: 15px;"><%= order.deliveryDetails.streetAddress %> <%= order.deliveryDetails.city %> <%= order.deliveryDetails.pin %> <%= order.deliveryDetails.state %> <%= order.deliveryDetails.country %></span>
+                            <span style="font-weight: 500; font-size: 15px;">(+91) <%= order.deliveryDetails.number %></span>
+                            <br>
+                            <span style="font-weight: 700; font-size: 18px; color: black">Payment</span>
+                            <br>
+                            <div style="font-weight: 500; color: black; display: flex; justify-content: space-between;">
+                                <span>Payment Method : </span>
+                                <span><%= order.paymentMethod %></span>
+                            </div>
+                            <div style="font-weight: 500; color: black; display: flex; justify-content: space-between;">
+                                <span>Status :</span>
+                                <span><%= order.paymentStatus %></span>
+                            </div>
+                        </div>
+                        <div style="background-color: white; padding: 2%; width: 100%;">
+                            <span style="font-weight: 700; color: black">Total Summary</span>
+                            <br><br>
+                            <div style="font-weight: 400; color: black; display: flex; justify-content: space-between;">
+                                <span>Subtotal</span>
+                                <span>₹ <%= order.subTotal %></span>
+                            </div>
+                            <% if(order.coupenDiscount){ %>
+                                <div style="font-weight: 400; color: black; display: flex; justify-content: space-between;">
+                                    <span>Discount</span>
+                                    <span>₹ <%= order.coupenDiscount %></span>
+                                </div>
+                            <% } %>
+                            <div style="font-weight: 400; color: black; display: flex; justify-content: space-between;">
+                                <span>Shipping Fee</span>
+                                <span style="color: green;">free</span>
+                            </div>
+                            <div style="font-weight: 500; color: black; display: flex; justify-content: space-between;">
+                                <span>Total</span>
+                                <span>₹ <%= order.discountedPrice %></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--//row-->
+        </div><!--//container-fluid-->
+    </div><!--//app-content-->
+    <!-- Javascript -->          
+    <script src="/admin/assets/plugins/popper.min.js"></script>
+    <script src="/admin/assets/plugins/bootstrap/js/bootstrap.min.js"></script>  
+    <!-- Page Specific JS -->
+    <script src="/admin/assets/js/app.js"></script> 
+    <script src="/admin/js/users.js"></script>
+</body>

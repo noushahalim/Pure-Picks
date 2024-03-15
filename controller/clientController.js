@@ -74,8 +74,13 @@ exports.productGet=async (req,res)=>{
         if(product){
             if(client){
                 const cart=await cartModel.findOne({userId:client._id})
-                const cartLength=cart.products.length
-                res.render("product",{products,product,avProducts,user:true,cartLength,page:''})
+                if(cart){
+                    const cartLength=cart.products.length
+                    res.render("product",{products,product,avProducts,user:true,cartLength,page:''})
+                }
+                else{
+                    res.render("product",{products,product,avProducts,user:true,cartLength:'',page:''})
+                }
             }else{
                 res.render("product",{products,product,avProducts,user:'',cartLength:'',page:''})
             }

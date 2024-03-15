@@ -139,6 +139,13 @@ exports.orderCancelGet=async(req,res)=>{
         const orderId=req.params.id
         const order=await orderModel.findOne({_id:orderId,deliveryStatus:{$ne:'Cancelled'}})
         if(order){
+            await Promise.all(order.products.map(async (product) => {
+                await productModel.updateOne(
+                    { _id: product.productId },
+                    { $inc: { stock: product.quantity } }
+                );
+            }));
+
             await orderModel.findByIdAndUpdate(
                 {_id:orderId},
                 {deliveryStatus:'Cancelled'},
@@ -167,4 +174,80 @@ function formatDate(date) {
     const seconds = date.getSeconds();
     
     return `${day} ${month} ${year} ${hours}:${minutes}:${seconds}`;
+}
+
+// -------------------------------------------------------------------------------
+
+
+const adminProfileModel=require('../model/adminProfileModel')
+
+
+//Admin Orders
+
+exports.adminOrdersGet=async(req,res)=>{
+    try{
+        const admin=req.session.admin
+        const adminProfile=await adminProfileModel.findOne({adminName:admin})
+        const orders=await orderModel.find()
+        const page="orders"
+        if(adminProfile){
+            res.render("orders",{adminProfile,page,orders})
+        }
+        else{
+            res.render("orders",{adminProfile:" ",page,orders})
+        }
+    }
+    catch(err){
+        console.log("error when admin get orders",err.message)
+    }
+}
+
+exports.adminOrderDetailsGet=async(req,res)=>{
+    try{
+        const admin=req.session.admin
+        const adminProfile=await adminProfileModel.findOne({adminName:admin})
+        const page="orders"
+        const orderId=req.params.id
+        const order=await orderModel.findOne({_id:orderId})
+        const orderDate= formatDate(new Date(order.orderDate))
+        const deliveredDate= formatDate(new Date(order.deliveredDate)) || ''
+
+        const orderProducts = await Promise.all(order.products.map(async (product) => {
+            const productDetails = await productModel.findById(product.productId);
+            return {
+                productId: product.productId,
+                productImage: productDetails.productImagePath,
+                productName: productDetails.productName,
+                quantity: product.quantity,
+                totalPrice: product.totalPrice
+            };
+        }));
+        if(adminProfile){
+            res.render("orderDetails",{adminProfile,page,deliveredDate,orderDate,order,orderProducts})
+        }
+        else{
+            res.render("orderDetails",{adminProfile:" ",page,deliveredDate,orderDate,order,orderProducts})
+        }
+    }
+    catch(err){
+        console.log("error when get admin order details",err.message)
+    }
+}
+
+//admin Oreder Status Change
+
+exports.orderStatusChangePost=async(req,res)=>{
+    const orderId=req.params.id
+    const order=await orderModel.findOne({_id:orderId})
+    if(order){
+        await orderModel.findOneAndUpdate(
+            {_id:orderId},
+            {deliveryStatus:req.body.deliveryStatus},
+            {upsert:true}
+        )
+        res.redirect("/admin/orders")
+    }
+    else{
+        res.redirect("/admin/orders")
+    }
 }

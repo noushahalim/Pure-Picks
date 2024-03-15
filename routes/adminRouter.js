@@ -9,6 +9,7 @@ const categoriesController=require("../controller/categoriesController")
 const productsController=require("../controller/productsController")
 const bannersController=require("../controller/bannersController")
 const couponController=require("../controller/couponController")
+const orderController=require("../controller/orderController")
 
 
 const upload = multer({ storage: storage })
@@ -126,6 +127,15 @@ adminRouter.post("/addCoupon",authenticatedAdmin,lockedAdmin,couponController.ad
 //admin delete coupon
 
 adminRouter.get("/deleteCoupon/:id",authenticatedAdmin,lockedAdmin,couponController.deleteCouponGet)
+
+//admin Order Management
+
+adminRouter.get("/orders",authenticatedAdmin,lockedAdmin,orderController.adminOrdersGet)
+adminRouter.get("/order/:id",authenticatedAdmin,lockedAdmin,orderController.adminOrderDetailsGet)
+
+//admin Oreder Status Change
+
+adminRouter.post("/orderStatusChange/:id",authenticatedAdmin,lockedAdmin,orderController.orderStatusChangePost)
 
 
 module.exports=adminRouter

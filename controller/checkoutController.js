@@ -54,6 +54,8 @@ exports.placeOrderPost=async(req,res)=>{
             const productData = await productModel.findOne({ _id: product.productId });
             const price = productData.newPrice;
             const totalPrice = price * product.quantity;
+
+            await productModel.updateOne({ _id: product.productId }, { $inc: { stock: -product.quantity } });
         
             return {
                 productId: product.productId,
@@ -108,16 +110,22 @@ exports.placeOrderPost=async(req,res)=>{
             await data.save()
         }
         if(payment==='UPI'){
-            const latestOrder= await orderModel.findOne({userId:userData._id}).sort({ orderDate: -1 });
+            const latestOrder= await orderModel.findOne({userId:userData._id,orderDate:new Date()})
             const cartLength=cart.products.length
-            const data={
-                amount:latestOrder.discountedPrice,
-                orderId:latestOrder._id
+            if(latestOrder){
+                const data={
+                    amount:latestOrder.discountedPrice,
+                    orderId:latestOrder._id
+                }
+                res.render('payment.ejs',{data,user: true,cartLength,page:'payment'})
             }
-            res.render('payment.ejs',{data,user: true,cartLength,page:'payment'})
+            else{
+                res.redirect("/checkout")
+            }
         }
         else if(payment==='COD'){
-            res.redirect("/paymentSuccess")
+            const latestOrder= await orderModel.findOne({userId:userData._id,orderDate:new Date()})
+            res.redirect(`/paymentSuccess/${latestOrder._id}`)
         }
     }
     catch(err){

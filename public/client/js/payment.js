@@ -1,7 +1,7 @@
 document.getElementById('paymentForm').addEventListener('submit', function (e) {
     e.preventDefault();
-
-    axios.post('/createOrder')
+    const orderId=document.getElementById("orderId").value
+    axios.post('/createOrder',{ orderId: orderId })
         .then(function (response) {
             var options = {
                 key: response.data.data.key,
@@ -12,7 +12,7 @@ document.getElementById('paymentForm').addEventListener('submit', function (e) {
                 description: 'Payment for your order',
                 handler: function (response) {
                     console.log('Razorpay payment success:', response);
-                    window.location.href = '/paymentSuccess';
+                    window.location.href = `/paymentSuccess/${orderId}`;
                 },
                 prefill: {
                     name: response.data.data.name,

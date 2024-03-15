@@ -85,7 +85,7 @@
                                     <label class="payment-form-label" for="amount">Amount :</label>
                                     <input disabled class="payment-form-input" type="text" name="amount" value="<%= data.amount%>">  <br>
                                     <label class="payment-form-label" for="orderId">Order Id :</label>
-                                    <input disabled class="payment-form-input" type="text" name="orderId" value="<%= data.orderId%>"><br>
+                                    <input disabled id="orderId" class="payment-form-input" type="text" name="orderId" value="<%= data.orderId%>"><br>
                                     <img src="/images/razorpayimage.jpg" alt="">
                                     <!-- Other required fields like order_id, customer details, etc. -->
                                     <button id="payButton" class="btn btn--e-brand-b-2 payment-form-button" type="submit">Pay Now</button>

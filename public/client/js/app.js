@@ -684,3 +684,22 @@
         RESHOP.shopPerspectiveChange();
         RESHOP.shopSideFilter();
 })(jQuery);
+
+const logout=document.getElementById("logout")
+logout.addEventListener("click",(event)=>{
+    event.preventDefault()
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You're Trying to Loging Out!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Logout!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = '/logout';
+        }
+    });
+})

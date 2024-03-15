@@ -213,7 +213,9 @@
                                                             <% } %>
                                                         <% } %>
                                                     <% }else{ %>
-                                                        <span class="dash__text-2" style="color: green;">Payment Refunded Succesfully</span>
+                                                        <% if(order.paymentMethod==='UPI'){ %>
+                                                            <span class="dash__text-2" style="color: green;">Payment Refunded Succesfully</span>
+                                                        <% } %>
                                                     <% } %>
                                                 </div>
                                             </div>

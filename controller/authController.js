@@ -225,7 +225,18 @@ exports.signUpPost=async (req,res)=>{
         console.log("error on SignUp post",err.message);
     }
     
-    // console.log(data);
+}
+
+//Client Logout
+
+exports.logoutGet=async(req,res)=>{
+    try{
+        req.session.destroy()
+        res.redirect("/")
+    }
+    catch(err){
+        console.log("error when logout",err.message);
+    }
 }
 
 //client otp
