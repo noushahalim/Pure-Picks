@@ -5,6 +5,7 @@ const productModel=require('../model/productModel')
 const cartModel=require('../model/cartModel')
 const orderModel=require('../model/orderModel')
 const reviewModel=require('../model/reviewModel')
+const contactModel=require('../model/contactModel')
 
 //client home
 
@@ -130,6 +131,25 @@ exports.reviewPost=async(req,res)=>{
     }
     catch(err){
         console.log("error when post review",err.message);
+        res.status(500).json({ message: "Internal server error." });
+    }
+}
+
+//Client Contact
+
+exports.contactPost=async(req,res)=>{
+    try{
+        const {email,message}=req.body
+        const contact = new contactModel({ 
+            email,
+            message,
+            date: new Date()
+        });
+        await contact.save();
+        res.redirect("/")
+    }
+    catch(err){
+        console.log("error when post contact",err.message);
         res.status(500).json({ message: "Internal server error." });
     }
 }

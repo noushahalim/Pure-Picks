@@ -44,7 +44,7 @@ exports.productDetailsGet=async(req,res)=>{
             if(adminProfile){
                 res.render("productDetails",{page,adminProfile,reviews,product})
             }else{
-                res.render("productDetails",{page,adminProfile:" ",reviews,product:''})
+                res.render("productDetails",{page,adminProfile:" ",reviews,product})
             }
         }
         else{

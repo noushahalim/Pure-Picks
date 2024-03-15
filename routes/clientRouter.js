@@ -150,4 +150,8 @@ clientRouter.get("/deleteAddress/:id",authenticatedClient,accountController.dele
 
 clientRouter.post("/review",clientController.reviewPost)
 
+//Client Contact
+
+clientRouter.post("/contact",clientController.contactPost)
+
 module.exports=clientRouter
