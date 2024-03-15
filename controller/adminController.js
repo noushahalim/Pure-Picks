@@ -1,5 +1,6 @@
 const adminProfileModel=require('../model/adminProfileModel')
 const clientModel=require('../model/clientSignUpModel')
+const contactModel=require('../model/contactModel')
 
 
 //admin Dashboard
@@ -74,5 +75,24 @@ exports.banUserPost= async(req,res)=>{
         }
     }catch(err){
         console.log("error when ban user",err.message);
+    }
+}
+
+//admin Contact management
+
+exports.contactsGet=async(req,res)=>{
+    try{
+        const admin=req.session.admin
+        const adminProfile=await adminProfileModel.findOne({adminName:admin})
+        const contacts=await contactModel.find()
+        const page="contacts"
+        if(adminProfile){
+            res.render("contacts",{adminProfile,page,contacts})
+        }
+        else{
+            res.render("contacts",{adminProfile:" ",page,contacts})
+        }
+    }catch(err){
+        console.log("error when get contact managment",err.message);
     }
 }

@@ -1,0 +1,41 @@
+<%- include('layouts/htmlhead.ejs') %>
+<body class="app">
+    <header class="app-header fixed-top">
+        <%- include('layouts/topnav.ejs') %>
+		<%- include('layouts/sidepanel.ejs') %>
+    </header>
+    <div class="app-wrapper">
+        <div class="app-content pt-3 p-md-3 p-lg-4">
+		    <div class="container-xl">
+			    <h1 class="app-page-title">Contact Management</h1>
+                <div class="row gy-4">
+                    <div class="col-12">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Email</th>
+                                    <th>Date</th>
+                                    <th>Message</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% contacts.forEach(function(contact) { %>
+                                <tr>
+                                    <td><%= contact.email %></td>
+                                    <td><%= new Date(contact.date).toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }) %></td>
+                                    <td><%= contact.message %></td>
+                                </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div><!--//row-->
+        </div><!--//container-fluid-->
+    </div><!--//app-content-->
+    <!-- Javascript -->          
+    <script src="/admin/assets/plugins/popper.min.js"></script>
+    <script src="/admin/assets/plugins/bootstrap/js/bootstrap.min.js"></script>  
+    <!-- Page Specific JS -->
+    <script src="/admin/assets/js/app.js"></script> 
+</body>

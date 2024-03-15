@@ -141,5 +141,8 @@ adminRouter.get("/order/:id",authenticatedAdmin,lockedAdmin,orderController.admi
 
 adminRouter.post("/orderStatusChange/:id",authenticatedAdmin,lockedAdmin,orderController.orderStatusChangePost)
 
+//admin Contact management
+
+adminRouter.get("/contacts",authenticatedAdmin,lockedAdmin,adminController.contactsGet)
 
 module.exports=adminRouter
