@@ -2,7 +2,8 @@ const adminProfileModel=require('../model/adminProfileModel')
 const productModel=require('../model/productModel')
 const categoryModel=require('../model/categoryModal')
 const reviewModel=require('../model/reviewModel')
-
+const signUpModel=require('../model/clientSignUpModel')
+const cartModel=require('../model/cartModel')
 
 
 //admin Products
@@ -206,4 +207,35 @@ exports.banProductPost= async(req,res)=>{
 function formatDate(date) {
     const options = { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
     return date.toLocaleDateString('en-US', options);
+}
+
+
+// -----------------------------------------------------------------------------------
+
+
+//Client All Products
+
+exports.allProductsGet=async(req,res)=>{
+    try{
+        const clientUserName=req.session.userName
+        const products=await productModel.find({stock:{$gt:0},bannedProduct:{$ne:1}}).limit(12)
+        const client=await signUpModel.findOne({userName:clientUserName})
+
+        if(client){
+            const cart=await cartModel.findOne({userId:client._id})
+            if(cart){
+                const cartLength=cart.products.length
+                res.render("products",{products,user:true,cartLength,page:'products'})
+            }
+            else{
+                res.render("products",{products,user:true,cartLength:'',page:'products'})
+            }
+        }
+        else{
+            res.render("products",{products,user:'',cartLength:'',page:'products'})
+        }
+    }
+    catch(err){
+        console.log("error when get all products",err.message);
+    }
 }

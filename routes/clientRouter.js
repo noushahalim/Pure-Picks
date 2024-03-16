@@ -9,6 +9,7 @@ const checkoutController=require("../controller/checkoutController")
 const couponController=require("../controller/couponController")
 const paymentController=require("../controller/paymentController")
 const orderController=require('../controller/orderController')
+const productsController=require("../controller/productsController")
 
 
 const authenticatedClient=require('../middleware/clientAuthentication')
@@ -41,6 +42,10 @@ clientRouter.get("/logout",authenticatedClient,authController.logoutGet)
 
 clientRouter.get("/otp/:mobileNumber",authController.otpGet)
 clientRouter.post("/otp/:otp",authController.otpPost)
+
+//Client All Products
+
+clientRouter.get("/products",productsController.allProductsGet)
 
 //client Product Details
 

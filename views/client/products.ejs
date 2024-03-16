@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+    <%- include('layouts/head.ejs') %>
+
+<body class="config" style="background-color: rgba(229,233,234);">
+    <div class="preloader is-active">
+        <div class="preloader__wrap">
+
+            <img class="preloader__img" src="/images/PurePicksIcon.ico" alt="loading"></div>
+    </div>
+
+    <!--====== Main App ======-->
+    <div id="app">
+
+        <!--====== Main Header ======-->
+        <%- include('layouts/topNav.ejs') %>
+
+        <!--====== End - Main Header ======-->
+
+
+        <!--====== App Content ======-->
+        <div class="app-content">
+
+            <!--====== Section 1 ======-->
+            <div class="u-s-p-y-90">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="shop-p">
+                                <div class="shop-p__toolbar u-s-m-b-30">
+                                    
+                                    <div class="shop-p__tool-style">
+                                        <div class="tool-style__group u-s-m-b-8">
+
+                                            <span class="js-shop-filter-target" data-side="#side-filter">Filters</span>
+
+                                            <span class="js-shop-grid-target is-active">Grid</span>
+
+                                            <span class="js-shop-list-target">List</span></div>
+                                        <form>
+                                            <div class="tool-style__form-wrap">
+                                                
+                                                <div class="u-s-m-b-8"><select class="select-box select-box--transparent-b-2">
+                                                        <option selected value="">Sort By: None</option>
+                                                        <option>Sort By: Best Rating</option>
+                                                        <option>Sort By: Lowest Price</option>
+                                                        <option>Sort By: Highest Price</option>
+                                                    </select></div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="shop-p__collection">
+                                    <div class="row is-grid-active">
+                                        <% products.forEach(product=>{ %>
+                                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                                <div class="product-m">
+                                                    <div class="product-m__thumb">
+    
+                                                        <a class="aspect aspect--bg-grey aspect--square u-d-block" href="/product/<%= product._id %>">
+    
+                                                            <img class="aspect__img" src="<%= product.productImagePath[3] %>" alt=""></a>
+                                                        <div class="product-m__quick-look">
+
+                                                            <a class="fas fa-search" data-modal="modal" data-modal-id="#quick<%= product._id %>" data-tooltip="tooltip" data-placement="top" title="Quick Look"></a></div>
+
+                                                        <% if(user){ %>
+                                                            <div class="product-m__add-cart">
+    
+                                                                <a class="btn--e-brand cartAdd" data-modal="modal" href="<%= product._id %>" data-modal-id="#cart<%= product._id %>">Add to Cart</a></div>
+                                                        <% }else{ %>
+                                                            <div class="product-m__add-cart">
+    
+                                                                <a class="btn--e-brand" href="/login" >Add to Cart</a></div>
+                                                        <% } %>
+                                                    </div>
+                                                    <div class="product-m__content">
+                                                        <div class="product-m__category">
+    
+                                                            <a href="shop-side-version-2.html"><%= product.category%> <%= product.subCategory%></a></div>
+                                                        <div class="product-m__name">
+    
+                                                            <a href="product-detail.html"><%= product.productName%></a></div>
+                                                        <div class="product-m__rating gl-rating-style"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+    
+                                                            </div>
+                                                        <div class="product-m__price">₹<%= product.newPrice%></div>
+                                                        <div class="product-m__hover">
+                                                            <div class="product-m__preview-description">
+    
+                                                                <span><%= product.productDescription%></span></div>
+                                                            <% if(user){ %>
+                                                                <div class="product-m__wishlist">
+    
+                                                                    <a class="far fa-heart wishlistAdd" href="<%= product._id %>" data-tooltip="tooltip" data-placement="top" title="Add to Wishlist"></a></div>
+                                                            <% }else{ %>
+                                                                <div class="product-m__wishlist">
+    
+                                                                    <a class="far fa-heart" href="/login"></a></div>
+                                                            <% } %>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <% }) %>
+                                        
+                                    </div>
+                                </div>
+                                <div class="u-s-p-y-60">
+
+                                    <!--====== Pagination ======-->
+                                    <ul class="shop-p__pagination">
+                                        <li>
+
+                                            <a class="fas fa-angle-left" href=""></a></li>
+                                        <li class="is-active">
+
+                                            <a href="">1</a></li>
+                                        <li>
+
+                                            <a href="">2</a></li>
+                                        <li>
+
+                                            <a href="">3</a></li>
+                                        <li>
+
+                                            <a href="">4</a></li>
+                                        <li>
+
+                                            <a class="fas fa-angle-right" href=""></a></li>
+                                    </ul>
+                                    <!--====== End - Pagination ======-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--====== End - Section 1 ======-->
+        </div>
+        <!--====== End - App Content ======-->
+
+        <!--====== Main Footer ======-->
+        <%- include('layouts/footer.ejs') %>
+        
+        <!--====== Side Filters ======-->
+        <div class="shop-a" id="side-filter">
+            <div class="shop-a__wrap">
+                <div class="shop-a__inner gl-scroll">
+                    <div class="shop-w-master">
+                        <h1 class="shop-w-master__heading u-s-m-b-30"><i class="fas fa-filter u-s-m-r-8"></i>
+
+                            <span>FILTERS</span></h1>
+                        <div class="shop-w-master__sidebar">
+                            <div class="u-s-m-b-30">
+                                <div class="shop-w">
+                                    <div class="shop-w__intro-wrap">
+                                        <h1 class="shop-w__h">CATEGORY</h1>
+
+                                        <span class="fas fa-minus shop-w__toggle" data-target="#s-category" data-toggle="collapse"></span>
+                                    </div>
+                                    <div class="shop-w__wrap collapse show" id="s-category">
+                                        <ul class="shop-w__category-list gl-scroll">
+                                            <li class="has-list">
+
+                                                <a href="#">Electronics</a>
+
+                                                <span class="category-list__text u-s-m-l-6">(23)</span>
+
+                                                
+                                            </li>
+                                            <li class="has-list">
+
+                                                <a href="#">Women's Clothing</a>
+
+                                                <span class="category-list__text u-s-m-l-6">(5)</span>
+
+                                                
+                                            </li>
+                                            <li class="has-list">
+
+                                                <a href="#">Men's Clothing</a>
+
+                                                <span class="category-list__text u-s-m-l-6">(5)</span>
+
+                                                
+                                            </li>
+                                            <li>
+
+                                                <a href="#">Food & Supplies</a>
+
+                                                <span class="category-list__text u-s-m-l-6">(0)</span></li>
+                                            <li>
+
+                                                <a href="#">Furniture & Decor</a>
+
+                                                <span class="category-list__text u-s-m-l-6">(0)</span></li>
+                                            <li>
+
+                                                <a href="#">Sports & Game</a>
+
+                                                <span class="category-list__text u-s-m-l-6">(0)</span></li>
+                                            <li>
+
+                                                <a href="#">Beauty & Health</a>
+
+                                                <span class="category-list__text u-s-m-l-6">(0)</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--====== End - Side Filters ======-->
+
+
+        <!--====== Modal Section ======-->
+
+        <!--====== Quick Look Modal ======-->
+        <%- include('layouts/quicklook.ejs') %>
+
+        <!--====== End - Quick Look Modal ======-->
+
+        <!--====== Add to Cart Modal ======-->
+
+        <%- include('layouts/addCart.ejs') %>
+
+
+        <!--====== End - Add to Cart Modal ======-->
+        <!--====== End - Modal Section ======-->
+    </div>
+    
+    <!--====== End - Main App ======-->
+
+
+    <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
+    <script>
+        window.ga = function() {
+            ga.q.push(arguments)
+        };
+        ga.q = [];
+        ga.l = +new Date;
+        ga('create', 'UA-XXXXX-Y', 'auto');
+        ga('send', 'pageview')
+    </script>
+    <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
+    <!--====== Vendor Js ======-->
+    <script src="/client/js/vendor.js"></script>
+
+    <!--====== jQuery Shopnav plugin ======-->
+    <script src="/client/js/jquery.shopnav.js"></script>
+
+    <!--====== App ======-->
+    <script src="/client/js/app.js"></script>
+    <script src="/client/js/products.js"></script>
+
+    <!--====== Noscript ======-->
+    <noscript>
+        <div class="app-setting">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="app-setting__wrap">
+                            <h1 class="app-setting__h1">JavaScript is disabled in your browser.</h1>
+
+                            <span class="app-setting__text">Please enable JavaScript in your browser or upgrade to a JavaScript-capable browser.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </noscript>
+</body>
+</html>
