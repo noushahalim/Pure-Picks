@@ -42,10 +42,9 @@
                                             <div class="tool-style__form-wrap">
                                                 
                                                 <div class="u-s-m-b-8"><select class="select-box select-box--transparent-b-2">
-                                                        <option selected value="">Sort By: None</option>
-                                                        <option>Sort By: Best Rating</option>
-                                                        <option>Sort By: Lowest Price</option>
-                                                        <option>Sort By: Highest Price</option>
+                                                        <option selected value="">Sort By: </option>
+                                                        <option class="sort" value="price low to high">Sort By: Price Low to High</option>
+                                                        <option class="sort" value="price high to low">Sort By: Price High to Low</option>
                                                     </select></div>
                                             </div>
                                         </form>
@@ -82,7 +81,12 @@
                                                         <div class="product-m__name">
     
                                                             <a href="product-detail.html"><%= product.productName%></a></div>
-                                                        <div class="product-m__rating gl-rating-style"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                                                        <div class="product-m__rating gl-rating-style">
+
+                                                            <% let j=product.rating %>
+                                                            <% for(let i=1; i<=j ; i++){ %>
+                                                                <i class="fas fa-star"></i>
+                                                            <%}%>
     
                                                             </div>
                                                         <div class="product-m__price">₹<%= product.newPrice%></div>
@@ -110,26 +114,7 @@
                                 <div class="u-s-p-y-60">
 
                                     <!--====== Pagination ======-->
-                                    <ul class="shop-p__pagination">
-                                        <li>
-
-                                            <a class="fas fa-angle-left" href=""></a></li>
-                                        <li class="is-active">
-
-                                            <a href="">1</a></li>
-                                        <li>
-
-                                            <a href="">2</a></li>
-                                        <li>
-
-                                            <a href="">3</a></li>
-                                        <li>
-
-                                            <a href="">4</a></li>
-                                        <li>
-
-                                            <a class="fas fa-angle-right" href=""></a></li>
-                                    </ul>
+                                    
                                     <!--====== End - Pagination ======-->
                                 </div>
                             </div>
@@ -162,50 +147,12 @@
                                     </div>
                                     <div class="shop-w__wrap collapse show" id="s-category">
                                         <ul class="shop-w__category-list gl-scroll">
-                                            <li class="has-list">
-
-                                                <a href="#">Electronics</a>
-
-                                                <span class="category-list__text u-s-m-l-6">(23)</span>
-
-                                                
-                                            </li>
-                                            <li class="has-list">
-
-                                                <a href="#">Women's Clothing</a>
-
-                                                <span class="category-list__text u-s-m-l-6">(5)</span>
-
-                                                
-                                            </li>
-                                            <li class="has-list">
-
-                                                <a href="#">Men's Clothing</a>
-
-                                                <span class="category-list__text u-s-m-l-6">(5)</span>
-
-                                                
-                                            </li>
-                                            <li>
-
-                                                <a href="#">Food & Supplies</a>
-
-                                                <span class="category-list__text u-s-m-l-6">(0)</span></li>
-                                            <li>
-
-                                                <a href="#">Furniture & Decor</a>
-
-                                                <span class="category-list__text u-s-m-l-6">(0)</span></li>
-                                            <li>
-
-                                                <a href="#">Sports & Game</a>
-
-                                                <span class="category-list__text u-s-m-l-6">(0)</span></li>
-                                            <li>
-
-                                                <a href="#">Beauty & Health</a>
-
-                                                <span class="category-list__text u-s-m-l-6">(0)</span></li>
+                                            <% categories.forEach(category=>{ %>
+                                                <li class="has-list">
+                                                    <a href="/products?category=<%= category.categoryName %>"><%= category.categoryName %></a>
+                                                </li>
+                                            <% }) %>
+                                            
                                         </ul>
                                     </div>
                                 </div>

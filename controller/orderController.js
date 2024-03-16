@@ -106,7 +106,7 @@ exports.orderGet=async(req,res)=>{
         const orderLength=placedOrders.length || 0
         const cancelledOrdersLength=cancelledOrders.length || 0
         const orderDate= formatDate(new Date(order.orderDate))
-        const deliveredDate= formatDate(new Date(order.deliveredDate)) || ''
+        const deliveredDate= formatDate(new Date(order.deliveryDate)) || ''
 
         const orderProducts = await Promise.all(order.products.map(async (product) => {
             const productDetails = await productModel.findById(product.productId);
@@ -210,7 +210,7 @@ exports.adminOrderDetailsGet=async(req,res)=>{
         const orderId=req.params.id
         const order=await orderModel.findOne({_id:orderId})
         const orderDate= formatDate(new Date(order.orderDate))
-        const deliveredDate= formatDate(new Date(order.deliveredDate)) || ''
+        const deliveredDate= formatDate(new Date(order.deliveryDate)) || ''
 
         const orderProducts = await Promise.all(order.products.map(async (product) => {
             const productDetails = await productModel.findById(product.productId);
@@ -240,11 +240,20 @@ exports.orderStatusChangePost=async(req,res)=>{
     const orderId=req.params.id
     const order=await orderModel.findOne({_id:orderId})
     if(order){
-        await orderModel.findOneAndUpdate(
-            {_id:orderId},
-            {deliveryStatus:req.body.deliveryStatus},
-            {upsert:true}
-        )
+        if(req.body.deliveryStatus==="Delivered"){
+            await orderModel.findOneAndUpdate(
+                {_id:orderId},
+                {deliveryStatus:req.body.deliveryStatus,deliveryDate:new Date()},
+                {upsert:true}
+            )
+        }
+        else{
+            await orderModel.findOneAndUpdate(
+                {_id:orderId},
+                {deliveryStatus:req.body.deliveryStatus},
+                {upsert:true}
+            )
+        }
         res.redirect("/admin/orders")
     }
     else{

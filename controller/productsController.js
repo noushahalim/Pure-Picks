@@ -218,21 +218,43 @@ function formatDate(date) {
 exports.allProductsGet=async(req,res)=>{
     try{
         const clientUserName=req.session.userName
-        const products=await productModel.find({stock:{$gt:0},bannedProduct:{$ne:1}}).limit(12)
         const client=await signUpModel.findOne({userName:clientUserName})
+        const categories=await categoryModel.find()
+        let products
+
+        if(req.query.search){
+            const search=req.query.search
+            products=await productModel.find({stock:{$gt:0},bannedProduct:{$ne:1},productName:{$regex:search,$options:'i'}})
+        }
+        else if(req.query.category){
+            const category=req.query.category
+            products=await productModel.find({stock:{$gt:0},bannedProduct:{$ne:1},category:category})
+        }
+        else if(req.query.sort){
+            const sort=req.query.sort
+            if(sort==="price low to high"){
+                products=await productModel.find({stock:{$gt:0},bannedProduct:{$ne:1}}).sort({newPrice:1})
+            }
+            else if(sort==="price high to low"){
+                products=await productModel.find({stock:{$gt:0},bannedProduct:{$ne:1}}).sort({newPrice:-1})
+            }
+        }
+        else{
+            products=await productModel.find({stock:{$gt:0},bannedProduct:{$ne:1}})
+        }
 
         if(client){
             const cart=await cartModel.findOne({userId:client._id})
             if(cart){
                 const cartLength=cart.products.length
-                res.render("products",{products,user:true,cartLength,page:'products'})
+                res.render("products",{categories,products,user:true,cartLength,page:'products'})
             }
             else{
-                res.render("products",{products,user:true,cartLength:'',page:'products'})
+                res.render("products",{categories,products,user:true,cartLength:'',page:'products'})
             }
         }
         else{
-            res.render("products",{products,user:'',cartLength:'',page:'products'})
+            res.render("products",{categories,products,user:'',cartLength:'',page:'products'})
         }
     }
     catch(err){

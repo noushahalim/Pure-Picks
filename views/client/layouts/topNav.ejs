@@ -23,7 +23,7 @@
 
                     <input class="input-text input-text--border-radius input-text--style-1" type="text" id="main-search" placeholder="Search">
 
-                    <button class="btn btn--icon fas fa-search main-search-button" type="submit"></button></form>
+                    <button class="btn btn--icon fas fa-search main-search-button" id="main-search-button" type="submit"></button></form>
                 <!--====== End - Search Form ======-->
 
 
@@ -124,7 +124,7 @@
                         <ul class="ah-list ah-list--design2 ah-list--link-color-secondary">
                             <li>
 
-                                <a href="/products">PRODUCTS</a></li>
+                                <a class="<%= page === 'products' ? 'u-c-brand' : '' %>" href="/products">PRODUCTS</a></li>
                             <li>
 
                                 <a href="/#newArrivals">NEW ARRIVALS</a></li>

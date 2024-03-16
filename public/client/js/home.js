@@ -48,3 +48,11 @@ addCartButtons.forEach(button => {
         })
     });
 });
+
+const searchsubmit=document.getElementById("main-search-button")
+
+searchsubmit.addEventListener("click",(event)=>{
+    event.preventDefault()
+    const searchValue=document.getElementById("main-search").value
+    location.href=`/products?search=${searchValue}`
+})

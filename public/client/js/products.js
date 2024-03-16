@@ -48,3 +48,21 @@ addCartButtons.forEach(button => {
         })
     });
 });
+
+const searchsubmit=document.getElementById("main-search-button")
+
+searchsubmit.addEventListener("click",(event)=>{
+    event.preventDefault()
+    const searchValue=document.getElementById("main-search").value
+    location.href=`/products?search=${searchValue}`
+})
+
+
+const selectBox = document.querySelector(".select-box");
+
+selectBox.addEventListener("change", (event) => {
+    event.preventDefault();
+    const sortValue = selectBox.value;
+    location.href = `/products?sort=${sortValue}`;
+});
+
