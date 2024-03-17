@@ -226,8 +226,16 @@ submitBtn.addEventListener('click', function(event) {
         }
         axios.post("/signUp",data)
         .then(function (response){
-            alert(response.data.message);
-            window.location.href="/login";
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "SignUp Completed",
+                showConfirmButton: false,
+                timer: 1500
+              })
+              .then(() => {
+                window.location.href="/login";
+            });
         })
         .catch(function(error){
             console.log(error.message);

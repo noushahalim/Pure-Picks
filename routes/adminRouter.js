@@ -10,7 +10,7 @@ const productsController=require("../controller/productsController")
 const bannersController=require("../controller/bannersController")
 const couponController=require("../controller/couponController")
 const orderController=require("../controller/orderController")
-
+const chartController=require("../controller/chartController")
 
 const upload = multer({ storage: storage })
 const authenticatedAdmin=require('../middleware/adminAuthentication')
@@ -144,5 +144,17 @@ adminRouter.post("/orderStatusChange/:id",authenticatedAdmin,lockedAdmin,orderCo
 //admin Contact management
 
 adminRouter.get("/contacts",authenticatedAdmin,lockedAdmin,adminController.contactsGet)
+
+//admin line-chart
+
+adminRouter.get("/line-chart-data",chartController.lineChartDataGet)
+
+//admin bar-chart
+
+adminRouter.get("/bar-chart-data",chartController.barChartDataGet)
+
+//admin pie-chart
+
+adminRouter.get("/pie-chart-data",chartController.pieChartDataGet)
 
 module.exports=adminRouter
