@@ -1,224 +1,274 @@
-'use strict';
+function fetchDataForCharts() {
+  // Fetch data for line chart
 
-/* Chart.js docs: https://www.chartjs.org/ */
+  axios
+    .get("/admin/line-chart-data")
+    .then((response) => {
+      const lineChartData = response.data;
+      renderLineChart(lineChartData);
+    })
+    .catch((error) => {
+      console.error("Error fetching line chart data:", error);
+    });
 
-window.chartColors = {
-	green: '#75c181',
-	gray: '#a9b5c9',
-	text: '#252930',
-	border: '#e7e9ed'
-};
-
-/* Random number generator for demo purpose */
-var randomDataPoint = function(){ return Math.round(Math.random()*10000)};
-
-
-//Chart.js Line Chart Example 
-
-var lineChartConfig = {
-	type: 'line',
-
-	data: {
-		labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
-		
-		datasets: [{
-			label: 'Current week',
-			fill: false,
-			backgroundColor: window.chartColors.green,
-			borderColor: window.chartColors.green,
-			data: [
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint()
-			],
-		}, {
-			label: 'Previous week',
-		    borderDash: [3, 5],
-			backgroundColor: window.chartColors.gray,
-			borderColor: window.chartColors.gray,
-			
-			data: [
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint(),
-				randomDataPoint()
-			],
-			fill: false,
-		}]
-	},
-	options: {
-		responsive: true,	
-		aspectRatio: 1.5,
-		
-		legend: {
-			display: true,
-			position: 'bottom',
-			align: 'end',
-		},
-		
-		title: {
-			display: true,
-			text: 'Week wise report',
-			
-		}, 
-		tooltips: {
-			mode: 'index',
-			intersect: false,
-			titleMarginBottom: 10,
-			bodySpacing: 10,
-			xPadding: 16,
-			yPadding: 16,
-			borderColor: window.chartColors.border,
-			borderWidth: 1,
-			backgroundColor: '#fff',
-			bodyFontColor: window.chartColors.text,
-			titleFontColor: window.chartColors.text,
-
-            callbacks: {
-	            //Ref: https://stackoverflow.com/questions/38800226/chart-js-add-commas-to-tooltip-and-y-axis
-                label: function(tooltipItem, data) {
-	                if (parseInt(tooltipItem.value) >= 1000) {
-                        return "$" + tooltipItem.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                    } else {
-	                    return '$' + tooltipItem.value;
-                    }
-                }
-            },
-
-		},
-		hover: {
-			mode: 'nearest',
-			intersect: true
-		},
-		scales: {
-			xAxes: [{
-				display: true,
-				gridLines: {
-					drawBorder: false,
-					color: window.chartColors.border,
-				},
-				scaleLabel: {
-					display: false,
-				
-				}
-			}],
-			yAxes: [{
-				display: true,
-				gridLines: {
-					drawBorder: false,
-					color: window.chartColors.border,
-				},
-				scaleLabel: {
-					display: false,
-				},
-				ticks: {
-		            beginAtZero: true,
-		            userCallback: function(value, index, values) {
-		                return '$' + value.toLocaleString();   //Ref: https://stackoverflow.com/questions/38800226/chart-js-add-commas-to-tooltip-and-y-axis
-		            }
-		        },
-			}]
-		}
-	}
-};
-
-
-
-// Chart.js Bar Chart Example 
-
-var barChartConfig = {
-	type: 'bar',
-
-	data: {
-		labels: ['Mobile', 'Electronics', 'M-cloths', 'W-cloths', 'Beauty', 'Kids', 'Others'],
-		datasets: [{
-			label: 'Orders',
-			backgroundColor: window.chartColors.green,
-			borderColor: window.chartColors.green,
-			borderWidth: 1,
-			maxBarThickness: 16,
-			
-			data: [
-				53,
-				45,
-				56,
-				85,
-				72,
-				67,
-				33
-			]
-		}]
-	},
-	options: {
-		responsive: true,
-		aspectRatio: 1.5,
-		legend: {
-			position: 'bottom',
-			align: 'end',
-		},
-		title: {
-			display: true,
-			text: 'Chart.js Bar Chart Example'
-		},
-		tooltips: {
-			mode: 'index',
-			intersect: false,
-			titleMarginBottom: 10,
-			bodySpacing: 10,
-			xPadding: 16,
-			yPadding: 16,
-			borderColor: window.chartColors.border,
-			borderWidth: 1,
-			backgroundColor: '#fff',
-			bodyFontColor: window.chartColors.text,
-			titleFontColor: window.chartColors.text,
-
-		},
-		scales: {
-			xAxes: [{
-				display: true,
-				gridLines: {
-					drawBorder: false,
-					color: window.chartColors.border,
-				},
-
-			}],
-			yAxes: [{
-				display: true,
-				gridLines: {
-					drawBorder: false,
-					color: window.chartColors.borders,
-				},
-
-				
-			}]
-		}
-		
-	}
+  // Fetch data for bar chart
+  axios
+    .get("/admin/bar-chart-data")
+    .then((response) => {
+      const barChartData = response.data;
+      renderBarChart(barChartData);
+    })
+    .catch((error) => {
+      console.error("Error fetching bar chart data:", error);
+    });
 }
 
+// Fetch data for the pie chart
+function fetchDataForPieChart() {
+  axios
+    .get("/admin/pie-chart-data")
+    .then((response) => {
+      const pieChartData = response.data;
+      console.log(pieChartData);
+      renderPieChart(pieChartData);
+    })
+    .catch((error) => {
+      console.error("Error fetching pie chart data:", error);
+    });
+}
 
+window.onload = function () {
+  fetchDataForCharts();
+  fetchDataForPieChart();
+};
 
+function renderLineChart(data) {
+  window.chartColors = {
+    green: "rgb(117,193,129)",
+    gray: "rgb(201, 203, 207)",
+    border: "rgb(143, 143, 143)",
+    text: "rgb(87, 87, 87)",
+  };
+  var lineChartCanvas = document
+    .getElementById("canvas-linechart")
+    .getContext("2d");
+  var lineChart = new Chart(lineChartCanvas, {
+    type: "line",
+    data: {
+      labels: data.labels,
+      datasets: [
+        {
+          label: "Sales",
+          fill: false,
+          backgroundColor: window.chartColors.green,
+          borderColor: window.chartColors.green,
+          data: data.salesData,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      aspectRatio: 1.5,
+      legend: {
+        display: true,
+        position: "bottom",
+        align: "end",
+      },
+      title: {
+        display: true,
+        text: "Sales Summary for the Past 6 Months",
+      },
+      tooltips: {
+        mode: "index",
+        intersect: false,
+        titleMarginBottom: 10,
+        bodySpacing: 10,
+        xPadding: 16,
+        yPadding: 16,
+        borderColor: window.chartColors.border,
+        borderWidth: 1,
+        backgroundColor: "#fff",
+        bodyFontColor: window.chartColors.text,
+        titleFontColor: window.chartColors.text,
+        callbacks: {
+          label: function (tooltipItem, data) {
+            if (parseInt(tooltipItem.value) >= 1000) {
+              return (
+                "₹" +
+                tooltipItem.value
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              );
+            } else {
+              return "₹" + tooltipItem.value;
+            }
+          },
+        },
+      },
+      hover: {
+        mode: "nearest",
+        intersect: true,
+      },
+      scales: {
+        xAxes: [
+          {
+            display: true,
+            gridLines: {
+              drawBorder: false,
+              color: window.chartColors.border,
+            },
+            scaleLabel: {
+              display: false,
+            },
+          },
+        ],
+        yAxes: [
+          {
+            display: true,
+            gridLines: {
+              drawBorder: false,
+              color: window.chartColors.border,
+            },
+            scaleLabel: {
+              display: false,
+            },
+            ticks: {
+              beginAtZero: true,
+              userCallback: function (value, index, values) {
+                return "₹" + value.toLocaleString();
+              },
+            },
+          },
+        ],
+      },
+    },
+  });
+}
 
+// Function to render bar chart
+function renderBarChart(data) {
+  const chartColors = {
+    green: "rgb(75, 192, 192)",
+    gray: "rgb(201, 203, 207)",
+    border: "rgb(143, 143, 143)",
+    text: "rgb(87, 87, 87)",
+  };
 
+  var barChartCanvas = document
+    .getElementById("canvas-barchart")
+    .getContext("2d");
+  var barChart = new Chart(barChartCanvas, {
+    type: "bar",
+    data: {
+      labels: data.labels,
+      datasets: [
+        {
+          label: "Users",
+          backgroundColor: chartColors.green,
+          borderColor: chartColors.green,
+          borderWidth: 1,
+          maxBarThickness: 16,
+          data: data.userCounts,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      aspectRatio: 1.5,
+      legend: {
+        position: "bottom",
+        align: "end",
+      },
+      title: {
+        display: true,
+        text: "Users Chart",
+      },
+      tooltips: {
+        mode: "index",
+        intersect: false,
+        titleMarginBottom: 10,
+        bodySpacing: 10,
+        xPadding: 16,
+        yPadding: 16,
+        borderColor: chartColors.border,
+        borderWidth: 1,
+        backgroundColor: "#fff",
+        bodyFontColor: chartColors.text,
+        titleFontColor: chartColors.text,
+      },
+      scales: {
+        xAxes: [
+          {
+            display: true,
+            gridLines: {
+              drawBorder: false,
+              color: chartColors.border,
+            },
+          },
+        ],
+        yAxes: [
+          {
+            display: true,
+            gridLines: {
+              drawBorder: false,
+              color: chartColors.borders,
+            },
+          },
+        ],
+      },
+    },
+  });
+}
 
+function renderPieChart(data) {
+  const chartColors = ["#007bff", "#28a745", "#dc3545", "#ffc107", "#6f42c1"];
+  const labels = data.map((category) => category.categoryName);
+  const counts = data.map((category) => category.productCount);
 
-// Generate charts on load
-window.addEventListener('load', function(){
-	
-	var lineChart = document.getElementById('canvas-linechart').getContext('2d');
-	window.myLine = new Chart(lineChart, lineChartConfig);
-	
-	var barChart = document.getElementById('canvas-barchart').getContext('2d');
-	window.myBar = new Chart(barChart, barChartConfig);
-	
-
-});	
-	
+  var pieChartCanvas = document.getElementById("productCategoryPieChart");
+  var pieChart = new Chart(pieChartCanvas, {
+    type: "pie",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          data: counts,
+          backgroundColor: chartColors,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      aspectRatio: 1.5,
+      legend: {
+        display: true,
+        position: "bottom",
+        align: "end",
+      },
+      title: {
+        display: true,
+        text: "Products in Categories",
+      },
+      tooltips: {
+        callbacks: {
+          label: function (tooltipItem, data) {
+            var dataset = data.datasets[tooltipItem.datasetIndex];
+            var total = dataset.data.reduce(function (
+              previousValue,
+              currentValue,
+              currentIndex,
+              array
+            ) {
+              return previousValue + currentValue;
+            });
+            var currentValue = dataset.data[tooltipItem.index];
+            var percentage = Math.floor((currentValue / total) * 100 + 0.5);
+            return `${
+              data.labels[tooltipItem.index]
+            }: ${currentValue} (${percentage}%)`;
+          },
+        },
+      },
+    },
+  });
+}

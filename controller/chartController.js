@@ -135,7 +135,6 @@ exports.pieChartDataGet = async (req, res) => {
             productCount: item.productCount,
             color: index < colors.length ? colors[index] : getRandomColor(),
         }));
-        console.log(pieChartData);
         res.json(pieChartData);
     } catch (error) {
         console.error('Error fetching pie chart data:', error);

@@ -1,7 +1,8 @@
 const adminProfileModel=require('../model/adminProfileModel')
 const clientModel=require('../model/clientSignUpModel')
 const contactModel=require('../model/contactModel')
-
+const orderModel = require('../model/orderModel');
+const productModel = require('../model/productModel');
 
 //admin Dashboard
 
@@ -9,13 +10,26 @@ exports.dashboardGet=async (req,res)=>{
     try{
         const admin=req.session.admin
         const adminProfile=await adminProfileModel.findOne({adminName:admin})
-        // console.log(adminProfile);
+        const users=await clientModel.find()
+        const orders=await orderModel.find()
+        let totalSales=0
+        const sales=orders.map((order)=>{
+            totalSales=totalSales+order.discountedPrice
+        })
+        const products=await productModel.find()
+        const contacts=await contactModel.find()
+        const card={
+            usersCount:users.length,
+            totalSales,
+            totalProducts:products.length,
+            totalContacts:contacts.length
+        }
         const page="dashboard"
         if(adminProfile){
-            res.render("dashboard",{adminProfile,page})
+            res.render("dashboard",{card,adminProfile,page})
         }
         else{
-            res.render("dashboard",{adminProfile:" ",page})
+            res.render("dashboard",{card,adminProfile:" ",page})
         }
     }catch(err){
         console.log("error when get dashboard",err.message);

@@ -187,8 +187,8 @@
 .lock-screen{
   font-size: 23px;
   position: absolute;
-  /* top: 22%; */
-  right: 178px;
+  top: 22%;
+  right: 70px;
   color: rgb(156, 162, 172);
   background: none;
   border: none;
