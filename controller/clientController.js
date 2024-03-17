@@ -154,6 +154,29 @@ exports.contactPost=async(req,res)=>{
     }
 }
 
+//client About Us
+
+exports.aboutUsGet=async (req,res)=>{
+    try{
+        const clientUserName=req.session.userName
+        const client=await signUpModel.findOne({userName:clientUserName})
+        if(client){
+            const cart=await cartModel.findOne({userId:client._id})
+            if(cart){
+                const cartLength=cart.products.length
+                res.render("about",{user:true,cartLength,page:'about'})
+            }
+            else{
+                res.render("about",{user:true,cartLength:'',page:'about'})
+            }
+        }else{
+            res.render("about",{user:'',cartLength:'',page:'about'})
+        }
+
+    }catch(err){
+        console.log("error when get about page",err.message);
+    }
+}
 
 function formatDate(date) {
     const options = { year: 'numeric', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };

@@ -159,4 +159,8 @@ clientRouter.post("/review",clientController.reviewPost)
 
 clientRouter.post("/contact",clientController.contactPost)
 
+//Client AboutUs
+
+clientRouter.get("/about",clientController.aboutUsGet)
+
 module.exports=clientRouter

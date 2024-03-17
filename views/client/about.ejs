@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <%- include('layouts/head.ejs') %>
+<body class="config" style="background-color: rgba(229,233,234);">
+    <div class="preloader is-active">
+        <div class="preloader__wrap">
+
+            <img class="preloader__img" src="/images/PurePicksIcon.ico" alt="loading"></div>
+    </div>
+
+    <!--====== Main App ======-->
+    <div id="app">
+
+        <!--====== Main Header ======-->
+        <%- include('layouts/topNav.ejs') %>
+        <!--====== End - Main Header ======-->
+
+        <!--====== App Content ======-->
+        <div class="app-content">
+
+            <!--====== Section 1 ======-->
+            <div class="u-s-p-y-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="breadcrumb">
+                            <div class="breadcrumb__wrap">
+                                <ul class="breadcrumb__list">
+                                    <li class="has-separator">
+
+                                        <a href="/">Home</a></li>
+                                    <li class="is-marked">
+
+                                        <a href="/about">About</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--====== End - Section 1 ======-->
+
+            <!--====== Section 2 ======-->
+            <div class="u-s-p-b-60">
+
+                <!--====== Section Content ======-->
+                <div class="section__content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="about">
+                                    <div class="about__container">
+                                        <div class="about__info">
+                                            <h2 class="about__h2">About Us</h2>
+                                            <div class="about__p-wrap">
+                                                <p class="about__p">Welcome to <b>Pure Picks</b> , your go-to destination for premium quality products and exceptional shopping experiences. At <b>Pure Picks</b>, we're committed to providing our customers with a diverse range of carefully curated products that meet the highest standards of quality and craftsmanship. <br>
+
+                                                    Our journey began with a simple vision: to create an online platform where shoppers could discover unique items that enrich their lives. What sets us apart is our dedication to sourcing products that not only meet your needs but also exceed your expectations. <br>
+                                                    
+                                                    Driven by a passion for innovation and customer satisfaction, we strive to foster a community where every purchase tells a story. Whether you're searching for the perfect gift, upgrading your lifestyle essentials, or simply indulging in a little self-care, <b>Pure Picks</b> has something special just for you. <br>
+                                                    
+                                                    But we're more than just a marketplace; we're a team of dedicated individuals who are committed to making your shopping experience seamless and enjoyable. From our user-friendly website to our responsive customer support, we're here to assist you every step of the way. <br>
+                                                    
+                                                    At <b>Pure Picks</b>, we believe that shopping should be a pleasure, not a chore. That's why we're constantly evolving and adapting to meet the evolving needs of our customers. Join us on our journey as we continue to redefine the online shopping experience, one satisfied customer at a time. <br>
+                                                    
+                                                    Thank you for choosing <b>Pure Picks</b>. We're honored to be a part of your shopping journey.</p>
+                                            </div>
+
+                                            <a class="about__link btn--e-secondary" href="/products" target="_blank">Shop Now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--====== End - Section Content ======-->
+            </div>
+            <!--====== End - Section 2 ======-->
+
+
+            <!--====== Section 3 ======-->
+            
+            <!--====== End - Section 4 ======-->
+        </div>
+        <!--====== End - App Content ======-->
+        
+        <!--====== Main Footer ======-->
+        <%- include('layouts/footer.ejs') %>
+    </div>
+    <!--====== End - Main App ======-->
+
+
+    <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
+    <script>
+        window.ga = function() {
+            ga.q.push(arguments)
+        };
+        ga.q = [];
+        ga.l = +new Date;
+        ga('create', 'UA-XXXXX-Y', 'auto');
+        ga('send', 'pageview')
+    </script>
+    <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
+    <!--====== Vendor Js ======-->
+    <script src="/client/js/vendor.js"></script>
+
+    <!--====== jQuery Shopnav plugin ======-->
+    <script src="/client/js/jquery.shopnav.js"></script>
+
+    <!--====== App ======-->
+    <script src="/client/js/app.js"></script>
+
+    <!--====== Noscript ======-->
+    <noscript>
+        <div class="app-setting">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="app-setting__wrap">
+                            <h1 class="app-setting__h1">JavaScript is disabled in your browser.</h1>
+
+                            <span class="app-setting__text">Please enable JavaScript in your browser or upgrade to a JavaScript-capable browser.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </noscript>
+</body>
+</html>
