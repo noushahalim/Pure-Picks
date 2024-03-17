@@ -163,4 +163,8 @@ clientRouter.post("/contact",clientController.contactPost)
 
 clientRouter.get("/about",clientController.aboutUsGet)
 
+//Client forgotPassword
+
+clientRouter.get("/forgotPassword",authController.forgotPasswordGet)
+
 module.exports=clientRouter

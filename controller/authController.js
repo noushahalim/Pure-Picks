@@ -279,3 +279,18 @@ exports.otpPost=async(req,res)=>{
         // res.status(400).json({success:false,message:'Mobile number Not verified'})
     }
 }
+
+//Client forgotPassword
+
+exports.forgotPasswordGet=async(req,res)=>{
+    try{
+        if(req.session.userName){
+            res.redirect("/")
+        }else{
+            res.render("forgotPassword",{user:'',cartLength:'',page:''})
+        }
+
+    }catch(err){
+        console.log("error when get forgotPassword page",err.message);
+    }
+}
