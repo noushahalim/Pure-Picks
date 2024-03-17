@@ -166,5 +166,12 @@ clientRouter.get("/about",clientController.aboutUsGet)
 //Client forgotPassword
 
 clientRouter.get("/forgotPassword",authController.forgotPasswordGet)
+clientRouter.post("/forgotPassword",authController.forgotPasswordPost)
+clientRouter.post("/forgotPasswordOtp",authController.forgotPasswordOtpPost)
+
+//Client Change Password
+
+clientRouter.get("/changePassword",authController.changePasswordGet)
+clientRouter.post("/changePassword",authController.changePasswordPost)
 
 module.exports=clientRouter

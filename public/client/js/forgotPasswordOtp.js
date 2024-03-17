@@ -89,16 +89,18 @@ otpSubmit.addEventListener('click', function(event) {
     const otp4 = document.getElementById('otp4').value;
     const otp5 = document.getElementById('otp5').value;
     const otp6 = document.getElementById('otp6').value;
+    const mailHelperId=document.getElementById('mailHelperId').value
+    const userId=document.getElementById('userId').value
 
     const combinedOTP = otp1 + otp2 + otp3 + otp4 + otp5 + otp6;
 
-    axios.post(`/forgotPasswordOtp/${combinedOTP}`)
+    axios.post("/forgotPasswordOtp",{combinedOTP:combinedOTP,mailHelperId:mailHelperId,userId:userId})
       .then(function (response){
-          
-          console.log(response.data.message);
-  
+          location.href=`/changePassword?userId=${response.data.userId}`
       })
       .catch(function(error){
-          console.log(error);
+        if(error.status==400){
+            alert(error.response.data.message)
+        }
       })
   });
