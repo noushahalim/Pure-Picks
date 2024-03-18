@@ -1,6 +1,6 @@
 const express=require('express')
 const multer=require('multer')
-const storage = require('../middleware/multer')
+const storage = require('../utility/multer')
 const adminRouter=express()
 const adminController=require("../controller/adminController")
 const adminProfileController=require("../controller/adminProfileController")

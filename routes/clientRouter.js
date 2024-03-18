@@ -10,6 +10,7 @@ const couponController=require("../controller/couponController")
 const paymentController=require("../controller/paymentController")
 const orderController=require('../controller/orderController')
 const productsController=require("../controller/productsController")
+const otpController=require("../utility/otpController")
 
 
 const authenticatedClient=require('../middleware/clientAuthentication')
@@ -40,8 +41,8 @@ clientRouter.get("/logout",authenticatedClient,authController.logoutGet)
 
 //client otp
 
-clientRouter.get("/otp/:mobileNumber",authController.otpGet)
-clientRouter.post("/otp",authController.otpPost)
+clientRouter.get("/otp/:mobileNumber",otpController.otpGet)
+clientRouter.post("/otp",otpController.otpPost)
 
 //Client All Products
 
@@ -166,8 +167,8 @@ clientRouter.get("/about",clientController.aboutUsGet)
 //Client forgotPassword
 
 clientRouter.get("/forgotPassword",authController.forgotPasswordGet)
-clientRouter.post("/forgotPassword",authController.forgotPasswordPost)
-clientRouter.post("/forgotPasswordOtp",authController.forgotPasswordOtpPost)
+clientRouter.post("/forgotPassword",otpController.forgotPasswordPost)
+clientRouter.post("/forgotPasswordOtp",otpController.forgotPasswordOtpPost)
 
 //Client Change Password
 
