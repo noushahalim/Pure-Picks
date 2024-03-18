@@ -220,44 +220,67 @@ exports.allProductsGet=async(req,res)=>{
         const clientUserName=req.session.userName
         const client=await signUpModel.findOne({userName:clientUserName})
         const categories=await categoryModel.find()
-        let products
+        const productsPerPage = 12;
+        let currentPage = parseInt(req.query.page) || 1;
+        const search = req.query.search;
+        const category = req.query.category;
+        const sort = req.query.sort;
 
-        if(req.query.search){
-            const search=req.query.search
-            products=await productModel.find({stock:{$gt:0},bannedProduct:{$ne:1},productName:{$regex:search,$options:'i'}})
+        let query = {
+            stock: { $gt: 0 },
+            bannedProduct: { $ne: 1 }
+        };
+
+        if (search) {
+            query.productName = { $regex: search, $options: 'i' };
         }
-        else if(req.query.category){
-            const category=req.query.category
-            products=await productModel.find({stock:{$gt:0},bannedProduct:{$ne:1},category:category})
+        if (category) {
+            query.category = category;
         }
-        else if(req.query.sort){
-            const sort=req.query.sort
-            if(sort==="price low to high"){
-                products=await productModel.find({stock:{$gt:0},bannedProduct:{$ne:1}}).sort({newPrice:1})
-            }
-            else if(sort==="price high to low"){
-                products=await productModel.find({stock:{$gt:0},bannedProduct:{$ne:1}}).sort({newPrice:-1})
-            }
-        }
-        else{
-            products=await productModel.find({stock:{$gt:0},bannedProduct:{$ne:1}})
+        let sortQuery = {};
+
+        if (sort === "price low to high") {
+            sortQuery = { newPrice: 1 };
+        } else if (sort === "price high to low") {
+            sortQuery = { newPrice: -1 };
         }
 
-        if(client){
-            const cart=await cartModel.findOne({userId:client._id})
-            if(cart){
-                const cartLength=cart.products.length
-                res.render("products",{categories,products,user:true,cartLength,page:'products'})
-            }
-            else{
-                res.render("products",{categories,products,user:true,cartLength:'',page:'products'})
-            }
+        let totalProducts = await productModel.countDocuments(query);
+        let totalPages = Math.ceil(totalProducts / productsPerPage);
+
+        currentPage = Math.min(currentPage, totalPages);
+
+        let visiblePages = [];
+        let startPage = Math.max(1, currentPage - 2);
+        let endPage = Math.min(totalPages, startPage + 3);
+
+        for (let i = startPage; i <= endPage; i++) {
+            visiblePages.push(i);
         }
-        else{
-            res.render("products",{categories,products,user:'',cartLength:'',page:'products'})
-        }
+
+        let products = await productModel.find(query)
+            .sort(sortQuery)
+            .skip((currentPage - 1) * productsPerPage)
+            .limit(productsPerPage);
+
+
+        res.render("products", {
+            categories,
+            products,
+            user: client ? true : '',
+            cartLength: client ? cart ? cart.products.length : '' : '',
+            page: 'products',
+            currentPage,
+            totalPages,
+            visiblePages,
+            search, 
+            category,
+            sort 
+        });
+        
     }
     catch(err){
-        console.log("error when get all products",err.message);
+        console.log("Error when getting all products", err.message);
+        res.status(500).send("Internal Server Error");
     }
 }

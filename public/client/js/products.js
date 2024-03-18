@@ -54,7 +54,10 @@ const searchsubmit=document.getElementById("main-search-button")
 searchsubmit.addEventListener("click",(event)=>{
     event.preventDefault()
     const searchValue=document.getElementById("main-search").value
-    location.href=`/products?search=${searchValue}`
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set("search", searchValue);
+    urlParams.delete("page");
+    location.href=`/products?${urlParams.toString()}`;
 })
 
 
@@ -63,6 +66,20 @@ const selectBox = document.querySelector(".select-box");
 selectBox.addEventListener("change", (event) => {
     event.preventDefault();
     const sortValue = selectBox.value;
-    location.href = `/products?sort=${sortValue}`;
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set("sort", sortValue);
+    location.href = `/products?${urlParams.toString()}`;
 });
 
+const filterLinks = document.querySelectorAll(".shop-w__category-list a");
+
+filterLinks.forEach(link => {
+    link.addEventListener("click", (event) => {
+        event.preventDefault();
+        const categoryValue = link.getAttribute("href").split("=")[1];
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set("category", categoryValue);
+        urlParams.delete("page");
+        location.href = `/products?${urlParams.toString()}`;
+    });
+});

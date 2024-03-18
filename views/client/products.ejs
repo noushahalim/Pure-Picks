@@ -77,10 +77,10 @@
                                                     <div class="product-m__content">
                                                         <div class="product-m__category">
     
-                                                            <a href="shop-side-version-2.html"><%= product.category%> <%= product.subCategory%></a></div>
+                                                            <a href="/products?category=<%= product.category%>"><%= product.category%> <%= product.subCategory%></a></div>
                                                         <div class="product-m__name">
     
-                                                            <a href="product-detail.html"><%= product.productName%></a></div>
+                                                            <a href="/product/<%= product._id %>"><%= product.productName%></a></div>
                                                         <div class="product-m__rating gl-rating-style">
 
                                                             <% let j=product.rating %>
@@ -112,10 +112,21 @@
                                     </div>
                                 </div>
                                 <div class="u-s-p-y-60">
-
-                                    <!--====== Pagination ======-->
-                                    
-                                    <!--====== End - Pagination ======-->
+                                    <!-- Pagination -->
+                                    <ul class="shop-p__pagination">
+                                        <% if (currentPage > 1) { %>
+                                            <li><a href="?page=1&search=<%= search %>&category=<%= category %>&sort=<%= sort %>">&laquo;</a></li>
+                                        <% } %>
+                                        <% visiblePages.forEach(page => { %>
+                                            <li <% if (page === currentPage) { %> class="is-active" <% } %> >
+                                                <a href="?page=<%= page %>&search=<%= search %>&category=<%= category %>&sort=<%= sort %>"><%= page %></a>
+                                            </li>
+                                        <% }); %>
+                                        <% if (currentPage < totalPages) { %>
+                                            <li><a href="?page=<%= totalPages %>&search=<%= search %>&category=<%= category %>&sort=<%= sort %>">&raquo;</a></li>
+                                        <% } %>
+                                    </ul>
+                                    <!-- End Pagination -->
                                 </div>
                             </div>
                         </div>
