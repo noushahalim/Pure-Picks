@@ -255,12 +255,11 @@ exports.logoutGet=async(req,res)=>{
 
 //client otp
 
-let otp
 
 exports.otpGet=async(req,res)=>{
     try{
         const mobileNumber=req.params.mobileNumber
-        otp= otpGenerator.generate(6, { upperCaseAlphabets: false,lowerCaseAlphabets: false, specialChars: false });
+        const otp= otpGenerator.generate(6, { upperCaseAlphabets: false,lowerCaseAlphabets: false, specialChars: false });
         const message=await client.messages
             .create({
             body: `Your verification code for Pure Picks registration is ${otp} . Please enter this code to complete your sign-up process. Thank you for choosing Pure Picks!`,
@@ -272,7 +271,8 @@ exports.otpGet=async(req,res)=>{
             res.status(400).json({error:'cant send opt'})
         }
         else{
-            res.status(200).json({success:true,message:'otp sented'})
+            const otpHelperId=await bcrypt.hash(otp,10)
+            res.status(200).json({success:true,message:'otp sented',otpHelperId:otpHelperId})
         }
     }catch(err){
         console.log('error when get otp',err.message);
@@ -282,15 +282,18 @@ exports.otpGet=async(req,res)=>{
 
 exports.otpPost=async(req,res)=>{
     try{
-        const reqOtp=req.params.otp
-        console.log(otp,reqOtp);
-        if(otp==reqOtp){
+        const otpHelperId=req.body.otpHelperId
+        const reqOtp=req.body.combinedOTP
+        const compareOtp=await bcrypt.compare(reqOtp,otpHelperId)
+        if(compareOtp){
             res.status(200).json({success:true,message:'Mobile number verified'})
+        }
+        else{
+            res.status(400).json({success:false,message:'Mobile number Not verified'})
         }
     }
     catch(err){
-        console.log('error when post otp');
-        // res.status(400).json({success:false,message:'Mobile number Not verified'})
+        console.log('error when post otp',err.message);
     }
 }
 

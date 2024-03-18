@@ -41,7 +41,7 @@ clientRouter.get("/logout",authenticatedClient,authController.logoutGet)
 //client otp
 
 clientRouter.get("/otp/:mobileNumber",authController.otpGet)
-clientRouter.post("/otp/:otp",authController.otpPost)
+clientRouter.post("/otp",authController.otpPost)
 
 //Client All Products
 

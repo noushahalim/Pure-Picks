@@ -80,7 +80,7 @@ const manageOtpLink = document.getElementById('otp-div-open');
 const otpSection = document.getElementById('otp-div-opened');
 const mobileNumberInput= document.getElementById('mobileNumber');
 const otpVerified=document.getElementById('otpVerified')
-
+const helperId=document.getElementById('helperId')
 
 
 manageOtpLink.addEventListener('click', function(event) {
@@ -91,6 +91,7 @@ manageOtpLink.addEventListener('click', function(event) {
     .then(function (response){
         if(response.status==200){
             otpSection.style.display = 'flex';
+            helperId.value=response.data.otpHelperId
             console.log(response.data.message);
         }
         else{
@@ -123,8 +124,8 @@ otpSubmit.addEventListener('click', function(event) {
     const otp6 = document.getElementById('otp6').value;
 
     const combinedOTP = otp1 + otp2 + otp3 + otp4 + otp5 + otp6;
-
-    axios.post(`/otp/${combinedOTP}`)
+    const otpHelperId=helperId.value
+    axios.post(`/otp`,{combinedOTP:combinedOTP,otpHelperId:otpHelperId})
       .then(function (response){
           otpSection.style.display = 'none';
           otpVerified.value="true"
