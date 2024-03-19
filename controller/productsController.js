@@ -220,6 +220,7 @@ exports.allProductsGet=async(req,res)=>{
         const clientUserName=req.session.userName
         const client=await signUpModel.findOne({userName:clientUserName})
         const categories=await categoryModel.find()
+        const cart= await cartModel.findOne({userId:client ?._id})
         const productsPerPage = 12;
         let currentPage = parseInt(req.query.page) || 1;
         const search = req.query.search;

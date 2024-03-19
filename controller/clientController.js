@@ -71,7 +71,7 @@ exports.productGet=async (req,res)=>{
         const productId=req.params.id
         const products=await productModel.find()
         const product=await productModel.findOne({_id:productId})
-        const avProducts=await productModel.find({category:product.category,subCategory:product.subCategory}).limit(6)
+        const avProducts=await productModel.find({category:product.category}).limit(6)
         const client=await signUpModel.findOne({userName:clientUserName})
         const reviews=await reviewModel.find({productId:productId}).populate('userId', 'userName').exec() || ''
         reviews.forEach(review => {
