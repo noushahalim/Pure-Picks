@@ -10,7 +10,7 @@ const DBconnect= require('./config/mongodb')
 DBconnect.dbconnect()
 
 
-const port=process.env.PORT || 8080
+const port=process.env.PORT
 const secret=process.env.SECRET
 const app=express()
 
