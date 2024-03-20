@@ -60,7 +60,7 @@
                                             <h1 class="dash__h1 u-s-m-b-14">Add new Address</h1>
 
                                             <span class="dash__text u-s-m-b-30">We need an address where we could deliver products.</span>
-                                            <form class="dash-address-manipulation" action="/addAddress" method="post">
+                                            <form id="addressForm" class="dash-address-manipulation" action="/addAddress" method="post">
                                                 <div class="gl-inline">
                                                     <div class="u-s-m-b-30">
 
@@ -78,7 +78,7 @@
 
                                                         <label class="gl-label" for="address-phone">PHONE *</label>
 
-                                                        <input class="input-text input-text--primary-style" type="text" id="address-phone" name="number" required></div>
+                                                        <input class="input-text input-text--primary-style" type="number" id="address-phone" name="number" required></div>
                                                     <div class="u-s-m-b-30">
 
                                                         <label class="gl-label" for="address-street">STREET ADDRESS *</label>
@@ -117,7 +117,7 @@
 
                                                         <label class="gl-label" for="address-street">ZIP/POSTAL CODE *</label>
 
-                                                        <input class="input-text input-text--primary-style" type="text" id="address-postal" placeholder="Zip/Postal Code" name="pin" required></div>
+                                                        <input class="input-text input-text--primary-style" type="number" id="address-postal" placeholder="Zip/Postal Code" name="pin" required></div>
                                                 </div>
 
                                                 <button class="btn btn--e-brand-b-2" type="submit">SAVE</button>
@@ -161,27 +161,7 @@
 
     <!--====== App ======-->
     <script src="/client/js/app.js"></script>
-    <script>
-        const states = [
-            "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
-            "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand",
-            "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur",
-            "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan",
-            "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh",
-            "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands",
-            "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi",
-            "Lakshadweep", "Puducherry"
-        ];
-
-        const stateSelect = document.getElementById("stateSelect");
-
-        states.forEach(state => {
-        const option = document.createElement("option");
-        option.value = state.toLowerCase().replace(/\s+/g, "-");
-        option.text = state;
-        stateSelect.appendChild(option);
-});
-    </script>
+    <script src="/client/js/addAddress.js"></script>
 
     <!--====== Noscript ======-->
     <noscript>

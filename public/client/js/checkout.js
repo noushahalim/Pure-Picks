@@ -58,6 +58,7 @@ const cancelFormButton = addressForm.querySelector('[data-dismiss="modal"]');
 
 addressForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+
     const formData = {
         fName: document.getElementById('address-fname').value,
         lName: document.getElementById('address-lname').value,
@@ -68,6 +69,31 @@ addressForm.addEventListener('submit', async (event) => {
         city: document.getElementById('address-city').value,
         pin: document.getElementById('address-postal').value
     };
+
+    const nameRegex = /^[A-Za-z]+$/;
+    const numberRegex = /^\d{10}$/;
+    const streetAddressRegex = /^(?=.*[a-zA-Z])[\w\s,'()-]+$/;
+
+    if (!nameRegex.test(formData.fName) || !nameRegex.test(formData.lName)) {
+        alert("First name and last name should only contain letters.");
+        return;
+    }
+
+    if (!numberRegex.test(formData.number)) {
+        alert("Mobile number must have 10 digits.");
+        return;
+    }
+
+    if (!streetAddressRegex.test(formData.streetAddress)) {
+        alert("Street address must include letters.");
+        return;
+    }
+
+    if (!streetAddressRegex.test(formData.city)) {
+        alert("City must include letters.");
+        return;
+    }
+
     try {
         const response = await axios.post('/addressAdd', formData);
         const { streetAddress, country, number , state, city, pin ,_id } = response.data.data;
