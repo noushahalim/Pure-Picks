@@ -135,16 +135,26 @@ displayAddressForm.addEventListener('submit', (event) => {
 });
 
 
+
+
 // ------------------------------------------------------------------------------------
 
-const placeOrder=document.getElementById("placeOrder")
+const checkoutForm=document.getElementById("checkoutForm")
 
-placeOrder.addEventListener("click",(event)=>{
+checkoutForm.addEventListener("submit",(event)=>{
     event.preventDefault()
-    if(addressId.value.length<1){
-        alert('Add A Shipping Address')
+
+    const cashOnDelivery=document.getElementById("cash-on-delivery")
+    const directBankTransfer=document.getElementById("direct-bank-transfer")
+    const addressId = document.getElementById("addressId");
+
+    if(!cashOnDelivery.checked || !directBankTransfer.checked){
+        alert("Please choose a payment method")
+    }
+    else if (addressId.value.length < 1) {
+        alert("Add a shipping address");
     }
     else{
-        event.target.form.submit();
+        event.target.submit()
     }
 })
