@@ -148,7 +148,7 @@ checkoutForm.addEventListener("submit",(event)=>{
     const directBankTransfer=document.getElementById("direct-bank-transfer")
     const addressId = document.getElementById("addressId");
 
-    if(!cashOnDelivery.checked || !directBankTransfer.checked){
+    if(!cashOnDelivery.checked && !directBankTransfer.checked){
         alert("Please choose a payment method")
     }
     else if (addressId.value.length < 1) {
