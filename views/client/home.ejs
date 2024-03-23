@@ -146,10 +146,10 @@
                                                 <% } else { %>
                                                     <li>
 
-                                                        <a href="/login"><i class="fas fa-plus-circle"></i></a></li>
+                                                        <a class="not-user" href="/login"><i class="fas fa-plus-circle"></i></a></li>
                                                     <li>
 
-                                                        <a href="/login"><i class="fas fa-heart"></i></a></li>
+                                                        <a class="not-user" href="/login"><i class="fas fa-heart"></i></a></li>
 
                                                 <% } %>
                                                 
@@ -252,10 +252,10 @@
                                                                     <% } else { %>
                                                                         <li>
                     
-                                                                            <a href="/login"><i class="fas fa-plus-circle"></i></a></li>
+                                                                            <a class="not-user" href="/login"><i class="fas fa-plus-circle"></i></a></li>
                                                                         <li>
                     
-                                                                            <a href="/login"><i class="fas fa-heart"></i></a></li>
+                                                                            <a class="not-user" href="/login"><i class="fas fa-heart"></i></a></li>
                     
                                                                     <% } %>
                                                                 
@@ -398,7 +398,6 @@
 
         <!--====== Modal Section ======-->
 
-
         <%- include('layouts/quicklook.ejs') %>
 
         <%- include('layouts/addCart.ejs') %>
@@ -409,6 +408,9 @@
     </div>
     <!--====== End - Main App ======-->
 
+<input type="hidden" id="login-location" value="/">
+
+<%- include('layouts/loginSignUp.ejs') %>
 
     <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
     <script>
@@ -432,6 +434,8 @@
     <script src="/client/js/app.js"></script>
 
     <script src="/client/js/home.js"></script>
+
+    <script src="/client/js/loginSignUp.js"></script>
 
     <!--====== Noscript ======-->
     <noscript>

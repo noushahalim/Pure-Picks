@@ -123,7 +123,7 @@
                                             <% if(user) { %>
                                                 <a class="wishlistAdd" href="<%=product._id%>">Add to Wishlist</a>
                                             <% }else{ %>
-                                                <a href="/login">Add to Wishlist</a>
+                                                <a class="not-user" href="/login">Add to Wishlist</a>
                                             <% } %>
 
                                             
@@ -151,7 +151,7 @@
                                                 <% if(user) { %>
                                                     <a class="btn btn--e-brand-b-2 cartAdd" href="<%=product._id%>" data-modal="modal" data-modal-id="#cart<%=product._id%>">Add to Cart</a>
                                                 <% }else{ %>
-                                                    <a class="btn btn--e-brand-b-2" href="/login" >Add to Cart</a>
+                                                    <a class="btn btn--e-brand-b-2 not-user" href="/login" >Add to Cart</a>
                                                 <% } %>
                                             </div>
                                         </div>
@@ -341,7 +341,11 @@
                                                         </div>
                                                         <input id="productId" type="hidden" value="<%=product._id%>">
                                                         <textarea  id="reviewDescription" cols="30" rows="6" placeholder="Tell us about your experience!" required></textarea>
-                                                        <button style="border: none;" class="submit-btn" type="submit">Send</button>
+                                                        <% if(user){ %>
+                                                            <button style="border: none;" class="submit-btn" type="submit">Send</button>
+                                                        <% }else{ %>
+                                                            <button style="border: none;" class="submit-btn not-user" type="submit">Send</button>
+                                                        <% } %>
                                                     </div>
                                                 </form>
                                             </div>
@@ -404,10 +408,10 @@
                                                         <% } else { %>
                                                             <li>
         
-                                                                <a href="/login"><i class="fas fa-plus-circle"></i></a></li>
+                                                                <a class="not-user" href="/login"><i class="fas fa-plus-circle"></i></a></li>
                                                             <li>
         
-                                                                <a href="/login"><i class="fas fa-heart"></i></a></li>
+                                                                <a class="not-user" href="/login"><i class="fas fa-heart"></i></a></li>
         
                                                         <% } %>
                                                     
@@ -421,7 +425,7 @@
 
                                         <span class="product-o__name">
 
-                                            <a href="/<%=avProduct.productName%>/<%=avProduct._id%>"><%=avProduct.productName%></a></span>
+                                            <a href="/product/<%=avProduct._id%>"><%=avProduct.productName%></a></span>
                                         <div class="product-o__rating gl-rating-style">
                                             
                                             <% let j=avProduct.rating %>
@@ -464,6 +468,10 @@
         <!--====== End - Modal Section ======-->
     </div>
     <!--====== End - Main App ======-->
+    
+<input type="hidden" id="login-location" value="/product/<%=product._id%>">
+
+<%- include('layouts/loginSignUp.ejs') %>
 
 
     <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
@@ -488,6 +496,9 @@
     <script src="/client/js/app.js"></script>
 
     <script src="/client/js/product.js"></script>
+
+    <script src="/client/js/loginSignUp.js"></script>
+
 
 
     <!--====== Noscript ======-->

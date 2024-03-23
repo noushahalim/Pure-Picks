@@ -6495,3 +6495,303 @@ input::-ms-clear {
     
 }
 
+.login-div{
+  color: black;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #4242426e;
+  font-family: "Roboto", sans-serif;
+  z-index: 10;
+}
+.login-form{
+  width: 450px;
+  height: 500px;
+  background-color: white;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  border-radius: 10px;
+}
+.login-top{
+  position: relative;
+  top: 6px;
+  left: 260px;
+}
+.login-top p{
+  font-size: 13px;
+}
+#close-login{
+  width: 45px;
+  position: relative;
+  top: -20px;
+  left: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.login-form form{
+  position: absolute;
+  top: 30%;
+  left: 39%;
+  width: 100%;
+  max-width: 300px;
+  /* transform: translate(-50%, -50%); */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+}
+.login-form form h2{
+  width: 100%;
+  font-weight: 500;
+  font-size: 26px;
+}
+.login-form form p{
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+.login-form form span{
+  font-size: 13px;
+  display: block;
+  text-align: right;
+  margin-bottom: 20px;
+}
+.login-form form div{
+  position: relative;
+}
+.login-form form .icon{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 1rem;
+  cursor: pointer;
+}
+.login-form form a{
+  font-size: 13px;
+  display: block;
+  text-align: right;
+  margin-bottom: 20px;
+  color: #1a1aff;
+  text-decoration: none;
+}
+.login-form form:last-child{
+  text-align: center;
+}
+.login-form form:last-child p{
+  position: relative;
+  display: inline-block;
+  font-size: 14px;
+}
+.login-form form input{
+  font-family: "Poppins", sans-serif;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  padding: 10px 0;
+  margin-bottom: 10px;
+  text-indent: 16px;
+  width: 100%;
+  color: #4d4d4d;
+  outline: none;
+}
+.login-form form input[type="submit"]{
+  display: block;
+  text-align: center;
+  width: 100%;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: rgb(26, 26, 255);
+  color: white;
+  transition: 0.5s;
+}
+.login-form form input[type="submit"]:hover{
+  background-color: #ccccff;
+}
+.icon img {
+  width: 20px;
+}
+.signUp-div{
+  color: black;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #4242426e;
+  font-family: "Roboto", sans-serif;
+  z-index: 10;
+}
+.signUp-form{
+  width: 450px;
+  height: 500px;
+  background-color: white;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.signUp-form form{
+  position: absolute;
+  top: 27%;
+  left: 39%;
+  width: 100%;
+  max-width: 300px;
+  /* transform: translate(-50%, -50%); */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+}
+.signUp-form form .signUp-form-control:first-child input{
+  font-family: "Poppins", sans-serif;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  padding: 10px 0;
+  margin-bottom: 10px;
+  text-indent: 16px;
+  width: 100%;
+  color: #4d4d4d;
+  outline: none;
+}
+.signUp-form form .signUp-form-control input[type="submit"]{
+  display: block;
+  text-align: center;
+  width: 100%;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: rgb(26, 26, 255);
+  color: white;
+  transition: 0.5s;
+}
+.signUp-form form .signUp-form-control input[type="submit"]:hover{
+  background-color: #ccccff;
+}
+.signUp-form form .signUp-form-control h2{
+  width: 100%;
+  font-weight: 400;
+  font-size: 26px;
+}
+.signUp-form form .signUp-form-control p{
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+.signUp-form .already{
+  font-size: 14px;
+  position: relative;
+  left: 46%;
+  top: -8%;
+}
+.signUp-form .already a{
+  text-decoration: none;
+  color: #1a1aff;
+}
+#close-signUp{
+  width: 45px;
+  position: relative;
+  left: 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+#otp-div-open{
+  /* width: 20%; */
+  /* border: 1px solid white; */
+  box-shadow: 0 5px 10px 1px rgba(255, 1, 1, 0.356);
+  text-decoration: none;
+  padding: 5px;
+  position: relative;
+  left: -124px;
+  top: -4px;
+  background-color: white;
+  border-radius: 5px;
+  color: white;
+  background-color: red;
+  font-size: 15px;
+  display: none;
+}
+.otp-div{
+  color: black;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  position: fixed;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  /* font-size: 15px; */
+  background: #4242426e;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  z-index: 10;
+}
+.card{
+  background-color: white;
+  border-radius: 10px;
+}
+.otp-field {
+  flex-direction: row;
+  column-gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.otp-field input {
+  height: 45px;
+  width: 42px;
+  border-radius: 6px;
+  outline: none;
+  font-size: 1.125rem;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+.otp-field input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+.otp-field input::-webkit-inner-spin-button,
+.otp-field input::-webkit-outer-spin-button {
+  display: none;
+}
+
+.resend {
+  font-size: 12px;
+}
+.card-body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 13px;
+  padding: 20px;
+}
+.card-body button{
+  width: 15%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 15px;
+  border-radius: 5px;
+  border: 1px solid;
+  color: white;
+}
+.btn-active {
+  background-color: rgb(97,161,254);
+  cursor: pointer;
+}
+
+.btn-inactive {
+  background-color: gray;
+}

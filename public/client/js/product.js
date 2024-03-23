@@ -103,7 +103,7 @@ reviewForm.addEventListener("submit",(event)=>{
             icon: "error",
             title: "Oops...",
             text: error.response.data.message,
-            footer: '<a href="/checkout">Yes, Do it Now !</a>'
+            footer: '<a href="">Yes, Buy it Now !</a>'
           });
     })
 })

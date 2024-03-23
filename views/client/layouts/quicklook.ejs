@@ -83,8 +83,11 @@
                                     <div class="pd-detail__inline">
 
                                         <span class="pd-detail__click-wrap"><i class="far fa-heart u-s-m-r-6"></i>
-
-                                            <a href="signin.html">Add to Wishlist</a>
+                                            <% if(user){ %>
+                                                <a class="wishlistAdd" href="<%= product._id%>">Add to Wishlist</a>
+                                            <% }else{ %>
+                                                <a data-dismiss="modal" class="not-user" href="">Add to Wishlist</a>
+                                            <% } %> 
 
                                             </span></div>
                                 </div>
@@ -104,8 +107,13 @@
                                                 <!--====== End - Input Counter ======-->
                                             </div>
                                             <div class="u-s-m-b-15">
-
-                                                <button class="btn btn--e-brand-b-2" type="submit">Add to Cart</button></div>
+                                                <% if(user){ %>
+                                                    <button  class="btn btn--e-brand-b-2 " >
+                                                        <a style="background: none; border: none; text-decoration: none; color: white;" class="cartAdd" href="<%= product._id%>" data-modal="modal" data-modal-id="#cart<%= product._id%>">Add to Cart</a>
+                                                        </button></div>
+                                                <% }else{ %>
+                                                    <button data-dismiss="modal" class="btn btn--e-brand-b-2 not-user" type="submit">Add to Cart</button></div>
+                                                <% } %> 
                                         </div>
                                     </form>
                                 </div>

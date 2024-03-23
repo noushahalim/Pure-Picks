@@ -71,7 +71,7 @@
                                                         <% }else{ %>
                                                             <div class="product-m__add-cart">
     
-                                                                <a class="btn--e-brand" href="/login" >Add to Cart</a></div>
+                                                                <a class="btn--e-brand not-user" href="/login" >Add to Cart</a></div>
                                                         <% } %>
                                                     </div>
                                                     <div class="product-m__content">
@@ -101,7 +101,7 @@
                                                             <% }else{ %>
                                                                 <div class="product-m__wishlist">
     
-                                                                    <a class="far fa-heart" href="/login"></a></div>
+                                                                    <a class="far fa-heart not-user" href="/login"></a></div>
                                                             <% } %>
                                                         </div>
                                                     </div>
@@ -195,6 +195,11 @@
     
     <!--====== End - Main App ======-->
 
+    
+<input type="hidden" id="login-location" value="/products">
+
+<%- include('layouts/loginSignUp.ejs') %>
+
 
     <!--====== Google Analytics: change UA-XXXXX-Y to be your site's ID ======-->
     <script>
@@ -217,6 +222,8 @@
     <!--====== App ======-->
     <script src="/client/js/app.js"></script>
     <script src="/client/js/products.js"></script>
+    <script src="/client/js/loginSignUp.js"></script>
+
 
     <!--====== Noscript ======-->
     <noscript>
